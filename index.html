@@ -1,172 +1,605 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#071A35">
 <title>YUNEEC Global Drone Technologies</title>
+
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
-body{font-family:Arial,sans-serif;background:#f1f5f9;color:#14243a}
-header{background:#092743;color:white;padding:18px;display:flex;justify-content:space-between;align-items:center}
-.logo{font-size:24px;font-weight:bold;letter-spacing:2px}
-.logo span{color:#31b9ed}
-nav{background:#103858;padding:13px;display:flex;justify-content:space-around;flex-wrap:wrap;gap:12px}
-nav a{color:white;text-decoration:none;font-size:14px}
-.hero{margin:15px;border-radius:16px;overflow:hidden;background:linear-gradient(120deg,#082944,#087eb5);color:white;padding:30px 20px;min-height:220px;display:flex;align-items:center;justify-content:space-between;gap:15px}
-.hero h1{font-size:27px;margin-bottom:12px}
-.hero p{line-height:1.5;color:#d8efff}
-.hero img{width:42%;max-width:230px;border-radius:12px;object-fit:cover}
-.btn{display:inline-block;background:#24b9ec;color:#062b43;padding:12px 20px;border-radius:8px;text-decoration:none;font-weight:bold;margin-top:16px}
-.container{padding:15px}
-.section-title{font-size:21px;margin:20px 0 14px}
-.stats{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
-.stat{background:white;padding:17px;border-radius:12px;box-shadow:0 2px 8px #0000000c}
-.stat p{font-size:12px;color:#65758b}
-.stat h3{font-size:19px;margin-top:9px;color:#087eb5}
-.slider{display:flex;gap:14px;overflow-x:auto;padding:5px 2px 15px;scroll-snap-type:x mandatory}
-.slider::-webkit-scrollbar{display:none}
-.feature{min-width:85%;background:#fff;border-radius:13px;overflow:hidden;scroll-snap-align:start;box-shadow:0 3px 10px #00000010}
-.feature img{width:100%;height:145px;object-fit:cover}
-.feature div{padding:14px}
-.packages{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
-.package{background:white;border-radius:12px;padding:14px;box-shadow:0 2px 8px #0000000c}
-.package img{width:100%;height:95px;object-fit:cover;border-radius:8px}
-.package h3{font-size:15px;margin:10px 0}
-.package p{font-size:12px;color:#68788a;margin:5px 0}
-.package button{width:100%;background:#087eb5;color:white;border:0;padding:10px;border-radius:7px;margin-top:10px}
-.notice{background:#e2f4ff;border-left:4px solid #087eb5;padding:15px;border-radius:8px;margin:18px 0;font-size:13px;line-height:1.6}
-footer{text-align:center;padding:25px;background:#092743;color:#d8e8f5;margin-top:25px;font-size:12px}
-@media(min-width:700px){.container{max-width:1000px;margin:auto}.packages{grid-template-columns:repeat(5,1fr)}.hero{max-width:970px;margin:20px auto}.stats{grid-template-columns:repeat(4,1fr)}.feature{min-width:32%}}
+:root{
+  --navy:#071A35;
+  --navy-light:#102B50;
+  --blue:#087BFF;
+  --blue-light:#38A0FF;
+  --white:#FFFFFF;
+  --light:#EAF2FC;
+  --muted:#9FB4D0;
+  --border:#24446C;
+}
+
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+html{
+  scroll-behavior:smooth;
+}
+
+body{
+  font-family:Arial,sans-serif;
+  background:var(--navy);
+  color:var(--white);
+  line-height:1.5;
+}
+
+/* HEADER */
+header{
+  background:#06152C;
+  color:white;
+  padding:18px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+  border-bottom:1px solid var(--border);
+}
+
+.logo{
+  font-size:25px;
+  font-weight:bold;
+  letter-spacing:3px;
+}
+
+.logo span{
+  color:var(--blue-light);
+}
+
+.company-label{
+  font-size:13px;
+  color:#C8D9F0;
+}
+
+/* NAVIGATION */
+nav{
+  background:#0A2142;
+  padding:14px 10px;
+  display:flex;
+  justify-content:center;
+  flex-wrap:wrap;
+  gap:25px;
+  position:sticky;
+  top:0;
+  z-index:100;
+  border-bottom:1px solid var(--border);
+}
+
+nav a{
+  color:#DCEBFF;
+  text-decoration:none;
+  font-size:14px;
+  font-weight:bold;
+  transition:.2s;
+}
+
+nav a:hover{
+  color:var(--blue-light);
+}
+
+/* HERO */
+.hero{
+  margin:18px;
+  border-radius:18px;
+  overflow:hidden;
+  background:linear-gradient(120deg,#071A35,#104B91,#087BFF);
+  color:white;
+  padding:35px 22px;
+  min-height:260px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:18px;
+  border:1px solid #245A99;
+  box-shadow:0 10px 35px #00000035;
+}
+
+.hero-content{
+  flex:1;
+}
+
+.hero h1{
+  font-size:30px;
+  line-height:1.2;
+  margin-bottom:14px;
+}
+
+.hero p{
+  line-height:1.7;
+  color:#D5E9FF;
+  font-size:15px;
+}
+
+.hero img{
+  width:42%;
+  max-width:250px;
+  height:165px;
+  border-radius:14px;
+  object-fit:cover;
+  border:2px solid #64B4FF;
+}
+
+/* BUTTONS */
+.btn{
+  display:inline-block;
+  background:var(--blue);
+  color:white;
+  padding:13px 22px;
+  border-radius:8px;
+  text-decoration:none;
+  font-weight:bold;
+  margin-top:18px;
+  transition:.2s;
+}
+
+.btn:hover{
+  background:var(--blue-light);
+  transform:translateY(-2px);
+}
+
+/* MAIN CONTENT */
+.container{
+  padding:18px;
+}
+
+.section-title{
+  font-size:22px;
+  margin:28px 0 16px;
+  padding-left:12px;
+  border-left:4px solid var(--blue);
+}
+
+/* COMPANY STATS */
+.stats{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:13px;
+}
+
+.stat{
+  background:#102849;
+  padding:19px;
+  border-radius:12px;
+  border:1px solid var(--border);
+  box-shadow:0 4px 12px #00000020;
+}
+
+.stat p{
+  font-size:12px;
+  color:var(--muted);
+}
+
+.stat h3{
+  font-size:20px;
+  margin-top:9px;
+  color:var(--blue-light);
+}
+
+/* FEATURED DRONES */
+.slider{
+  display:flex;
+  gap:15px;
+  overflow-x:auto;
+  padding:5px 2px 16px;
+  scroll-snap-type:x mandatory;
+}
+
+.slider::-webkit-scrollbar{
+  display:none;
+}
+
+.feature{
+  min-width:85%;
+  background:#102849;
+  border:1px solid var(--border);
+  border-radius:14px;
+  overflow:hidden;
+  scroll-snap-align:start;
+}
+
+.feature img{
+  width:100%;
+  height:165px;
+  object-fit:cover;
+}
+
+.feature div{
+  padding:16px;
+}
+
+.feature h3{
+  color:var(--blue-light);
+  margin-bottom:6px;
+}
+
+.feature p{
+  color:#C1D2E8;
+  font-size:13px;
+}
+
+/* PACKAGES */
+.packages{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:13px;
+}
+
+.package{
+  background:#102849;
+  border:1px solid var(--border);
+  border-radius:13px;
+  padding:13px;
+  box-shadow:0 4px 12px #00000020;
+  transition:.2s;
+}
+
+.package:hover{
+  border-color:var(--blue);
+  transform:translateY(-3px);
+}
+
+.package img{
+  width:100%;
+  height:105px;
+  object-fit:cover;
+  border-radius:9px;
+}
+
+.package h3{
+  font-size:15px;
+  margin:11px 0;
+  color:#FFFFFF;
+}
+
+.package p{
+  font-size:12px;
+  color:#B7C9E0;
+  margin:6px 0;
+}
+
+.package button{
+  width:100%;
+  background:var(--blue);
+  color:white;
+  border:0;
+  padding:11px;
+  border-radius:8px;
+  margin-top:12px;
+  font-weight:bold;
+  cursor:pointer;
+  transition:.2s;
+}
+
+.package button:hover{
+  background:var(--blue-light);
+}
+
+/* INFORMATION NOTICE */
+.notice{
+  background:#102B50;
+  border-left:4px solid var(--blue);
+  padding:17px;
+  border-radius:9px;
+  margin:25px 0;
+  font-size:13px;
+  line-height:1.8;
+  color:#D7E7FA;
+}
+
+.notice strong{
+  color:var(--blue-light);
+}
+
+/* FOOTER */
+footer{
+  text-align:center;
+  padding:30px 18px;
+  background:#06152C;
+  color:#C5D7EC;
+  margin-top:30px;
+  font-size:12px;
+  border-top:1px solid var(--border);
+}
+
+footer h3{
+  color:white;
+  font-size:19px;
+  margin-bottom:8px;
+}
+
+footer p{
+  margin:5px;
+}
+
+/* RESPONSIVE DESIGN */
+@media(min-width:700px){
+
+  .container{
+    max-width:1100px;
+    margin:auto;
+  }
+
+  .packages{
+    grid-template-columns:repeat(5,1fr);
+  }
+
+  .hero{
+    max-width:1060px;
+    margin:25px auto;
+    padding:45px;
+  }
+
+  .hero h1{
+    font-size:38px;
+  }
+
+  .stats{
+    grid-template-columns:repeat(4,1fr);
+  }
+
+  .feature{
+    min-width:32%;
+  }
+}
+
+@media(max-width:420px){
+  .company-label{
+    font-size:11px;
+  }
+
+  .logo{
+    font-size:21px;
+  }
+
+  .hero h1{
+    font-size:24px;
+  }
+
+  .hero img{
+    width:38%;
+  }
+
+  nav{
+    gap:15px;
+  }
+
+  nav a{
+    font-size:12px;
+  }
+}
 </style>
 </head>
+
 <body>
 
 <header>
-<div class="logo">YUN<span>EEC</span></div>
-<div>🚁 Global Technologies</div>
+  <div class="logo">YUN<span>EEC</span></div>
+  <div class="company-label">🚁 Global Technologies</div>
 </header>
 
 <nav>
-<a href="#home">Home</a>
-<a href="#packages">Packages</a>
-<a href="#daily">Daily</a>
-<a href="#weekly">Weekly</a>
-<a href="#monthly">Monthly</a>
+  <a href="#home">Home</a>
+  <a href="#packages">Packages</a>
+  <a href="#daily">Daily</a>
+  <a href="#weekly">Weekly</a>
+  <a href="#monthly">Monthly</a>
 </nav>
 
 <section class="hero" id="home">
-<div>
-<h1 id="heroTitle">YUNEEC Global Drone Technologies</h1>
-<p id="heroText">Discover the future of drone innovation and aerial technology.</p>
-<a href="#packages" class="btn">Explore Packages</a>
-</div>
-<img id="heroImage" src="https://images.unsplash.com/photo-1506947411487-a56738267384?w=600" alt="Drone in flight">
+  <div class="hero-content">
+    <h1 id="heroTitle">
+      YUNEEC Global Drone Technologies
+    </h1>
+
+    <p id="heroText">
+      Discover the future of drone innovation and aerial technology.
+    </p>
+
+    <a href="#packages" class="btn">
+      Explore Packages
+    </a>
+  </div>
+
+  <img
+    id="heroImage"
+    src="https://images.unsplash.com/photo-1506947411487-a56738267384?w=600"
+    alt="Drone in flight">
 </section>
 
 <main class="container">
 
-<h2 class="section-title">Company Overview</h2>
-<div class="stats">
-<div class="stat"><p>Investment Packages</p><h3>10</h3></div>
-<div class="stat"><p>Package Categories</p><h3>3</h3></div>
-<div class="stat"><p>Company</p><h3>YUNEEC</h3></div>
-<div class="stat"><p>Platform</p><h3>Online</h3></div>
-</div>
+  <h2 class="section-title">Company Overview</h2>
 
-<h2 class="section-title">Featured Packages</h2>
-<div class="slider" id="featured">
-<div class="feature">
-<img src="https://images.unsplash.com/photo-1506947411487-a56738267384?w=600" alt="Drone">
-<div><h3>YUNEEC Starter</h3><p>Explore our entry-level business opportunity.</p></div>
-</div>
-<div class="feature">
-<img src="https://images.unsplash.com/photo-1473968512647-3e447244af8f?w=600" alt="Drone">
-<div><h3>YUNEEC Professional</h3><p>Explore professional drone technology opportunities.</p></div>
-</div>
-<div class="feature">
-<img src="https://images.unsplash.com/photo-1527977966376-1c8408f9f108?w=600" alt="Drone">
-<div><h3>YUNEEC Enterprise</h3><p>Explore commercial drone opportunities.</p></div>
-</div>
-</div>
+  <div class="stats">
+    <div class="stat">
+      <p>Investment Packages</p>
+      <h3>10</h3>
+    </div>
 
-<h2 class="section-title" id="packages">Our 10 Packages</h2>
-<div class="packages" id="packageList"></div>
+    <div class="stat">
+      <p>Package Categories</p>
+      <h3>3</h3>
+    </div>
 
-<div class="notice">
-<strong>Investment information</strong><br>
-All investment opportunities are subject to company performance, verification, applicable terms and risks. Returns are not guaranteed. Package prices and distributions will be published only after business and legal verification.
-</div>
+    <div class="stat">
+      <p>Company</p>
+      <h3>YUNEEC</h3>
+    </div>
+
+    <div class="stat">
+      <p>Platform</p>
+      <h3>Online</h3>
+    </div>
+  </div>
+
+  <h2 class="section-title">Featured Packages</h2>
+
+  <div class="slider" id="featured">
+
+    <div class="feature">
+      <img
+        src="https://images.unsplash.com/photo-1506947411487-a56738267384?w=600"
+        alt="Drone">
+      <div>
+        <h3>YUNEEC Starter</h3>
+        <p>Explore our entry-level business opportunity.</p>
+      </div>
+    </div>
+
+    <div class="feature">
+      <img
+        src="https://images.unsplash.com/photo-1473968512647-3e447244af8f?w=600"
+        alt="Professional drone">
+      <div>
+        <h3>YUNEEC Professional</h3>
+        <p>Explore professional drone technology opportunities.</p>
+      </div>
+    </div>
+
+    <div class="feature">
+      <img
+        src="https://images.unsplash.com/photo-1527977966376-1c8408f9f108?w=600"
+        alt="Commercial drone">
+      <div>
+        <h3>YUNEEC Enterprise</h3>
+        <p>Explore commercial drone opportunities.</p>
+      </div>
+    </div>
+
+  </div>
+
+  <h2 class="section-title" id="packages">
+    Our 10 Packages
+  </h2>
+
+  <div class="packages" id="packageList"></div>
+
+  <div class="notice">
+    <strong>Investment Information</strong><br>
+    All investment opportunities are subject to company performance,
+    verification, applicable terms and risks. Returns are not guaranteed.
+    Package prices and distributions will be published only after
+    business and legal verification.
+  </div>
 
 </main>
 
 <footer>
-<h3>YUNEEC Global Drone Technologies</h3>
-<p>Innovating the Future of Aerial Technology</p>
-<p>© 2026 YUNEEC. All rights reserved.</p>
+  <h3>YUNEEC Global Drone Technologies</h3>
+  <p>Innovating the Future of Aerial Technology</p>
+  <p>© 2026 YUNEEC. All rights reserved.</p>
 </footer>
 
 <script>
+
 const packages = [
-["Starter","daily"],["Bronze","daily"],
-["Silver","daily"],["Gold","daily"],
-["Platinum","weekly"],["Diamond","weekly"],
-["Premium","weekly"],["Professional","monthly"],
-["Executive","monthly"],["Enterprise","monthly"]
+  ["Starter","daily"],
+  ["Bronze","daily"],
+  ["Silver","daily"],
+  ["Gold","daily"],
+  ["Platinum","weekly"],
+  ["Diamond","weekly"],
+  ["Premium","weekly"],
+  ["Professional","monthly"],
+  ["Executive","monthly"],
+  ["Enterprise","monthly"]
 ];
 
 const images = [
-"https://images.unsplash.com/photo-1506947411487-a56738267384?w=400",
-"https://images.unsplash.com/photo-1473968512647-3e447244af8f?w=400",
-"https://images.unsplash.com/photo-1527977966376-1c8408f9f108?w=400"
+  "https://images.unsplash.com/photo-1506947411487-a56738267384?w=400",
+  "https://images.unsplash.com/photo-1473968512647-3e447244af8f?w=400",
+  "https://images.unsplash.com/photo-1527977966376-1c8408f9f108?w=400"
 ];
 
 const list = document.getElementById("packageList");
 
 packages.forEach((item,index)=>{
-const card=document.createElement("div");
-card.className="package";
-card.innerHTML=`
-<img src="${images[index%3]}" alt="Drone package">
-<h3>YUNEEC ${item[0]}</h3>
-<p>Category: ${item[1]}</p>
-<p>Investment details coming soon.</p>
-<button onclick="showInfo('${item[0]}')">View Package</button>
-`;
-list.appendChild(card);
+
+  const card = document.createElement("div");
+
+  card.className = "package";
+
+  if(index === 0) card.id = "daily";
+  if(index === 4) card.id = "weekly";
+  if(index === 7) card.id = "monthly";
+
+  card.innerHTML = `
+    <img src="${images[index%3]}" alt="Drone package">
+
+    <h3>YUNEEC ${item[0]}</h3>
+
+    <p>Category: ${item[1]}</p>
+
+    <p>Investment details coming soon.</p>
+
+    <button onclick="showInfo('${item[0]}')">
+      View Package
+    </button>
+  `;
+
+  list.appendChild(card);
+
 });
 
 function showInfo(name){
-alert("YUNEEC "+name+" package details will be published after verification.");
+
+  alert(
+    "YUNEEC " + name +
+    " package details will be published after verification."
+  );
+
 }
 
-const banners=[
-{
-title:"YUNEEC Global Drone Technologies",
-text:"Discover the future of drone innovation and aerial technology.",
-image:images[0]
-},
-{
-title:"Advanced Drone Solutions",
-text:"Exploring new possibilities in commercial aerial technology.",
-image:images[1]
-},
-{
-title:"The Future Takes Flight",
-text:"Discover professional drone products and services.",
-image:images[2]
-}
+/* AUTOMATIC HERO SLIDER */
+
+const banners = [
+  {
+    title:"YUNEEC Global Drone Technologies",
+    text:"Discover the future of drone innovation and aerial technology.",
+    image:images[0]
+  },
+  {
+    title:"Advanced Drone Solutions",
+    text:"Exploring new possibilities in commercial aerial technology.",
+    image:images[1]
+  },
+  {
+    title:"The Future Takes Flight",
+    text:"Discover professional drone products and services.",
+    image:images[2]
+  }
 ];
 
-let current=0;
+let current = 0;
+
 setInterval(()=>{
-current=(current+1)%banners.length;
-document.getElementById("heroTitle").textContent=banners[current].title;
-document.getElementById("heroText").textContent=banners[current].text;
-document.getElementById("heroImage").src=banners[current].image;
+
+  current = (current + 1) % banners.length;
+
+  document.getElementById("heroTitle").textContent =
+    banners[current].title;
+
+  document.getElementById("heroText").textContent =
+    banners[current].text;
+
+  document.getElementById("heroImage").src =
+    banners[current].image;
+
 },5000);
+
 </script>
 
 </body>
-</html>
+  </html>
 
