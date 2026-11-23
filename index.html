@@ -13,7 +13,6 @@
   --blue:#087BFF;
   --blue-light:#38A0FF;
   --white:#FFFFFF;
-  --light:#EAF2FC;
   --muted:#9FB4D0;
   --border:#24446C;
 }
@@ -24,31 +23,26 @@
   padding:0;
 }
 
-html{
-  scroll-behavior:smooth;
-}
-
 body{
   font-family:Arial,sans-serif;
   background:var(--navy);
-  color:var(--white);
+  color:white;
   line-height:1.5;
 }
 
 /* HEADER */
+
 header{
   background:#06152C;
-  color:white;
-  padding:18px;
+  padding:17px;
   display:flex;
-  justify-content:space-between;
   align-items:center;
-  gap:10px;
+  justify-content:space-between;
   border-bottom:1px solid var(--border);
 }
 
 .logo{
-  font-size:25px;
+  font-size:24px;
   font-weight:bold;
   letter-spacing:3px;
 }
@@ -58,18 +52,19 @@ header{
 }
 
 .company-label{
-  font-size:13px;
   color:#C8D9F0;
+  font-size:13px;
 }
 
 /* NAVIGATION */
+
 nav{
   background:#0A2142;
-  padding:14px 10px;
+  padding:12px;
   display:flex;
-  justify-content:center;
+  gap:9px;
   flex-wrap:wrap;
-  gap:25px;
+  justify-content:center;
   position:sticky;
   top:0;
   z-index:100;
@@ -77,305 +72,239 @@ nav{
 }
 
 nav a{
-  color:#DCEBFF;
   text-decoration:none;
-  font-size:14px;
+  color:#DCEBFF;
+  font-size:13px;
   font-weight:bold;
+  padding:9px 11px;
+  border-radius:7px;
   transition:.2s;
 }
 
-nav a:hover{
-  color:var(--blue-light);
-}
-
-/* HERO */
-.hero{
-  margin:18px;
-  border-radius:18px;
-  overflow:hidden;
-  background:linear-gradient(120deg,#071A35,#104B91,#087BFF);
-  color:white;
-  padding:35px 22px;
-  min-height:260px;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:18px;
-  border:1px solid #245A99;
-  box-shadow:0 10px 35px #00000035;
-}
-
-.hero-content{
-  flex:1;
-}
-
-.hero h1{
-  font-size:30px;
-  line-height:1.2;
-  margin-bottom:14px;
-}
-
-.hero p{
-  line-height:1.7;
-  color:#D5E9FF;
-  font-size:15px;
-}
-
-.hero img{
-  width:42%;
-  max-width:250px;
-  height:165px;
-  border-radius:14px;
-  object-fit:cover;
-  border:2px solid #64B4FF;
-}
-
-/* BUTTONS */
-.btn{
-  display:inline-block;
+nav a:hover,
+nav a.active{
   background:var(--blue);
   color:white;
-  padding:13px 22px;
-  border-radius:8px;
-  text-decoration:none;
-  font-weight:bold;
-  margin-top:18px;
-  transition:.2s;
 }
 
-.btn:hover{
-  background:var(--blue-light);
-  transform:translateY(-2px);
-}
+/* MAIN */
 
-/* MAIN CONTENT */
 .container{
-  padding:18px;
+  max-width:1100px;
+  margin:auto;
+  padding:20px;
 }
+
+.welcome{
+  background:linear-gradient(120deg,#071A35,#104B91,#087BFF);
+  border:1px solid #245A99;
+  padding:27px;
+  border-radius:16px;
+  margin-bottom:25px;
+  box-shadow:0 10px 30px #00000030;
+}
+
+.welcome h1{
+  font-size:27px;
+  margin-bottom:8px;
+}
+
+.welcome p{
+  color:#D5E9FF;
+  font-size:14px;
+}
+
+/* SECTION TITLE */
 
 .section-title{
-  font-size:22px;
-  margin:28px 0 16px;
-  padding-left:12px;
+  font-size:21px;
+  margin:27px 0 16px;
   border-left:4px solid var(--blue);
+  padding-left:12px;
 }
 
-/* COMPANY STATS */
-.stats{
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:13px;
-}
+/* DASHBOARD CARDS */
 
-.stat{
-  background:#102849;
-  padding:19px;
-  border-radius:12px;
-  border:1px solid var(--border);
-  box-shadow:0 4px 12px #00000020;
-}
-
-.stat p{
-  font-size:12px;
-  color:var(--muted);
-}
-
-.stat h3{
-  font-size:20px;
-  margin-top:9px;
-  color:var(--blue-light);
-}
-
-/* FEATURED DRONES */
-.slider{
-  display:flex;
-  gap:15px;
-  overflow-x:auto;
-  padding:5px 2px 16px;
-  scroll-snap-type:x mandatory;
-}
-
-.slider::-webkit-scrollbar{
-  display:none;
-}
-
-.feature{
-  min-width:85%;
-  background:#102849;
-  border:1px solid var(--border);
-  border-radius:14px;
-  overflow:hidden;
-  scroll-snap-align:start;
-}
-
-.feature img{
-  width:100%;
-  height:165px;
-  object-fit:cover;
-}
-
-.feature div{
-  padding:16px;
-}
-
-.feature h3{
-  color:var(--blue-light);
-  margin-bottom:6px;
-}
-
-.feature p{
-  color:#C1D2E8;
-  font-size:13px;
-}
-
-/* PACKAGES */
-.packages{
+.cards{
   display:grid;
   grid-template-columns:repeat(2,minmax(0,1fr));
   gap:13px;
 }
 
-.package{
+.card{
   background:#102849;
+  padding:19px;
+  border-radius:12px;
   border:1px solid var(--border);
-  border-radius:13px;
-  padding:13px;
-  box-shadow:0 4px 12px #00000020;
   transition:.2s;
 }
 
-.package:hover{
+.card:hover{
   border-color:var(--blue);
-  transform:translateY(-3px);
+  transform:translateY(-2px);
 }
 
-.package img{
-  width:100%;
-  height:105px;
-  object-fit:cover;
-  border-radius:9px;
+.card .icon{
+  font-size:25px;
+  margin-bottom:8px;
 }
 
-.package h3{
-  font-size:15px;
-  margin:11px 0;
-  color:#FFFFFF;
-}
-
-.package p{
+.card p{
+  color:var(--muted);
   font-size:12px;
-  color:#B7C9E0;
-  margin:6px 0;
 }
 
-.package button{
-  width:100%;
+.card h3{
+  font-size:18px;
+  color:var(--blue-light);
+  margin-top:7px;
+}
+
+/* MENU ITEMS */
+
+.menu-list{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:12px;
+}
+
+.menu-item{
+  background:#102849;
+  border:1px solid var(--border);
+  border-radius:11px;
+  padding:16px 12px;
+  color:white;
+  text-decoration:none;
+  display:flex;
+  align-items:center;
+  gap:12px;
+  transition:.2s;
+  font-weight:bold;
+  font-size:13px;
+}
+
+.menu-item:hover{
+  background:#153962;
+  border-color:var(--blue);
+}
+
+.menu-item span{
+  font-size:23px;
+}
+
+/* CONTENT SECTIONS */
+
+.page-section{
+  display:none;
+  background:#102849;
+  border:1px solid var(--border);
+  padding:22px;
+  border-radius:13px;
+  margin-top:20px;
+}
+
+.page-section.active{
+  display:block;
+}
+
+.page-section h2{
+  color:var(--blue-light);
+  margin-bottom:12px;
+}
+
+.page-section p{
+  color:#C1D2E8;
+  font-size:14px;
+  margin-bottom:10px;
+}
+
+.info{
+  background:#071A35;
+  border:1px solid var(--border);
+  padding:15px;
+  border-radius:9px;
+  margin-top:12px;
+  color:#DCEBFF;
+  font-size:13px;
+}
+
+/* BUTTON */
+
+.btn{
+  display:inline-block;
   background:var(--blue);
   color:white;
   border:0;
-  padding:11px;
   border-radius:8px;
-  margin-top:12px;
+  padding:12px 20px;
+  text-decoration:none;
   font-weight:bold;
   cursor:pointer;
-  transition:.2s;
+  margin-top:12px;
 }
 
-.package button:hover{
+.btn:hover{
   background:var(--blue-light);
 }
 
-/* INFORMATION NOTICE */
-.notice{
-  background:#102B50;
-  border-left:4px solid var(--blue);
-  padding:17px;
-  border-radius:9px;
-  margin:25px 0;
-  font-size:13px;
-  line-height:1.8;
-  color:#D7E7FA;
-}
-
-.notice strong{
-  color:var(--blue-light);
-}
-
 /* FOOTER */
+
 footer{
   text-align:center;
-  padding:30px 18px;
+  padding:28px 15px;
   background:#06152C;
-  color:#C5D7EC;
-  margin-top:30px;
-  font-size:12px;
+  margin-top:35px;
   border-top:1px solid var(--border);
+  color:#C5D7EC;
+  font-size:12px;
 }
 
 footer h3{
   color:white;
-  font-size:19px;
-  margin-bottom:8px;
+  margin-bottom:7px;
 }
 
-footer p{
-  margin:5px;
-}
+/* RESPONSIVE */
 
-/* RESPONSIVE DESIGN */
 @media(min-width:700px){
-
-  .container{
-    max-width:1100px;
-    margin:auto;
-  }
-
-  .packages{
-    grid-template-columns:repeat(5,1fr);
-  }
-
-  .hero{
-    max-width:1060px;
-    margin:25px auto;
-    padding:45px;
-  }
-
-  .hero h1{
-    font-size:38px;
-  }
-
-  .stats{
+  .cards{
     grid-template-columns:repeat(4,1fr);
   }
 
-  .feature{
-    min-width:32%;
+  .menu-list{
+    grid-template-columns:repeat(3,1fr);
+  }
+
+  .welcome h1{
+    font-size:34px;
   }
 }
 
 @media(max-width:420px){
+  .logo{
+    font-size:20px;
+  }
+
   .company-label{
     font-size:11px;
   }
 
-  .logo{
-    font-size:21px;
-  }
-
-  .hero h1{
-    font-size:24px;
-  }
-
-  .hero img{
-    width:38%;
-  }
-
   nav{
-    gap:15px;
+    gap:5px;
   }
 
   nav a{
+    font-size:11px;
+    padding:8px;
+  }
+
+  .container{
+    padding:13px;
+  }
+
+  .menu-item{
     font-size:12px;
+    padding:13px 9px;
   }
 }
 </style>
@@ -383,115 +312,241 @@ footer p{
 
 <body>
 
+<!-- HEADER -->
+
 <header>
   <div class="logo">YUN<span>EEC</span></div>
   <div class="company-label">🚁 Global Technologies</div>
 </header>
 
-<nav>
-  <a href="#home">Home</a>
-  <a href="#packages">Packages</a>
-  <a href="#daily">Daily</a>
-  <a href="#weekly">Weekly</a>
-  <a href="#monthly">Monthly</a>
+<!-- NAVIGATION -->
+
+<nav id="navigation">
+  <a href="#dashboard" class="active">Dashboard</a>
+  <a href="#balance">My Balance</a>
+  <a href="#investment">Investment</a>
+  <a href="#deposit">Deposit</a>
+  <a href="#withdraw">Withdraw Money</a>
+  <a href="#deposit-history">Deposit History</a>
+  <a href="#withdrawal-history">Withdrawal History</a>
+  <a href="#referrals">Referral Team</a>
+  <a href="#profile">My Profile</a>
+  <a href="#support">Contact & Support</a>
+  <a href="#admin">Admin Panel</a>
+  <a href="#logout">Logout</a>
 </nav>
-
-<section class="hero" id="home">
-  <div class="hero-content">
-    <h1 id="heroTitle">
-      YUNEEC Global Drone Technologies
-    </h1>
-
-    <p id="heroText">
-      Discover the future of drone innovation and aerial technology.
-    </p>
-
-    <a href="#packages" class="btn">
-      Explore Packages
-    </a>
-  </div>
-
-  <img
-    id="heroImage"
-    src="https://images.unsplash.com/photo-1506947411487-a56738267384?w=600"
-    alt="Drone in flight">
-</section>
 
 <main class="container">
 
-  <h2 class="section-title">Company Overview</h2>
+<!-- DASHBOARD -->
 
-  <div class="stats">
-    <div class="stat">
-      <p>Investment Packages</p>
-      <h3>10</h3>
-    </div>
+<section id="dashboard" class="page-section active">
 
-    <div class="stat">
-      <p>Package Categories</p>
-      <h3>3</h3>
-    </div>
-
-    <div class="stat">
-      <p>Company</p>
-      <h3>YUNEEC</h3>
-    </div>
-
-    <div class="stat">
-      <p>Platform</p>
-      <h3>Online</h3>
-    </div>
+  <div class="welcome">
+    <h1>Welcome to YUNEEC</h1>
+    <p>
+      Welcome to YUNEEC Global Drone Technologies.
+      Manage your account and access your dashboard.
+    </p>
   </div>
 
-  <h2 class="section-title">Featured Packages</h2>
+  <h2 class="section-title">Account Overview</h2>
 
-  <div class="slider" id="featured">
+  <div class="cards">
 
-    <div class="feature">
-      <img
-        src="https://images.unsplash.com/photo-1506947411487-a56738267384?w=600"
-        alt="Drone">
-      <div>
-        <h3>YUNEEC Starter</h3>
-        <p>Explore our entry-level business opportunity.</p>
-      </div>
+    <div class="card">
+      <div class="icon">💰</div>
+      <p>Available Balance</p>
+      <h3>UGX 0</h3>
     </div>
 
-    <div class="feature">
-      <img
-        src="https://images.unsplash.com/photo-1473968512647-3e447244af8f?w=600"
-        alt="Professional drone">
-      <div>
-        <h3>YUNEEC Professional</h3>
-        <p>Explore professional drone technology opportunities.</p>
-      </div>
+    <div class="card">
+      <div class="icon">📈</div>
+      <p>Total Investment</p>
+      <h3>UGX 0</h3>
     </div>
 
-    <div class="feature">
-      <img
-        src="https://images.unsplash.com/photo-1527977966376-1c8408f9f108?w=600"
-        alt="Commercial drone">
-      <div>
-        <h3>YUNEEC Enterprise</h3>
-        <p>Explore commercial drone opportunities.</p>
-      </div>
+    <div class="card">
+      <div class="icon">💵</div>
+      <p>Total Earnings</p>
+      <h3>UGX 0</h3>
+    </div>
+
+    <div class="card">
+      <div class="icon">👥</div>
+      <p>Referral Members</p>
+      <h3>0</h3>
     </div>
 
   </div>
 
-  <h2 class="section-title" id="packages">
-    Our 10 Packages
-  </h2>
+  <h2 class="section-title">Account Menu</h2>
 
-  <div class="packages" id="packageList"></div>
+  <div class="menu-list">
 
-  <div class="notice">
-    <strong>Investment Information</strong><br>
-    All investment opportunities are subject to company performance,
-    verification, applicable terms and risks. Returns are not guaranteed.
-    Package prices and distributions will be published only after
-    business and legal verification.
+    <a href="#balance" class="menu-item">
+      <span>▣</span> My Balance
+    </a>
+
+    <a href="#investment" class="menu-item">
+      <span>↗</span> Investment
+    </a>
+
+    <a href="#deposit" class="menu-item">
+      <span>💰</span> Deposit
+    </a>
+
+    <a href="#withdraw" class="menu-item">
+      <span>💸</span> Withdraw Money
+    </a>
+
+    <a href="#deposit-history" class="menu-item">
+      <span>◷</span> Deposit History
+    </a>
+
+    <a href="#withdrawal-history" class="menu-item">
+      <span>⇩</span> Withdrawal History
+    </a>
+
+    <a href="#referrals" class="menu-item">
+      <span>♧</span> Referral Team
+    </a>
+
+    <a href="#profile" class="menu-item">
+      <span>♙</span> My Profile
+    </a>
+
+    <a href="#support" class="menu-item">
+      <span>☎</span> Contact & Support
+    </a>
+
+    <a href="#admin" class="menu-item">
+      <span>🛡️</span> Admin Panel
+    </a>
+
+    <a href="#logout" class="menu-item">
+      <span>🚪</span> Logout
+    </a>
+
   </div>
+
+</section>
+
+<!-- MY BALANCE -->
+
+<section id="balance" class="page-section">
+  <h2>▣ My Balance</h2>
+  <p>View your account balance.</p>
+  <div class="info">
+    Available Balance: <strong>UGX 0</strong>
+  </div>
+  <div class="info">
+    Total Earnings: UGX 0
+  </div>
+</section>
+
+<!-- INVESTMENT -->
+
+<section id="investment" class="page-section">
+  <h2>↗ Investment</h2>
+  <p>Manage your investment activities.</p>
+  <div class="info">
+    Your investment information will appear here.
+  </div>
+</section>
+
+<!-- DEPOSIT -->
+
+<section id="deposit" class="page-section">
+  <h2>💰 Deposit</h2>
+  <p>Access your account deposit services.</p>
+  <div class="info">
+    Deposit instructions and payment verification
+    will appear here.
+  </div>
+</section>
+
+<!-- WITHDRAW -->
+
+<section id="withdraw" class="page-section">
+  <h2>💸 Withdraw Money</h2>
+  <p>Manage your withdrawal requests.</p>
+  <div class="info">
+    Withdrawal instructions and account verification
+    will appear here.
+  </div>
+</section>
+
+<!-- DEPOSIT HISTORY -->
+
+<section id="deposit-history" class="page-section">
+  <h2>◷ Deposit History</h2>
+  <p>View your previous deposit transactions.</p>
+  <div class="info">
+    No deposit records available.
+  </div>
+</section>
+
+<!-- WITHDRAWAL HISTORY -->
+
+<section id="withdrawal-history" class="page-section">
+  <h2>⇩ Withdrawal History</h2>
+  <p>View your previous withdrawal transactions.</p>
+  <div class="info">
+    No withdrawal records available.
+  </div>
+</section>
+
+<!-- REFERRALS -->
+
+<section id="referrals" class="page-section">
+  <h2>♧ Referral Team</h2>
+  <p>Manage and view your referral team.</p>
+  <div class="info">
+    Your referral members will appear here.
+  </div>
+</section>
+
+<!-- PROFILE -->
+
+<section id="profile" class="page-section">
+  <h2>♙ My Profile</h2>
+  <p>View and manage your account information.</p>
+  <div class="info">
+    Your profile information will appear here.
+  </div>
+</section>
+
+<!-- SUPPORT -->
+
+<section id="support" class="page-section">
+  <h2>☎ Contact & Support</h2>
+  <p>Contact YUNEEC customer support.</p>
+  <div class="info">
+    Support contact details will appear here.
+  </div>
+</section>
+
+<!-- ADMIN -->
+
+<section id="admin" class="page-section">
+  <h2>🛡️ Admin Panel</h2>
+  <p>Administrative management area.</p>
+  <div class="info">
+    Administrator access and management tools
+    will appear here.
+  </div>
+</section>
+
+<!-- LOGOUT -->
+
+<section id="logout" class="page-section">
+  <h2>🚪 Logout</h2>
+  <p>Are you sure you want to leave your account?</p>
+  <button class="btn" onclick="logout()">
+    Confirm Logout
+  </button>
+</section>
 
 </main>
 
@@ -503,103 +558,59 @@ footer p{
 
 <script>
 
-const packages = [
-  ["Starter","daily"],
-  ["Bronze","daily"],
-  ["Silver","daily"],
-  ["Gold","daily"],
-  ["Platinum","weekly"],
-  ["Diamond","weekly"],
-  ["Premium","weekly"],
-  ["Professional","monthly"],
-  ["Executive","monthly"],
-  ["Enterprise","monthly"]
-];
+/* DASHBOARD NAVIGATION */
 
-const images = [
-  "https://images.unsplash.com/photo-1506947411487-a56738267384?w=400",
-  "https://images.unsplash.com/photo-1473968512647-3e447244af8f?w=400",
-  "https://images.unsplash.com/photo-1527977966376-1c8408f9f108?w=400"
-];
+function showPage(){
 
-const list = document.getElementById("packageList");
+  const id = location.hash.replace("#","") || "dashboard";
 
-packages.forEach((item,index)=>{
+  const sections = document.querySelectorAll(".page-section");
 
-  const card = document.createElement("div");
+  let found = false;
 
-  card.className = "package";
+  sections.forEach(section=>{
+    section.classList.remove("active");
 
-  if(index === 0) card.id = "daily";
-  if(index === 4) card.id = "weekly";
-  if(index === 7) card.id = "monthly";
+    if(section.id === id){
+      section.classList.add("active");
+      found = true;
+    }
+  });
 
-  card.innerHTML = `
-    <img src="${images[index%3]}" alt="Drone package">
+  if(!found){
+    document.getElementById("dashboard").classList.add("active");
+  }
 
-    <h3>YUNEEC ${item[0]}</h3>
+  document.querySelectorAll("nav a").forEach(link=>{
+    link.classList.toggle(
+      "active",
+      link.getAttribute("href") === "#" + id
+    );
+  });
 
-    <p>Category: ${item[1]}</p>
-
-    <p>Investment details coming soon.</p>
-
-    <button onclick="showInfo('${item[0]}')">
-      View Package
-    </button>
-  `;
-
-  list.appendChild(card);
-
-});
-
-function showInfo(name){
-
-  alert(
-    "YUNEEC " + name +
-    " package details will be published after verification."
-  );
-
+  window.scrollTo(0,0);
 }
 
-/* AUTOMATIC HERO SLIDER */
+window.addEventListener("hashchange",showPage);
 
-const banners = [
-  {
-    title:"YUNEEC Global Drone Technologies",
-    text:"Discover the future of drone innovation and aerial technology.",
-    image:images[0]
-  },
-  {
-    title:"Advanced Drone Solutions",
-    text:"Exploring new possibilities in commercial aerial technology.",
-    image:images[1]
-  },
-  {
-    title:"The Future Takes Flight",
-    text:"Discover professional drone products and services.",
-    image:images[2]
+window.addEventListener("DOMContentLoaded",showPage);
+
+/* LOGOUT */
+
+function logout(){
+
+  const confirmLogout = confirm(
+    "Are you sure you want to logout?"
+  );
+
+  if(confirmLogout){
+    alert("Connect your authentication system to complete logout.");
   }
-];
 
-let current = 0;
-
-setInterval(()=>{
-
-  current = (current + 1) % banners.length;
-
-  document.getElementById("heroTitle").textContent =
-    banners[current].title;
-
-  document.getElementById("heroText").textContent =
-    banners[current].text;
-
-  document.getElementById("heroImage").src =
-    banners[current].image;
-
-},5000);
+}
 
 </script>
 
 </body>
-  </html>
+</html>
 
