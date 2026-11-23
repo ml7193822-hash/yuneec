@@ -1,69 +1,102 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#071A35">
+<meta name="theme-color" content="#1b1000">
 <title>YUNEEC Global Drone Technologies</title>
 
 <style>
 :root{
-  --navy:#071A35;
-  --navy-light:#102B50;
-  --blue:#087BFF;
-  --blue-light:#38A0FF;
-  --white:#FFFFFF;
-  --muted:#9FB4D0;
-  --border:#24446C;
+  --navy:#170d00;
+  --navy-light:#382100;
+  --blue:#d99b16;
+  --blue-light:#ffdc68;
+  --white:#fff5d5;
+  --muted:#d3b879;
+  --border:#9d6c16;
+  --gold:#ffca35;
+  --gold-light:#fff0a0;
 }
 
-*{box-sizing:border-box;margin:0;padding:0}
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
 
 body{
   font-family:Arial,sans-serif;
-  background:var(--navy);
-  color:white;
+  background:
+    radial-gradient(ellipse at top,#684000 0%,#291700 40%,#100900 100%);
+  color:var(--white);
   line-height:1.5;
+  min-height:100vh;
+}
+
+/* GOLD SHINE ANIMATION */
+
+@keyframes goldGlow{
+  0%,100%{
+    box-shadow:0 0 8px #ffbd3040;
+  }
+  50%{
+    box-shadow:0 0 22px #ffc52b90;
+  }
+}
+
+@keyframes shine{
+  0%{background-position:-200% center}
+  100%{background-position:200% center}
 }
 
 /* HEADER */
 
 header{
-  background:#06152C;
+  background:linear-gradient(
+    110deg,#170d00,#654000,#2b1900,#170d00
+  );
   padding:14px 17px;
   display:flex;
   align-items:center;
   gap:15px;
-  border-bottom:1px solid var(--border);
+  border-bottom:2px solid var(--gold);
   position:sticky;
   top:0;
   z-index:200;
+  box-shadow:0 3px 20px #ffb90035;
 }
 
 .logo{
   font-size:23px;
   font-weight:bold;
   letter-spacing:3px;
+  color:var(--gold-light);
+  text-shadow:0 0 12px #ffbd30;
 }
 
-.logo span{color:var(--blue-light)}
+.logo span{
+  color:#fff1a5;
+}
 
 .company-label{
-  color:#C8D9F0;
+  color:#ffe6a0;
   font-size:13px;
   margin-left:auto;
 }
 
 .menu-toggle{
-  background:#102B50;
-  color:white;
-  border:1px solid var(--border);
+  background:linear-gradient(135deg,#765000,#d99b16,#805000);
+  color:#211300;
+  border:1px solid #ffe28a;
   border-radius:8px;
   width:43px;
   height:43px;
   font-size:25px;
   cursor:pointer;
   flex-shrink:0;
+  box-shadow:0 0 12px #ffbb35;
 }
 
 /* SIDEBAR */
@@ -74,15 +107,18 @@ header{
   left:-290px;
   width:270px;
   height:100vh;
-  background:#06152C;
-  border-right:1px solid var(--border);
+  background:linear-gradient(180deg,#382100,#170d00);
+  border-right:2px solid var(--gold);
   z-index:400;
   transition:left .3s ease;
   overflow-y:auto;
   padding-bottom:25px;
+  box-shadow:5px 0 25px #0008;
 }
 
-.sidebar.open{left:0}
+.sidebar.open{
+  left:0;
+}
 
 .sidebar-header{
   display:flex;
@@ -90,20 +126,25 @@ header{
   align-items:center;
   padding:19px 15px;
   border-bottom:1px solid var(--border);
+  background:linear-gradient(100deg,#604000,#241500);
 }
 
 .sidebar-title{
   font-size:20px;
   font-weight:bold;
   letter-spacing:2px;
+  color:var(--gold);
+  text-shadow:0 0 10px #ffb900;
 }
 
-.sidebar-title span{color:var(--blue-light)}
+.sidebar-title span{
+  color:#fff0a0;
+}
 
 .close-menu{
-  background:#102B50;
-  color:white;
-  border:0;
+  background:#694400;
+  color:#ffe9a0;
+  border:1px solid var(--gold);
   font-size:23px;
   padding:5px 12px;
   border-radius:7px;
@@ -111,7 +152,7 @@ header{
 }
 
 .sidebar-label{
-  color:var(--muted);
+  color:#d6ad54;
   font-size:11px;
   font-weight:bold;
   padding:20px 18px 9px;
@@ -123,7 +164,7 @@ header{
   display:flex;
   align-items:center;
   gap:13px;
-  color:#DCEBFF;
+  color:#ffe9b9;
   text-decoration:none;
   padding:13px 18px;
   margin:3px 10px;
@@ -141,19 +182,24 @@ header{
 
 .sidebar a:hover,
 .sidebar a.active{
-  background:var(--blue);
-  color:white;
+  background:linear-gradient(
+    100deg,#fff0a0,#e7a817,#a96800
+  );
+  color:#241500;
+  box-shadow:0 0 15px #ffbd35;
 }
 
 .overlay{
   display:none;
   position:fixed;
   inset:0;
-  background:#0009;
+  background:#000b;
   z-index:300;
 }
 
-.overlay.show{display:block}
+.overlay.show{
+  display:block;
+}
 
 /* MAIN */
 
@@ -163,30 +209,53 @@ header{
   padding:20px;
 }
 
+/* WELCOME */
+
 .welcome{
-  background:linear-gradient(120deg,#071A35,#104B91,#087BFF);
-  border:1px solid #245A99;
+  position:relative;
+  overflow:hidden;
+  background:
+    linear-gradient(120deg,#211300,#694100,#b87900,#392000);
+  border:1px solid #ffe08a;
   padding:27px;
   border-radius:16px;
   margin-bottom:25px;
-  box-shadow:0 10px 30px #00000030;
+  box-shadow:0 0 25px #d99b1650;
+}
+
+.welcome:after{
+  content:"";
+  position:absolute;
+  top:0;
+  left:-100%;
+  width:60%;
+  height:100%;
+  background:linear-gradient(
+    90deg,transparent,#ffffff20,transparent
+  );
+  transform:skewX(-20deg);
+  animation:shine 5s infinite;
 }
 
 .welcome h1{
   font-size:27px;
   margin-bottom:8px;
+  color:#fff0a0;
+  text-shadow:0 0 15px #ffb900;
 }
 
 .welcome p{
-  color:#D5E9FF;
+  color:#ffebbb;
   font-size:14px;
 }
 
 .section-title{
   font-size:21px;
   margin:27px 0 16px;
-  border-left:4px solid var(--blue);
+  border-left:4px solid var(--gold);
   padding-left:12px;
+  color:#ffdf76;
+  text-shadow:0 0 8px #ffb90060;
 }
 
 /* CARDS */
@@ -198,32 +267,38 @@ header{
 }
 
 .card{
-  background:#102849;
+  background:linear-gradient(
+    145deg,#624000,#382100,#1b1000
+  );
   padding:19px;
   border-radius:12px;
-  border:1px solid var(--border);
+  border:1px solid #b88625;
   transition:.2s;
+  animation:goldGlow 4s infinite;
 }
 
 .card:hover{
-  border-color:var(--blue);
-  transform:translateY(-2px);
+  border-color:#ffe28a;
+  transform:translateY(-3px);
+  box-shadow:0 0 22px #ffbf35;
 }
 
 .card .icon{
   font-size:25px;
   margin-bottom:8px;
+  filter:drop-shadow(0 0 7px #ffc000);
 }
 
 .card p{
-  color:var(--muted);
+  color:#e4ca8a;
   font-size:12px;
 }
 
 .card h3{
   font-size:18px;
-  color:var(--blue-light);
+  color:#ffdc68;
   margin-top:7px;
+  text-shadow:0 0 8px #ffb90070;
 }
 
 /* DASHBOARD MENU */
@@ -235,11 +310,11 @@ header{
 }
 
 .menu-item{
-  background:#102849;
-  border:1px solid var(--border);
+  background:linear-gradient(120deg,#523300,#291800);
+  border:1px solid #936515;
   border-radius:11px;
   padding:16px 12px;
-  color:white;
+  color:#ffedbc;
   text-decoration:none;
   display:flex;
   align-items:center;
@@ -250,43 +325,57 @@ header{
 }
 
 .menu-item:hover{
-  background:#153962;
-  border-color:var(--blue);
+  background:linear-gradient(100deg,#fff0a0,#d99b16);
+  color:#241500;
+  border-color:#fff0a0;
+  box-shadow:0 0 16px #ffb900;
 }
 
-.menu-item span{font-size:23px}
+.menu-item span{
+  font-size:23px;
+}
 
 /* PAGES */
 
 .page-section{
   display:none;
-  background:#102849;
+  background:linear-gradient(145deg,#392300,#1b1000);
   border:1px solid var(--border);
   padding:22px;
   border-radius:13px;
   margin-top:20px;
+  box-shadow:0 0 18px #c18b2630;
 }
 
-.page-section.active{display:block}
+.page-section.active{
+  display:block;
+  animation:fadeIn .3s ease;
+}
+
+@keyframes fadeIn{
+  from{opacity:0;transform:translateY(8px)}
+  to{opacity:1;transform:translateY(0)}
+}
 
 .page-section h2{
-  color:var(--blue-light);
+  color:var(--gold);
   margin-bottom:12px;
+  text-shadow:0 0 10px #ffb90060;
 }
 
 .page-section p{
-  color:#C1D2E8;
+  color:#e6d3a4;
   font-size:14px;
   margin-bottom:10px;
 }
 
 .info{
-  background:#071A35;
-  border:1px solid var(--border);
+  background:linear-gradient(120deg,#241500,#493000);
+  border:1px solid #9b701f;
   padding:15px;
   border-radius:9px;
   margin-top:12px;
-  color:#DCEBFF;
+  color:#ffedc0;
   font-size:13px;
 }
 
@@ -294,48 +383,98 @@ header{
 
 .btn{
   display:inline-block;
-  background:var(--blue);
-  color:white;
-  border:0;
+  background:linear-gradient(
+    100deg,#fff0a0,#e8a500,#ffdc65
+  );
+  color:#241500;
+  border:1px solid #fff1a4;
   border-radius:8px;
   padding:12px 20px;
   font-weight:bold;
   cursor:pointer;
   margin-top:12px;
+  box-shadow:0 0 12px #ffb90070;
+  transition:.2s;
 }
 
-.btn:hover{background:var(--blue-light)}
+.btn:hover{
+  filter:brightness(1.15);
+  box-shadow:0 0 22px #ffcb42;
+}
+
+/* INPUTS */
+
+input,select{
+  width:100%;
+  padding:13px;
+  margin:10px 0;
+  color:#fff0c0;
+  background:#1b1000;
+  border:1px solid #a8781d;
+  border-radius:8px;
+}
+
+input::placeholder{
+  color:#b99b5a;
+}
+
+input:focus,select:focus{
+  outline:1px solid var(--gold);
+  box-shadow:0 0 10px #ffbd3580;
+}
 
 /* FOOTER */
 
 footer{
   text-align:center;
   padding:28px 15px;
-  background:#06152C;
+  background:linear-gradient(100deg,#170d00,#4a2c00,#170d00);
   margin-top:35px;
-  border-top:1px solid var(--border);
-  color:#C5D7EC;
+  border-top:2px solid var(--gold);
+  color:#e8d2a0;
   font-size:12px;
+  box-shadow:0 0 20px #ffbd3025;
 }
 
 footer h3{
-  color:white;
+  color:#ffdc68;
   margin-bottom:7px;
+  text-shadow:0 0 10px #ffb900;
 }
 
 /* RESPONSIVE */
 
 @media(min-width:700px){
-  .cards{grid-template-columns:repeat(4,1fr)}
-  .menu-list{grid-template-columns:repeat(3,1fr)}
-  .welcome h1{font-size:34px}
+  .cards{
+    grid-template-columns:repeat(4,1fr);
+  }
+
+  .menu-list{
+    grid-template-columns:repeat(3,1fr);
+  }
+
+  .welcome h1{
+    font-size:34px;
+  }
 }
 
 @media(max-width:420px){
-  .logo{font-size:19px}
-  .company-label{font-size:11px}
-  .container{padding:13px}
-  .menu-item{font-size:12px;padding:13px 9px}
+  .logo{
+    font-size:19px;
+  }
+
+  .company-label{
+    font-size:11px;
+  }
+
+  .container{
+    padding:13px;
+  }
+
+  .menu-item{
+    font-size:12px;
+    padding:13px 9px;
+  }
 }
 </style>
 </head>
@@ -345,22 +484,35 @@ footer h3{
 <!-- HEADER -->
 
 <header>
-  <button class="menu-toggle" onclick="toggleMenu()" aria-label="Open menu">☰</button>
+  <button class="menu-toggle"
+    onclick="toggleMenu()"
+    aria-label="Open menu">☰</button>
+
   <div class="logo">YUN<span>EEC</span></div>
-  <div class="company-label">🚁 Global Technologies</div>
+
+  <div class="company-label">
+    🚁 Global Technologies
+  </div>
 </header>
 
-<!-- DARK OVERLAY -->
+<!-- OVERLAY -->
 
-<div class="overlay" id="overlay" onclick="closeMenu()"></div>
+<div class="overlay"
+  id="overlay"
+  onclick="closeMenu()"></div>
 
-<!-- LEFT SIDEBAR -->
+<!-- SIDEBAR -->
 
 <aside class="sidebar" id="sidebar">
 
   <div class="sidebar-header">
-    <div class="sidebar-title">YUN<span>EEC</span></div>
-    <button class="close-menu" onclick="closeMenu()" aria-label="Close menu">×</button>
+    <div class="sidebar-title">
+      YUN<span>EEC</span>
+    </div>
+
+    <button class="close-menu"
+      onclick="closeMenu()"
+      aria-label="Close menu">×</button>
   </div>
 
   <div class="sidebar-label">Main Menu</div>
@@ -428,7 +580,8 @@ footer h3{
 <section id="dashboard" class="page-section active">
 
   <div class="welcome">
-    <h1>Welcome to YUNEEC</h1>
+    <h1>✨ Welcome to YUNEEC</h1>
+
     <p>
       Welcome to YUNEEC Global Drone Technologies.
       Manage your account and access your dashboard.
@@ -469,94 +622,186 @@ footer h3{
 
   <div class="menu-list">
 
-    <a href="#balance" class="menu-item"><span>▣</span> My Balance</a>
-    <a href="#investment" class="menu-item"><span>↗</span> Investment</a>
-    <a href="#deposit" class="menu-item"><span>💰</span> Deposit</a>
-    <a href="#withdraw" class="menu-item"><span>💸</span> Withdraw Money</a>
-    <a href="#deposit-history" class="menu-item"><span>◷</span> Deposit History</a>
-    <a href="#withdrawal-history" class="menu-item"><span>⇩</span> Withdrawal History</a>
-    <a href="#referrals" class="menu-item"><span>♧</span> Referral Team</a>
-    <a href="#profile" class="menu-item"><span>♙</span> My Profile</a>
-    <a href="#support" class="menu-item"><span>☎</span> Contact & Support</a>
-    <a href="#admin" class="menu-item"><span>🛡️</span> Admin Panel</a>
-    <a href="#logout" class="menu-item"><span>🚪</span> Logout</a>
+    <a href="#balance" class="menu-item">
+      <span>▣</span> My Balance
+    </a>
+
+    <a href="#investment" class="menu-item">
+      <span>↗</span> Investment
+    </a>
+
+    <a href="#deposit" class="menu-item">
+      <span>💰</span> Deposit
+    </a>
+
+    <a href="#withdraw" class="menu-item">
+      <span>💸</span> Withdraw Money
+    </a>
+
+    <a href="#deposit-history" class="menu-item">
+      <span>◷</span> Deposit History
+    </a>
+
+    <a href="#withdrawal-history" class="menu-item">
+      <span>⇩</span> Withdrawal History
+    </a>
+
+    <a href="#referrals" class="menu-item">
+      <span>♧</span> Referral Team
+    </a>
+
+    <a href="#profile" class="menu-item">
+      <span>♙</span> My Profile
+    </a>
+
+    <a href="#support" class="menu-item">
+      <span>☎</span> Contact & Support
+    </a>
+
+    <a href="#admin" class="menu-item">
+      <span>🛡️</span> Admin Panel
+    </a>
+
+    <a href="#logout" class="menu-item">
+      <span>🚪</span> Logout
+    </a>
 
   </div>
 
 </section>
 
+<!-- BALANCE -->
+
 <section id="balance" class="page-section">
   <h2>▣ My Balance</h2>
   <p>View your account balance.</p>
-  <div class="info">Available Balance: <strong>UGX 0</strong></div>
-  <div class="info">Total Earnings: UGX 0</div>
+
+  <div class="info">
+    Available Balance: <strong>UGX 0</strong>
+  </div>
+
+  <div class="info">
+    Total Earnings: UGX 0
+  </div>
 </section>
+
+<!-- INVESTMENT -->
 
 <section id="investment" class="page-section">
   <h2>↗ Investment</h2>
   <p>Manage your investment activities.</p>
-  <div class="info">Your investment information will appear here.</div>
+
+  <div class="info">
+    Your investment information will appear here.
+  </div>
 </section>
+
+<!-- DEPOSIT -->
 
 <section id="deposit" class="page-section">
   <h2>💰 Deposit</h2>
   <p>Access your account deposit services.</p>
-  <div class="info">Deposit instructions and payment verification will appear here.</div>
+
+  <div class="info">
+    Deposit instructions and payment verification will appear here.
+  </div>
 </section>
+
+<!-- WITHDRAW -->
 
 <section id="withdraw" class="page-section">
   <h2>💸 Withdraw Money</h2>
   <p>Manage your withdrawal requests.</p>
-  <div class="info">Withdrawal instructions and account verification will appear here.</div>
+
+  <div class="info">
+    Withdrawal instructions and account verification will appear here.
+  </div>
 </section>
+
+<!-- DEPOSIT HISTORY -->
 
 <section id="deposit-history" class="page-section">
   <h2>◷ Deposit History</h2>
   <p>View your previous deposit transactions.</p>
-  <div class="info">No deposit records available.</div>
+
+  <div class="info">
+    No deposit records available.
+  </div>
 </section>
+
+<!-- WITHDRAWAL HISTORY -->
 
 <section id="withdrawal-history" class="page-section">
   <h2>⇩ Withdrawal History</h2>
   <p>View your previous withdrawal transactions.</p>
-  <div class="info">No withdrawal records available.</div>
+
+  <div class="info">
+    No withdrawal records available.
+  </div>
 </section>
+
+<!-- REFERRALS -->
 
 <section id="referrals" class="page-section">
   <h2>♧ Referral Team</h2>
   <p>Manage and view your referral team.</p>
-  <div class="info">Your referral members will appear here.</div>
+
+  <div class="info">
+    Your referral members will appear here.
+  </div>
 </section>
+
+<!-- PROFILE -->
 
 <section id="profile" class="page-section">
   <h2>♙ My Profile</h2>
   <p>View and manage your account information.</p>
-  <div class="info">Your profile information will appear here.</div>
+
+  <div class="info">
+    Your profile information will appear here.
+  </div>
 </section>
+
+<!-- SUPPORT -->
 
 <section id="support" class="page-section">
   <h2>☎ Contact & Support</h2>
   <p>Contact YUNEEC customer support.</p>
-  <div class="info">Support contact details will appear here.</div>
+
+  <div class="info">
+    Support contact details will appear here.
+  </div>
 </section>
+
+<!-- ADMIN -->
 
 <section id="admin" class="page-section">
   <h2>🛡️ Admin Panel</h2>
   <p>Administrative management area.</p>
-  <div class="info">Administrator access and management tools will appear here.</div>
+
+  <div class="info">
+    Administrator access and management tools will appear here.
+  </div>
 </section>
+
+<!-- LOGOUT -->
 
 <section id="logout" class="page-section">
   <h2>🚪 Logout</h2>
   <p>Are you sure you want to leave your account?</p>
-  <button class="btn" onclick="logout()">Confirm Logout</button>
+
+  <button class="btn" onclick="logout()">
+    Confirm Logout
+  </button>
 </section>
 
 </main>
 
 <footer>
-  <h3>YUNEEC Global Drone Technologies</h3>
+  <h3>✨ YUNEEC Global Drone Technologies ✨</h3>
+
   <p>Innovating the Future of Aerial Technology</p>
+
   <p>© 2026 YUNEEC. All rights reserved.</p>
 </footer>
 
@@ -565,13 +810,19 @@ footer h3{
 /* SIDEBAR */
 
 function toggleMenu(){
-  document.getElementById("sidebar").classList.toggle("open");
-  document.getElementById("overlay").classList.toggle("show");
+  document.getElementById("sidebar")
+    .classList.toggle("open");
+
+  document.getElementById("overlay")
+    .classList.toggle("show");
 }
 
 function closeMenu(){
-  document.getElementById("sidebar").classList.remove("open");
-  document.getElementById("overlay").classList.remove("show");
+  document.getElementById("sidebar")
+    .classList.remove("open");
+
+  document.getElementById("overlay")
+    .classList.remove("show");
 }
 
 /* PAGE NAVIGATION */
@@ -581,6 +832,7 @@ function showPage(){
   const id = location.hash.replace("#","") || "dashboard";
 
   const sections = document.querySelectorAll(".page-section");
+
   let found = false;
 
   sections.forEach(section=>{
@@ -593,7 +845,8 @@ function showPage(){
   });
 
   if(!found){
-    document.getElementById("dashboard").classList.add("active");
+    document.getElementById("dashboard")
+      .classList.add("active");
   }
 
   document.querySelectorAll(".sidebar a").forEach(link=>{
@@ -604,19 +857,26 @@ function showPage(){
   });
 
   closeMenu();
+
   window.scrollTo(0,0);
 }
 
 window.addEventListener("hashchange",showPage);
+
 window.addEventListener("DOMContentLoaded",showPage);
 
 /* LOGOUT */
 
 function logout(){
-  const confirmLogout = confirm("Are you sure you want to logout?");
+
+  const confirmLogout = confirm(
+    "Are you sure you want to logout?"
+  );
 
   if(confirmLogout){
-    alert("Connect your authentication system to complete logout.");
+    alert(
+      "Connect your authentication system to complete logout."
+    );
   }
 }
 
@@ -631,5 +891,6 @@ document.addEventListener("keydown",event=>{
 </script>
 
 </body>
-    </html>
+</html>
+
 
