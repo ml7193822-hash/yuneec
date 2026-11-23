@@ -17,11 +17,7 @@
   --border:#24446C;
 }
 
-*{
-  box-sizing:border-box;
-  margin:0;
-  padding:0;
-}
+*{box-sizing:border-box;margin:0;padding:0}
 
 body{
   font-family:Arial,sans-serif;
@@ -34,58 +30,130 @@ body{
 
 header{
   background:#06152C;
-  padding:17px;
+  padding:14px 17px;
   display:flex;
   align-items:center;
-  justify-content:space-between;
+  gap:15px;
   border-bottom:1px solid var(--border);
+  position:sticky;
+  top:0;
+  z-index:200;
 }
 
 .logo{
-  font-size:24px;
+  font-size:23px;
   font-weight:bold;
   letter-spacing:3px;
 }
 
-.logo span{
-  color:var(--blue-light);
-}
+.logo span{color:var(--blue-light)}
 
 .company-label{
   color:#C8D9F0;
   font-size:13px;
+  margin-left:auto;
 }
 
-/* NAVIGATION */
+.menu-toggle{
+  background:#102B50;
+  color:white;
+  border:1px solid var(--border);
+  border-radius:8px;
+  width:43px;
+  height:43px;
+  font-size:25px;
+  cursor:pointer;
+  flex-shrink:0;
+}
 
-nav{
-  background:#0A2142;
-  padding:12px;
-  display:flex;
-  gap:9px;
-  flex-wrap:wrap;
-  justify-content:center;
-  position:sticky;
+/* SIDEBAR */
+
+.sidebar{
+  position:fixed;
   top:0;
-  z-index:100;
+  left:-290px;
+  width:270px;
+  height:100vh;
+  background:#06152C;
+  border-right:1px solid var(--border);
+  z-index:400;
+  transition:left .3s ease;
+  overflow-y:auto;
+  padding-bottom:25px;
+}
+
+.sidebar.open{left:0}
+
+.sidebar-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:19px 15px;
   border-bottom:1px solid var(--border);
 }
 
-nav a{
-  text-decoration:none;
-  color:#DCEBFF;
-  font-size:13px;
+.sidebar-title{
+  font-size:20px;
   font-weight:bold;
-  padding:9px 11px;
+  letter-spacing:2px;
+}
+
+.sidebar-title span{color:var(--blue-light)}
+
+.close-menu{
+  background:#102B50;
+  color:white;
+  border:0;
+  font-size:23px;
+  padding:5px 12px;
   border-radius:7px;
+  cursor:pointer;
+}
+
+.sidebar-label{
+  color:var(--muted);
+  font-size:11px;
+  font-weight:bold;
+  padding:20px 18px 9px;
+  text-transform:uppercase;
+  letter-spacing:1px;
+}
+
+.sidebar a{
+  display:flex;
+  align-items:center;
+  gap:13px;
+  color:#DCEBFF;
+  text-decoration:none;
+  padding:13px 18px;
+  margin:3px 10px;
+  border-radius:8px;
+  font-size:14px;
+  font-weight:bold;
   transition:.2s;
 }
 
-nav a:hover,
-nav a.active{
+.sidebar a span{
+  font-size:20px;
+  width:25px;
+  text-align:center;
+}
+
+.sidebar a:hover,
+.sidebar a.active{
   background:var(--blue);
   color:white;
 }
+
+.overlay{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:#0009;
+  z-index:300;
+}
+
+.overlay.show{display:block}
 
 /* MAIN */
 
@@ -114,8 +182,6 @@ nav a.active{
   font-size:14px;
 }
 
-/* SECTION TITLE */
-
 .section-title{
   font-size:21px;
   margin:27px 0 16px;
@@ -123,7 +189,7 @@ nav a.active{
   padding-left:12px;
 }
 
-/* DASHBOARD CARDS */
+/* CARDS */
 
 .cards{
   display:grid;
@@ -160,7 +226,7 @@ nav a.active{
   margin-top:7px;
 }
 
-/* MENU ITEMS */
+/* DASHBOARD MENU */
 
 .menu-list{
   display:grid;
@@ -188,11 +254,9 @@ nav a.active{
   border-color:var(--blue);
 }
 
-.menu-item span{
-  font-size:23px;
-}
+.menu-item span{font-size:23px}
 
-/* CONTENT SECTIONS */
+/* PAGES */
 
 .page-section{
   display:none;
@@ -203,9 +267,7 @@ nav a.active{
   margin-top:20px;
 }
 
-.page-section.active{
-  display:block;
-}
+.page-section.active{display:block}
 
 .page-section h2{
   color:var(--blue-light);
@@ -237,15 +299,12 @@ nav a.active{
   border:0;
   border-radius:8px;
   padding:12px 20px;
-  text-decoration:none;
   font-weight:bold;
   cursor:pointer;
   margin-top:12px;
 }
 
-.btn:hover{
-  background:var(--blue-light);
-}
+.btn:hover{background:var(--blue-light)}
 
 /* FOOTER */
 
@@ -267,45 +326,16 @@ footer h3{
 /* RESPONSIVE */
 
 @media(min-width:700px){
-  .cards{
-    grid-template-columns:repeat(4,1fr);
-  }
-
-  .menu-list{
-    grid-template-columns:repeat(3,1fr);
-  }
-
-  .welcome h1{
-    font-size:34px;
-  }
+  .cards{grid-template-columns:repeat(4,1fr)}
+  .menu-list{grid-template-columns:repeat(3,1fr)}
+  .welcome h1{font-size:34px}
 }
 
 @media(max-width:420px){
-  .logo{
-    font-size:20px;
-  }
-
-  .company-label{
-    font-size:11px;
-  }
-
-  nav{
-    gap:5px;
-  }
-
-  nav a{
-    font-size:11px;
-    padding:8px;
-  }
-
-  .container{
-    padding:13px;
-  }
-
-  .menu-item{
-    font-size:12px;
-    padding:13px 9px;
-  }
+  .logo{font-size:19px}
+  .company-label{font-size:11px}
+  .container{padding:13px}
+  .menu-item{font-size:12px;padding:13px 9px}
 }
 </style>
 </head>
@@ -315,26 +345,81 @@ footer h3{
 <!-- HEADER -->
 
 <header>
+  <button class="menu-toggle" onclick="toggleMenu()" aria-label="Open menu">☰</button>
   <div class="logo">YUN<span>EEC</span></div>
   <div class="company-label">🚁 Global Technologies</div>
 </header>
 
-<!-- NAVIGATION -->
+<!-- DARK OVERLAY -->
 
-<nav id="navigation">
-  <a href="#dashboard" class="active">Dashboard</a>
-  <a href="#balance">My Balance</a>
-  <a href="#investment">Investment</a>
-  <a href="#deposit">Deposit</a>
-  <a href="#withdraw">Withdraw Money</a>
-  <a href="#deposit-history">Deposit History</a>
-  <a href="#withdrawal-history">Withdrawal History</a>
-  <a href="#referrals">Referral Team</a>
-  <a href="#profile">My Profile</a>
-  <a href="#support">Contact & Support</a>
-  <a href="#admin">Admin Panel</a>
-  <a href="#logout">Logout</a>
-</nav>
+<div class="overlay" id="overlay" onclick="closeMenu()"></div>
+
+<!-- LEFT SIDEBAR -->
+
+<aside class="sidebar" id="sidebar">
+
+  <div class="sidebar-header">
+    <div class="sidebar-title">YUN<span>EEC</span></div>
+    <button class="close-menu" onclick="closeMenu()" aria-label="Close menu">×</button>
+  </div>
+
+  <div class="sidebar-label">Main Menu</div>
+
+  <a href="#dashboard" class="active">
+    <span>▣</span> Dashboard
+  </a>
+
+  <a href="#balance">
+    <span>▣</span> My Balance
+  </a>
+
+  <a href="#investment">
+    <span>↗</span> Investment
+  </a>
+
+  <a href="#deposit">
+    <span>💰</span> Deposit
+  </a>
+
+  <a href="#withdraw">
+    <span>💸</span> Withdraw Money
+  </a>
+
+  <div class="sidebar-label">Transaction History</div>
+
+  <a href="#deposit-history">
+    <span>◷</span> Deposit History
+  </a>
+
+  <a href="#withdrawal-history">
+    <span>⇩</span> Withdrawal History
+  </a>
+
+  <div class="sidebar-label">Account</div>
+
+  <a href="#referrals">
+    <span>♧</span> Referral Team
+  </a>
+
+  <a href="#profile">
+    <span>♙</span> My Profile
+  </a>
+
+  <a href="#support">
+    <span>☎</span> Contact & Support
+  </a>
+
+  <div class="sidebar-label">Administration</div>
+
+  <a href="#admin">
+    <span>🛡️</span> Admin Panel
+  </a>
+
+  <a href="#logout">
+    <span>🚪</span> Logout
+  </a>
+
+</aside>
 
 <main class="container">
 
@@ -384,168 +469,87 @@ footer h3{
 
   <div class="menu-list">
 
-    <a href="#balance" class="menu-item">
-      <span>▣</span> My Balance
-    </a>
-
-    <a href="#investment" class="menu-item">
-      <span>↗</span> Investment
-    </a>
-
-    <a href="#deposit" class="menu-item">
-      <span>💰</span> Deposit
-    </a>
-
-    <a href="#withdraw" class="menu-item">
-      <span>💸</span> Withdraw Money
-    </a>
-
-    <a href="#deposit-history" class="menu-item">
-      <span>◷</span> Deposit History
-    </a>
-
-    <a href="#withdrawal-history" class="menu-item">
-      <span>⇩</span> Withdrawal History
-    </a>
-
-    <a href="#referrals" class="menu-item">
-      <span>♧</span> Referral Team
-    </a>
-
-    <a href="#profile" class="menu-item">
-      <span>♙</span> My Profile
-    </a>
-
-    <a href="#support" class="menu-item">
-      <span>☎</span> Contact & Support
-    </a>
-
-    <a href="#admin" class="menu-item">
-      <span>🛡️</span> Admin Panel
-    </a>
-
-    <a href="#logout" class="menu-item">
-      <span>🚪</span> Logout
-    </a>
+    <a href="#balance" class="menu-item"><span>▣</span> My Balance</a>
+    <a href="#investment" class="menu-item"><span>↗</span> Investment</a>
+    <a href="#deposit" class="menu-item"><span>💰</span> Deposit</a>
+    <a href="#withdraw" class="menu-item"><span>💸</span> Withdraw Money</a>
+    <a href="#deposit-history" class="menu-item"><span>◷</span> Deposit History</a>
+    <a href="#withdrawal-history" class="menu-item"><span>⇩</span> Withdrawal History</a>
+    <a href="#referrals" class="menu-item"><span>♧</span> Referral Team</a>
+    <a href="#profile" class="menu-item"><span>♙</span> My Profile</a>
+    <a href="#support" class="menu-item"><span>☎</span> Contact & Support</a>
+    <a href="#admin" class="menu-item"><span>🛡️</span> Admin Panel</a>
+    <a href="#logout" class="menu-item"><span>🚪</span> Logout</a>
 
   </div>
 
 </section>
-
-<!-- MY BALANCE -->
 
 <section id="balance" class="page-section">
   <h2>▣ My Balance</h2>
   <p>View your account balance.</p>
-  <div class="info">
-    Available Balance: <strong>UGX 0</strong>
-  </div>
-  <div class="info">
-    Total Earnings: UGX 0
-  </div>
+  <div class="info">Available Balance: <strong>UGX 0</strong></div>
+  <div class="info">Total Earnings: UGX 0</div>
 </section>
-
-<!-- INVESTMENT -->
 
 <section id="investment" class="page-section">
   <h2>↗ Investment</h2>
   <p>Manage your investment activities.</p>
-  <div class="info">
-    Your investment information will appear here.
-  </div>
+  <div class="info">Your investment information will appear here.</div>
 </section>
-
-<!-- DEPOSIT -->
 
 <section id="deposit" class="page-section">
   <h2>💰 Deposit</h2>
   <p>Access your account deposit services.</p>
-  <div class="info">
-    Deposit instructions and payment verification
-    will appear here.
-  </div>
+  <div class="info">Deposit instructions and payment verification will appear here.</div>
 </section>
-
-<!-- WITHDRAW -->
 
 <section id="withdraw" class="page-section">
   <h2>💸 Withdraw Money</h2>
   <p>Manage your withdrawal requests.</p>
-  <div class="info">
-    Withdrawal instructions and account verification
-    will appear here.
-  </div>
+  <div class="info">Withdrawal instructions and account verification will appear here.</div>
 </section>
-
-<!-- DEPOSIT HISTORY -->
 
 <section id="deposit-history" class="page-section">
   <h2>◷ Deposit History</h2>
   <p>View your previous deposit transactions.</p>
-  <div class="info">
-    No deposit records available.
-  </div>
+  <div class="info">No deposit records available.</div>
 </section>
-
-<!-- WITHDRAWAL HISTORY -->
 
 <section id="withdrawal-history" class="page-section">
   <h2>⇩ Withdrawal History</h2>
   <p>View your previous withdrawal transactions.</p>
-  <div class="info">
-    No withdrawal records available.
-  </div>
+  <div class="info">No withdrawal records available.</div>
 </section>
-
-<!-- REFERRALS -->
 
 <section id="referrals" class="page-section">
   <h2>♧ Referral Team</h2>
   <p>Manage and view your referral team.</p>
-  <div class="info">
-    Your referral members will appear here.
-  </div>
+  <div class="info">Your referral members will appear here.</div>
 </section>
-
-<!-- PROFILE -->
 
 <section id="profile" class="page-section">
   <h2>♙ My Profile</h2>
   <p>View and manage your account information.</p>
-  <div class="info">
-    Your profile information will appear here.
-  </div>
+  <div class="info">Your profile information will appear here.</div>
 </section>
-
-<!-- SUPPORT -->
 
 <section id="support" class="page-section">
   <h2>☎ Contact & Support</h2>
   <p>Contact YUNEEC customer support.</p>
-  <div class="info">
-    Support contact details will appear here.
-  </div>
+  <div class="info">Support contact details will appear here.</div>
 </section>
-
-<!-- ADMIN -->
 
 <section id="admin" class="page-section">
   <h2>🛡️ Admin Panel</h2>
   <p>Administrative management area.</p>
-  <div class="info">
-    Administrator access and management tools
-    will appear here.
-  </div>
+  <div class="info">Administrator access and management tools will appear here.</div>
 </section>
-
-<!-- LOGOUT -->
 
 <section id="logout" class="page-section">
   <h2>🚪 Logout</h2>
   <p>Are you sure you want to leave your account?</p>
-  <button class="btn" onclick="logout()">
-    Confirm Logout
-  </button>
+  <button class="btn" onclick="logout()">Confirm Logout</button>
 </section>
 
 </main>
@@ -558,14 +562,25 @@ footer h3{
 
 <script>
 
-/* DASHBOARD NAVIGATION */
+/* SIDEBAR */
+
+function toggleMenu(){
+  document.getElementById("sidebar").classList.toggle("open");
+  document.getElementById("overlay").classList.toggle("show");
+}
+
+function closeMenu(){
+  document.getElementById("sidebar").classList.remove("open");
+  document.getElementById("overlay").classList.remove("show");
+}
+
+/* PAGE NAVIGATION */
 
 function showPage(){
 
   const id = location.hash.replace("#","") || "dashboard";
 
   const sections = document.querySelectorAll(".page-section");
-
   let found = false;
 
   sections.forEach(section=>{
@@ -581,36 +596,40 @@ function showPage(){
     document.getElementById("dashboard").classList.add("active");
   }
 
-  document.querySelectorAll("nav a").forEach(link=>{
+  document.querySelectorAll(".sidebar a").forEach(link=>{
     link.classList.toggle(
       "active",
       link.getAttribute("href") === "#" + id
     );
   });
 
+  closeMenu();
   window.scrollTo(0,0);
 }
 
 window.addEventListener("hashchange",showPage);
-
 window.addEventListener("DOMContentLoaded",showPage);
 
 /* LOGOUT */
 
 function logout(){
-
-  const confirmLogout = confirm(
-    "Are you sure you want to logout?"
-  );
+  const confirmLogout = confirm("Are you sure you want to logout?");
 
   if(confirmLogout){
     alert("Connect your authentication system to complete logout.");
   }
-
 }
+
+/* CLOSE SIDEBAR WITH ESCAPE */
+
+document.addEventListener("keydown",event=>{
+  if(event.key === "Escape"){
+    closeMenu();
+  }
+});
 
 </script>
 
 </body>
-</html>
+    </html>
 
