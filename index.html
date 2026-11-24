@@ -870,7 +870,46 @@ function renderMembers(search = '') {
     });
 }
 
-searchInput.oninput = () => renderMembers(searchInput.value);
+searchInput.oninput = async () => {
+  const search = searchInput.value.trim();
+
+  if (search.includes('@')) {
+    const { data, error } = await supabaseClient.rpc(
+      'admin_search_members',
+      { search_email: search }
+    );
+
+    if (error) {
+      console.error(error);
+      container.textContent = 'Email search failed.';
+      return;
+    }
+
+    container.replaceChildren();
+
+    (data || []).forEach(member => {
+      const card = document.createElement('div');
+      card.className = 'admin-card';
+
+      const name = document.createElement('strong');
+      name.textContent = member.username || 'Member';
+
+      const email = document.createElement('p');
+      email.textContent = member.email;
+
+      const balance = document.createElement('p');
+      balance.textContent =
+        'Wallet: UGX ' +
+        Number(member.wallet_balance || 0).toLocaleString('en-UG');
+
+      card.append(name, email, balance);
+      container.appendChild(card);
+    });
+  } else {
+    renderMembers(search);
+  }
+};
+
 renderMembers();
 
   (members || []).forEach(member => {
