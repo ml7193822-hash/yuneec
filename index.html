@@ -953,11 +953,196 @@ if (withdrawalError) {
 
     withdrawalContainer.appendChild(card);
   });
+  const { data: approvedDeposits, error: approvedDepositError } =
+  await supabaseClient
+    .from('deposits')
+    .select('amount')
+    .eq('status', 'Approved');
+
+const { data: approvedWithdrawals, error: approvedWithdrawalError } =
+  await supabaseClient
+    .from('withdrawals')
+    .select('amount')
+    .eq('status', 'Approved');
+
+if (approvedDepositError || approvedWithdrawalError) {
+  console.error(
+    'Transaction totals error:',
+    approvedDepositError || approvedWithdrawalError
+  );
+} else {
+  const depositTotal = (approvedDeposits || []).reduce(
+    (sum, item) => sum + Number(item.amount || 0), 0
+  );
+
+  const withdrawalTotal = (approvedWithdrawals || []).reduce(
+    (sum, item) => sum + Number(item.amount || 0), 0
+  );
+
+  document.getElementById('adminTotalDeposits').textContent =
+    'UGX ' + depositTotal.toLocaleString('en-UG');
+
+  document.getElementById('adminTotalWithdrawals').textContent =
+    'UGX ' + withdrawalTotal.toLocaleString('en-UG');
+  }
 }
 
   const totalWallet = (wallets || []).reduce(
     (sum, w) => sum + Number(w.balance || 0), 0
   );
+    const { data: funds, error: fundsError } =
+  await supabaseClient
+    .from('company_fund_submissions')
+    .select('id, amount, status');
+
+const { data: allocations, error: allocationsError } =
+  await supabaseClient
+    .from('company_fund_allocations')
+    .select('submission_id, amount');
+
+if (fundsError || allocationsError) {
+  console.error('Company funds loading error:', fundsError || allocationsError);
+} else {
+  const declared = (funds || []).reduce(
+    (sum, fund) => sum + Number(fund.amount || 0), 0
+  );
+
+  const verified = (funds || [])
+    .filter(fund => fund.status === 'Verified')
+    .reduce((sum, fund) => sum + Number(fund.amount || 0), 0);
+
+  const allocated = (allocations || []).reduce(
+    (sum, item) => sum + Number(item.amount || 0), 0
+  );
+
+  const available = Math.max(0, verified - allocated);
+
+  document.getElementById('adminDeclaredFunds').textContent =
+    'UGX ' + declared.toLocaleString('en-UG');
+
+  document.getElementById('adminVerifiedFunds').textContent =
+    'UGX ' + verified.toLocaleString('en-UG');
+
+  document.getElementById('adminAllocatedFunds').textContent =
+    'UGX ' + allocated.toLocaleString('en-UG');
+
+  document.getElementById('adminAvailableFunds').textContent =
+    'UGX ' + available.toLocaleString('en-UG');
+  }
+    const { data: fundSubmissions, error: submissionError } =
+  await supabaseClient
+    .from('company_fund_submissions')
+    .select('id, amount, source, proof_reference, status, submitted_at')
+    .order('submitted_at', { ascending: false });
+
+const fundContainer =
+  document.getElementById('adminFundSubmissions');
+
+fundContainer.replaceChildren();
+
+if (submissionError) {
+  fundContainer.textContent = 'Could not load fund submissions.';
+} else if (!fundSubmissions || fundSubmissions.length === 0) {
+  fundContainer.textContent = 'No company fund submissions yet.';
+} else {
+  fundSubmissions.forEach(fund => {
+    const card = document.createElement('div');
+    card.className = 'admin-card';
+
+    const details = document.createElement('p');
+    details.textContent =
+      'Amount: UGX ' + Number(fund.amount).toLocaleString('en-UG') +
+      ' | Source: ' + fund.source +
+      ' | Proof: ' + fund.proof_reference +
+      ' | Status: ' + fund.status +
+      ' | Submitted: ' + new Date(fund.submitted_at).toLocaleDateString();
+
+    card.appendChild(details);
+
+    if (fund.status === 'Pending') {
+      ['Verified', 'Rejected'].forEach(decision => {
+        const button = document.createElement('button');
+        button.className = 'btn';
+        button.textContent = decision;
+
+        button.onclick = async () => {
+          if (!confirm('Mark these funds as ' + decision + '?')) return;
+
+          button.disabled = true;
+
+          const { error } = await supabaseClient.rpc(
+            'admin_review_company_fund',
+            {
+              target_fund_id: fund.id,
+              decision
+            }
+          );
+
+          if (error) {
+            alert(error.message);
+            button.disabled = false;
+            return;
+          }
+
+          alert('Company funds ' + decision.toLowerCase() + '.');
+          await loadAdminDashboard();
+        };
+
+        card.appendChild(button);
+      });
+    }
+
+    fundContainer.appendChild(card);
+  });
+}
+    const fundForm = document.getElementById('adminCompanyFundsForm');
+
+fundForm.onsubmit = async (event) => {
+  event.preventDefault();
+
+  const amount = Number(
+    document.getElementById('companyFundAmount').value
+  );
+
+  const source = document.getElementById('companyFundSource').value.trim();
+  const proof = document.getElementById('companyFundProof').value.trim();
+
+  if (!amount || amount <= 0 || !source || !proof) {
+    alert('Please complete all fund details.');
+    return;
+  }
+
+  const { data: authData } = await supabaseClient.auth.getUser();
+
+  if (!authData.user) {
+    alert('Please sign in again.');
+    return;
+  }
+
+  const submitButton = fundForm.querySelector('button[type="submit"]');
+  submitButton.disabled = true;
+  submitButton.textContent = 'Submitting...';
+
+  const { error } = await supabaseClient
+    .from('company_fund_submissions')
+    .insert({
+      amount,
+      source,
+      proof_reference: proof,
+      submitted_by: authData.user.id
+    });
+
+  if (error) {
+    alert('Submission failed: ' + error.message);
+  } else {
+    alert('Company funds submitted for verification.');
+    fundForm.reset();
+    await loadAdminDashboard();
+  }
+
+  submitButton.disabled = false;
+  submitButton.textContent = 'Submit Funds for Verification';
+};
 
   document.getElementById('adminTotalWallet').textContent =
     'UGX ' + totalWallet.toLocaleString('en-UG');
