@@ -313,7 +313,42 @@ footer h3{color:#ffdc68;margin-bottom:7px}
 <section id="transactions" class="page-section"><div class="content-panel"><h2>▧ Transactions</h2><p>Review your account transaction history.</p><div class="empty-state">No transaction records available.</div></div></section>
 <section id="deposit" class="page-section"><div class="content-panel"><h2>💰 Deposit</h2><p>Deposit instructions and payment verification will appear here.</p><div class="info">No payment instructions have been configured on this page yet. Please contact support before sending money.</div></div></section>
 <section id="withdraw" class="page-section"><div class="content-panel"><h2>💸 Withdraw Funds</h2><p>Withdrawal requests will be shown here.</p><div class="info">Available balance: <strong>UGX 0</strong></div><div class="info">Withdrawal submission is not connected on this page yet.</div></div></section>
-<section id="profile" class="page-section"><div class="content-panel"><h2>♙ My Profile</h2><p>Your verified profile information will appear here when your account data is connected.</p><div class="empty-state">Profile details are not loaded.</div></div></section>
+
+<section id="profile" class="page-section">
+  <div class="content-panel">
+    <h2>♙ My Profile</h2>
+    <p>Your YUNEEC account information.</p>
+
+    <div class="info">
+      Username: <strong id="profileUsername">Loading...</strong>
+    </div>
+
+    <div class="info">
+      Email: <strong id="profileEmail">Loading...</strong>
+    </div>
+
+    <div class="info">
+      Account ID: <strong id="profileId">Loading...</strong>
+    </div>
+
+    <div class="info">
+      Full Name: <strong id="profileFullName">Loading...</strong>
+    </div>
+
+    <div class="info">
+      Phone: <strong id="profilePhone">Not provided</strong>
+    </div>
+
+    <div class="info">
+      Membership: <strong id="profileMembership">Loading...</strong>
+    </div>
+
+    <div class="info">
+      Account Status: <strong id="profileStatus">Loading...</strong>
+    </div>
+  </div>
+</section>
+
 <section id="settings" class="page-section"><div class="content-panel"><h2>⚙ Settings</h2><p>Account preferences and security settings.</p><div class="info">Settings controls are not connected yet.</div></div></section>
 <section id="support" class="page-section"><div class="content-panel"><h2>🎧 Contact & Support</h2><p>Contact YUNEEC customer support.</p><div class="info">Support contact details have not been configured on this page yet.</div></div></section>
 <section id="admin" class="page-section"><div class="content-panel"><h2>🛡 Admin Panel</h2><p>Administrative management area.</p><div class="info">Admin access must be protected and verified by your authentication and database rules. No admin controls are exposed by this static page.</div></div></section>
@@ -473,41 +508,45 @@ footer h3{color:#ffdc68;margin-bottom:7px}
     }
   });
 
-  async function loadAccount(user) {
-    if (!user) return;
+  
+async function loadAccount(user) {
+  if (!user) return;
 
-    authScreen.classList.add('auth-hidden');
+  authScreen.classList.add('auth-hidden');
 
-    const username =
-      user.user_metadata?.username ||
-      user.user_metadata?.full_name ||
-      user.email?.split('@')[0] ||
-      'Member';
+  const { data: profile, error } = await supabaseClient
+    .from('profiles')
+    .select('full_name, phone')
+    .eq('id', user.id)
+    .maybeSingle();
 
-    document.getElementById('headerName').textContent = username;
-    document.getElementById('accountId').textContent = user.id;
-
-    document.getElementById('referralLink').value =
-      location.origin + location.pathname + '?ref=' + user.id;
-
-    showPage();
+  if (error) {
+    console.error('Profile loading error:', error.message);
   }
 
-  async function checkSession() {
-    const { data, error } = await supabaseClient.auth.getSession();
+  const username =
+    user.user_metadata?.username ||
+    profile?.full_name ||
+    user.email?.split('@')[0] ||
+    'Member';
 
-    if (error) {
-      message(error.message);
-      return;
-    }
+  document.getElementById('headerName').textContent = username;
+  document.getElementById('accountId').textContent = user.id;
 
-    if (data.session) {
-      await loadAccount(data.session.user);
-    } else {
-      authScreen.classList.remove('auth-hidden');
-      message('');
-    }
-  }
+  document.getElementById('referralLink').value =
+    location.origin + location.pathname + '?ref=' + user.id;
+
+  document.getElementById('profileUsername').textContent = username;
+  document.getElementById('profileEmail').textContent = user.email || 'Not available';
+  document.getElementById('profileId').textContent = user.id;
+  document.getElementById('profileFullName').textContent =
+    profile?.full_name || 'Not provided';
+  document.getElementById('profilePhone').textContent =
+    profile?.phone || 'Not provided';
+
+  showPage();
+}
+
 
   function toggleMenu() {
     document.getElementById('sidebar').classList.toggle('open');
