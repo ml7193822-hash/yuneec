@@ -547,6 +547,39 @@ footer h3{color:#ffdc68;margin-bottom:7px}
     <div id="adminFundSubmissions">
       Loading company fund submissions...
     </div>
+    <h3>📤 Allocate Company Profit Funds</h3>
+
+<p>Allocate verified company funds for approved company purposes.</p>
+
+<form id="adminFundAllocationForm">
+
+  <label>Select Verified Fund Submission</label>
+  <select id="allocationFundSelect" required>
+    <option value="">Loading verified funds...</option>
+  </select>
+
+  <label>Allocation Amount (UGX)</label>
+  <input
+    type="number"
+    id="allocationAmount"
+    min="1"
+    step="0.01"
+    placeholder="Enter allocation amount"
+    required
+  >
+
+  <button type="submit" class="btn">
+    Allocate Company Funds
+  </button>
+
+</form>
+
+<div id="adminAllocationMessage"></div>
+
+<h3>📊 Company Funds Allocation History</h3>
+<div id="adminAllocationHistory">
+  Loading allocation history...
+</div>
 
     <h3>➕ Register Company Profit Funds</h3>
     <p>
@@ -1091,6 +1124,80 @@ if (submissionError) {
     fundContainer.appendChild(card);
   });
 }
+    const allocationSelect =
+  document.getElementById('allocationFundSelect');
+
+allocationSelect.replaceChildren();
+
+const allocatedByFund = new Map();
+
+(allocations || []).forEach(item => {
+  const previous = allocatedByFund.get(item.submission_id) || 0;
+
+  allocatedByFund.set(
+    item.submission_id,
+    previous + Number(item.amount || 0)
+  );
+});
+
+const verifiedFunds = (funds || []).filter(
+  fund => fund.status === 'Verified'
+);
+
+let availableFundCount = 0;
+
+verifiedFunds.forEach(fund => {
+  const remaining =
+    Number(fund.amount) -
+    (allocatedByFund.get(fund.id) || 0);
+
+  if (remaining <= 0) return;
+
+  const option = document.createElement('option');
+  option.value = fund.id;
+  option.textContent =
+    fund.source + ' — Available UGX ' +
+    remaining.toLocaleString('en-UG');
+
+  allocationSelect.appendChild(option);
+  availableFundCount++;
+});
+
+if (availableFundCount === 0) {
+  const option = document.createElement('option');
+  option.value = '';
+  option.textContent = 'No available verified funds';
+  allocationSelect.appendChild(option);
+}
+
+const historyContainer =
+  document.getElementById('adminAllocationHistory');
+
+historyContainer.replaceChildren();
+
+if (!allocations || allocations.length === 0) {
+  historyContainer.textContent = 'No allocations recorded yet.';
+} else {
+  allocations.forEach(item => {
+    const fund = (funds || []).find(
+      entry => entry.id === item.submission_id
+    );
+
+    const card = document.createElement('div');
+    card.className = 'admin-card';
+
+    const details = document.createElement('p');
+    details.textContent =
+      'Source: ' + (fund ? fund.source : 'Company fund') +
+      ' | Allocated: UGX ' +
+      Number(item.amount).toLocaleString('en-UG') +
+      ' | Date: ' +
+      new Date(item.allocated_at || '').toLocaleDateString();
+
+    card.appendChild(details);
+    historyContainer.appendChild(card);
+  });
+      }
     const fundForm = document.getElementById('adminCompanyFundsForm');
 
 fundForm.onsubmit = async (event) => {
