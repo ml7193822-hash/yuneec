@@ -838,6 +838,40 @@ if (adminError || isAdmin !== true) {
 
   const container = document.getElementById('adminMembers');
   container.replaceChildren();
+    function addMemberStatusButton(card, userId, currentStatus) {
+  const button = document.createElement('button');
+  button.className = 'btn';
+
+  const suspended = currentStatus === 'Suspended';
+  button.textContent = suspended ? 'Activate Member' : 'Suspend Member';
+
+  button.onclick = async () => {
+    const newStatus = suspended ? 'Active' : 'Suspended';
+
+    if (!confirm('Change this member status to ' + newStatus + '?')) return;
+
+    button.disabled = true;
+
+    const { error } = await supabaseClient.rpc(
+      'admin_set_member_status',
+      {
+        target_user_id: userId,
+        new_status: newStatus
+      }
+    );
+
+    if (error) {
+      alert('Could not update member: ' + error.message);
+      button.disabled = false;
+      return;
+    }
+
+    alert('Member status updated to ' + newStatus + '.');
+    await loadAdminDashboard();
+  };
+
+  card.appendChild(button);
+    }
     const searchInput = document.getElementById('adminMemberSearch');
 
 function renderMembers(search = '') {
@@ -866,7 +900,14 @@ function renderMembers(search = '') {
         (walletMap.get(member.id) || 0).toLocaleString('en-UG');
 
       card.append(name, details, balance);
-      container.appendChild(card);
+
+addMemberStatusButton(
+  card,
+  member.id,
+  member.account_status
+);
+
+container.appendChild(card);
     });
 }
 
