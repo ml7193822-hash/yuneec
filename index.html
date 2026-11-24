@@ -3,304 +3,245 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#160b02">
-<title>YUNEEC | Global Investment Platform</title>
+<meta name="theme-color" content="#170d00">
+<title>YUNEEC Global Drone Technologies</title>
 <style>
 :root{
-  --bg:#100800;--panel:#211203;--panel2:#321b04;--gold:#ffbf24;
-  --gold2:#ffe58a;--amber:#d98608;--text:#fff1c5;--muted:#c9a96b;
-  --green:#16e879;--line:rgba(255,190,36,.62);
-  --glow:0 0 9px #ffbd26,0 0 22px rgba(255,166,0,.55),inset 0 0 12px rgba(255,183,26,.12);
+  --bg:#100900;--panel:#211300;--panel2:#382100;--gold:#ffca35;
+  --gold2:#ffe99a;--gold3:#d99b16;--text:#fff5d5;--muted:#d3b879;
+  --line:#9d6c16;--green:#27d66b;--red:#ff6969;
 }
-*{box-sizing:border-box}
-body{margin:0;background:
- radial-gradient(ellipse at 52% 0%,rgba(194,103,0,.23),transparent 42%),
- radial-gradient(ellipse at 80% 90%,rgba(116,57,0,.2),transparent 35%),var(--bg);
- color:var(--text);font-family:Arial,Helvetica,sans-serif;min-height:100vh}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:Arial,sans-serif;background:radial-gradient(ellipse at top,#684000 0%,#291700 38%,#100900 100%);color:var(--text);min-height:100vh;line-height:1.5}
 button,a{font:inherit}
 button{cursor:pointer}
-.app{max-width:1800px;margin:auto;padding:12px;display:grid;grid-template-columns:214px minmax(0,1fr);gap:14px}
-.sidebar{border:1px solid var(--line);border-radius:18px;background:linear-gradient(150deg,#422300,#170b02 55%,#281300);box-shadow:var(--glow);min-height:calc(100vh - 24px);padding:15px 12px;display:flex;flex-direction:column;position:relative;overflow:hidden}
-.brand{padding:10px 4px 22px;text-align:center;border-bottom:1px solid rgba(255,195,50,.45)}
-.brand-name{font-size:clamp(25px,2.3vw,39px);font-weight:900;letter-spacing:2px;color:#ffe28a;text-shadow:0 0 8px #ffae00,0 0 20px #ff9d00}
-.brand-sub{font-size:13px;color:#ffda66;margin-top:3px}
-.nav{display:grid;gap:8px;margin-top:17px}
-.nav button{border:1px solid transparent;color:#fff0c7;background:transparent;text-align:left;padding:13px 11px;border-radius:12px;display:flex;align-items:center;gap:13px;font-size:15px;transition:.2s}
-.nav button:hover,.nav button.active{background:linear-gradient(100deg,#ffcf4a,#9e5200);border-color:#ffe38c;box-shadow:var(--glow);color:#291400}
-.nav .ico{width:25px;text-align:center;font-size:21px}
-.side-bottom{margin-top:auto;text-align:center;padding-top:25px;color:#e6b94e}
-.globe{font-size:85px;filter:drop-shadow(0 0 14px #ffb000);line-height:1}
-.main{min-width:0}
-.topbar{min-height:96px;border:1px solid var(--line);border-radius:18px;background:linear-gradient(100deg,#291400,#120900 45%,#3b1d00);box-shadow:var(--glow);display:grid;grid-template-columns:1fr 1fr auto;align-items:center;padding:12px 22px;gap:14px}
-.top-brand{font-size:13px;color:#e9c66f}
-.slogan{text-align:center;font-size:clamp(17px,2vw,29px);font-weight:bold;font-style:italic;color:#ffe07b;text-shadow:0 0 10px #ffb000}
-.user-tools{display:flex;align-items:center;gap:18px}
-.user-chip{display:flex;align-items:center;gap:10px}
-.avatar{width:48px;height:48px;border:2px solid var(--gold2);border-radius:50%;display:grid;place-items:center;font-size:25px;background:#3a2305}
-.user-small{font-size:12px;color:#e6c77c}.user-name{font-size:16px;color:#fff1bd;margin-top:3px}
-.tool-btn{border:0;background:none;color:#ffd35c;font-size:23px;position:relative;padding:5px}
-.notif{position:absolute;right:-3px;top:-3px;background:#d92314;color:white;border-radius:50%;font-size:11px;padding:3px 6px}
-.hero{margin-top:13px;min-height:290px;border:1px solid var(--line);border-radius:18px;box-shadow:var(--glow);background:
- radial-gradient(ellipse at 50% 90%,rgba(255,170,0,.45),transparent 38%),
- linear-gradient(115deg,#1d0e02,#3a1b00 52%,#170a01);display:grid;grid-template-columns:1fr 1.4fr 1fr;align-items:center;gap:10px;padding:20px;overflow:hidden;position:relative}
-.hero:before{content:"";position:absolute;left:0;right:0;bottom:0;height:28%;background:linear-gradient(0deg,rgba(255,160,0,.22),transparent);border-top:1px solid rgba(255,194,42,.35)}
-.hero-copy{z-index:1}
-.hero-copy h1{font-size:clamp(30px,3.4vw,54px);line-height:.98;margin:0;color:#ffdb68;text-shadow:0 0 12px #ffae00}
-.hero-copy h2{font-size:clamp(18px,2.2vw,30px);margin:8px 0;color:#ffe7a0}
-.hero-copy p{font-size:17px;font-weight:bold;font-style:italic;color:#ffe6a0;line-height:1.35}
-.drone-art{z-index:1;text-align:center;filter:drop-shadow(0 10px 16px #000) drop-shadow(0 0 14px #ffb000)}.drone-svg{width:100%;max-width:520px;height:auto;overflow:visible}
-.account-card{z-index:1;border:1px solid #ffcf51;border-radius:15px;background:linear-gradient(140deg,rgba(80,42,0,.9),rgba(18,9,0,.94));box-shadow:var(--glow);padding:18px;min-width:0}
-.account-title{font-size:17px;color:#ffdf7d;font-weight:bold;border-bottom:1px solid rgba(255,190,36,.4);padding-bottom:12px;margin-bottom:12px}
-.account-title span{font-size:24px;margin-right:8px}
-.account-row{display:flex;justify-content:space-between;align-items:center;gap:8px;margin:10px 0;font-size:14px}
-.account-row strong{display:block;font-size:16px;margin-top:5px;color:#fff3d0}
-.member-seal{font-size:52px;color:#ffca40;text-shadow:0 0 12px #ffb000}
-.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:14px}
-.stat{min-height:128px;border:1px solid var(--line);border-radius:15px;background:linear-gradient(140deg,#4b2906,#1b0d02 70%);box-shadow:var(--glow);padding:16px;display:flex;align-items:center;gap:13px;min-width:0}
-.stat-icon{font-size:clamp(30px,3vw,49px);filter:drop-shadow(0 0 8px #ffb000)}
-.stat-label{font-size:14px;color:#ffe8b0;white-space:nowrap}
-.stat-value{font-size:clamp(17px,1.8vw,25px);font-weight:800;color:#fff4d8;margin:7px 0;white-space:nowrap}
-.stat-sub{font-size:13px;color:var(--green)}
-.gold-btn{border:1px solid #ffe17a;border-radius:10px;background:linear-gradient(#ffe17b,#d88b00);color:#2a1600;font-weight:bold;padding:8px 18px;box-shadow:0 0 12px rgba(255,179,0,.45)}
-.gold-btn:hover{filter:brightness(1.12);transform:translateY(-1px)}
-.content-grid{display:grid;grid-template-columns:1.55fr 1.05fr .72fr;gap:13px;margin-top:14px}
-.panel{border:1px solid var(--line);border-radius:16px;background:linear-gradient(145deg,rgba(58,30,3,.96),rgba(17,8,1,.98));box-shadow:var(--glow);padding:17px;min-width:0}
-.panel-head{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:13px}
-.panel h3{font-size:20px;color:#ffdf76;margin:0}
-select{background:#211100;color:#ffe5a0;border:1px solid #b8790b;border-radius:8px;padding:6px}
+@keyframes glow{0%,100%{box-shadow:0 0 8px #ffbd3040}50%{box-shadow:0 0 20px #ffc52b80}}
+@keyframes shimmer{0%{transform:translateX(-150%) skewX(-20deg)}100%{transform:translateX(350%) skewX(-20deg)}}
+@keyframes pulse{0%,100%{opacity:.75}50%{opacity:1}}
+.app-header{height:76px;position:sticky;top:0;z-index:200;display:flex;align-items:center;gap:16px;padding:10px 22px;background:linear-gradient(100deg,#170d00,#654000,#2b1900,#170d00);border-bottom:2px solid var(--gold);box-shadow:0 3px 22px #ffb90035}
+.brand{display:flex;align-items:center;gap:11px;min-width:220px}
+.brand-mark{font-size:30px;filter:drop-shadow(0 0 8px #ffc000)}
+.logo{font-size:25px;font-weight:900;letter-spacing:2px;color:var(--gold2);text-shadow:0 0 12px #ffbd30}
+.brand-sub{font-size:10px;color:#ffe6a0;letter-spacing:.6px;margin-top:-4px}
+.tagline{flex:1;text-align:center;font-size:clamp(13px,2vw,22px);font-style:italic;font-weight:bold;color:#ffe27a}
+.header-right{display:flex;align-items:center;gap:12px}
+.welcome-user{font-size:12px;color:var(--muted);white-space:nowrap}
+.welcome-user strong{display:block;color:var(--gold2);font-size:14px}
+.icon-btn,.menu-toggle{width:40px;height:40px;border-radius:50%;border:1px solid #b98724;background:linear-gradient(145deg,#624000,#211300);color:var(--gold2);font-size:19px;position:relative}
+.notice-dot{position:absolute;right:-3px;top:-4px;background:#e33;color:white;border-radius:50%;font-size:10px;padding:1px 5px}
+.menu-toggle{display:none;border-radius:8px;font-size:23px}
+.sidebar{position:fixed;top:76px;left:0;bottom:0;width:224px;overflow-y:auto;background:linear-gradient(180deg,#382100,#170d00);border-right:1px solid var(--gold3);z-index:150;padding:14px 10px 24px;transition:transform .25s}
+.sidebar-label{font-size:10px;text-transform:uppercase;letter-spacing:1.5px;color:#c99d43;padding:14px 10px 7px;font-weight:bold}
+.sidebar a{display:flex;align-items:center;gap:12px;text-decoration:none;color:#ffe9b9;padding:11px 12px;margin:3px 0;border:1px solid transparent;border-radius:9px;font-size:13px;font-weight:bold;transition:.2s}
+.sidebar a .nav-icon{width:24px;text-align:center;font-size:19px}
+.sidebar a:hover,.sidebar a.active{background:linear-gradient(100deg,#fff0a0,#e7a817,#a96800);color:#241500;box-shadow:0 0 15px #ffbd35}
+.sidebar-bottom{margin:22px 7px 0;padding:13px;border:1px solid #825b16;border-radius:10px;color:#d9bd7a;font-size:11px;text-align:center}
+.overlay{display:none;position:fixed;inset:0;background:#000b;z-index:140}
+.main{margin-left:224px;padding:18px;max-width:1700px}
+.page-section{display:none;animation:fade .25s ease}
+.page-section.active{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+.hero{min-height:280px;position:relative;overflow:hidden;border:1px solid #ffe08a;border-radius:15px;background:radial-gradient(ellipse at 72% 85%,#e9a51b 0%,#774300 18%,transparent 46%),linear-gradient(110deg,#1a1000 0%,#563400 48%,#1b1000 100%);box-shadow:0 0 25px #d99b1650;display:grid;grid-template-columns:1.1fr 1fr;align-items:center;padding:25px 30px;margin-bottom:17px}
+.hero:before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 62%,#ffc83b22 63%,transparent 65%),repeating-linear-gradient(170deg,transparent 0 28px,#ffc83b10 29px 30px);pointer-events:none}
+.hero:after{content:"";position:absolute;top:0;left:-50%;width:35%;height:100%;background:linear-gradient(90deg,transparent,#fff5b51c,transparent);transform:skewX(-20deg);animation:shimmer 7s infinite}
+.hero-copy,.hero-art{position:relative;z-index:1}
+.hero h1{font-size:clamp(27px,4vw,48px);line-height:1.02;color:#ffdf68;text-shadow:0 0 16px #ffb900;margin-bottom:9px}
+.hero h2{font-size:clamp(18px,2.2vw,27px);line-height:1.15;color:#fff0a0;margin-bottom:13px}
+.hero p{color:#ffebbb;font-size:14px;font-style:italic}
+.hero-art{height:220px;display:flex;align-items:center;justify-content:center}
+.drone{position:relative;width:min(100%,430px);height:180px;filter:drop-shadow(0 10px 12px #000b)}
+.drone-body{position:absolute;left:35%;top:42%;width:30%;height:28%;border:2px solid #ffe28a;border-radius:45% 45% 35% 35%;background:linear-gradient(145deg,#ffe99a,#a86b08 45%,#1b1000 75%);transform:perspective(120px) rotateX(8deg);box-shadow:0 0 22px #ffbf35}
+.drone-body:before{content:"YUNEEC";position:absolute;top:25%;width:100%;text-align:center;color:#2a1800;font-weight:900;font-size:11px;letter-spacing:1px}
+.drone-body:after{content:"";position:absolute;left:38%;bottom:-42%;width:24%;height:40%;border-radius:50%;background:radial-gradient(circle,#fff 0 12%,#222 15% 45%,#a87820 50%);border:2px solid #d8a52d}
+.arm{position:absolute;top:48%;height:7px;width:39%;background:linear-gradient(#ffe99a,#7a4b08);border-radius:8px}
+.arm.left{left:1%;transform:rotate(12deg)}.arm.right{right:1%;transform:rotate(-12deg)}
+.rotor{position:absolute;top:25%;width:34%;height:15px;border:2px solid #ffe28a;border-radius:50%;box-shadow:0 0 13px #ffcf43;animation:pulse 1.6s infinite}
+.rotor.one{left:0}.rotor.two{right:0}
+.leg{position:absolute;top:67%;width:5px;height:31px;background:#c18b26;border-radius:4px}
+.leg.one{left:42%}.leg.two{right:42%}
+.hero-stats{display:flex;gap:10px;flex-wrap:wrap;margin-top:17px}
+.hero-pill{border:1px solid #b98622;border-radius:30px;padding:6px 11px;background:#1b100088;color:#ffe49a;font-size:11px}
+.account-strip{display:grid;grid-template-columns:1.3fr .7fr;gap:14px;margin-bottom:17px}
+.panel{background:linear-gradient(145deg,#4b3000d9,#241500f5 65%,#160d00);border:1px solid #b88625;border-radius:13px;box-shadow:0 0 15px #c18b2625;overflow:hidden}
+.panel-head{display:flex;align-items:center;gap:10px;padding:13px 16px;border-bottom:1px solid #8c641c;color:var(--gold2);font-weight:bold}
+.panel-body{padding:15px}
+.account-meta{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.meta-label{font-size:11px;color:#cdb477}.meta-value{font-size:14px;color:#fff0b4;font-weight:bold;overflow-wrap:anywhere}
+.membership{display:flex;align-items:center;gap:12px}.medal{font-size:40px;filter:drop-shadow(0 0 8px #ffcb38)}
+.cards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-bottom:17px}
+.stat-card{min-height:116px;padding:14px;background:linear-gradient(145deg,#624000,#382100,#1b1000);border:1px solid #b88625;border-radius:12px;display:flex;align-items:center;gap:12px;animation:glow 4s infinite}
+.stat-icon{font-size:36px;filter:drop-shadow(0 0 7px #ffc000)}
+.stat-label{font-size:12px;color:#e4ca8a}.stat-value{font-size:clamp(16px,1.8vw,23px);font-weight:900;color:#ffdc68;line-height:1.25;margin:5px 0}
+.stat-note{font-size:11px;color:var(--green)}
+.small-btn{border:0;border-radius:20px;padding:5px 14px;background:linear-gradient(100deg,#fff0a0,#e8a500);color:#241500;font-size:11px;font-weight:bold}
+.dashboard-grid{display:grid;grid-template-columns:1.35fr 1fr .78fr;gap:13px;align-items:stretch}
+.panel-title{font-size:18px;color:#ffdf76}
+.panel-head .push{margin-left:auto}
+.period-select{background:#211300;color:#ffdf76;border:1px solid #946a1c;border-radius:7px;padding:5px;font-size:11px}
+.chart-wrap{padding:13px 14px 10px}
 .chart{width:100%;height:205px;display:block}
-.chart-labels{display:flex;justify-content:space-around;color:#ffe3a0;font-size:13px;margin-top:4px}
-.referral-body{display:flex;align-items:center;justify-content:space-between;gap:10px}
-.referral-number{font-size:27px;font-weight:bold;color:#fff4d5;margin:4px 0 12px}
-.referral-bonus{font-size:23px;font-weight:bold;color:#ffcc45;margin:5px 0 15px}
-.gift{font-size:90px;filter:drop-shadow(0 0 13px #ffb000)}
-.quick{display:grid;gap:8px}
-.quick button{width:100%;text-align:left;border:1px solid #ffda69;border-radius:10px;padding:10px 12px;background:linear-gradient(100deg,#ffdf79,#c97800);color:#2a1600;font-weight:bold}
-.quick button span{font-size:19px;margin-right:8px}
-.banner{margin-top:14px;min-height:112px;border:1px solid var(--line);border-radius:16px;box-shadow:var(--glow);background:linear-gradient(100deg,#4b2600,#1b0c01 50%,#a65b00);display:flex;align-items:center;justify-content:space-around;gap:12px;padding:14px;text-align:center;overflow:hidden}
-.banner .trophy{font-size:54px}.banner strong{font-size:clamp(19px,2.4vw,31px);font-style:italic;color:#ffe07a}.banner small{display:block;margin-top:7px;color:#ffedbd;font-style:italic}
-.banner-drone{font-size:18px;font-weight:800;letter-spacing:2px;color:#ffe08a;text-shadow:0 0 12px #ffb000}
-.page-view{display:none;margin-top:14px}.page-view.active{display:block}
-.page-view .panel{min-height:180px}.drone-fleet{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin:18px 0}.drone-item{display:flex;align-items:center;gap:14px;padding:16px;border:1px solid var(--line);border-radius:13px;background:linear-gradient(140deg,#4b2906,#1b0d02)}.mini-drone{width:76px;height:76px;flex:0 0 76px;border-radius:50%;display:grid;place-items:center;background:radial-gradient(circle,#76500c,#1c0e02);font-size:42px;color:#ffd35c;text-shadow:0 0 12px #ffb000}.drone-item p{margin:6px 0;color:#d9bd83}.active-status{color:var(--green);font-size:13px}@media(max-width:700px){.drone-fleet{grid-template-columns:1fr}.drone-item{padding:12px}}
-.modal-backdrop{display:none;position:fixed;inset:0;background:rgba(0,0,0,.76);z-index:10;align-items:center;justify-content:center;padding:16px}
-.modal-backdrop.show{display:flex}
-.modal{width:min(420px,100%);border:1px solid #ffce4e;border-radius:17px;background:linear-gradient(145deg,#482500,#140900);box-shadow:0 0 25px #ffb000;padding:22px}
-.modal h2{color:#ffdc70;margin:0 0 15px}
-.modal label{display:block;margin:12px 0 6px;color:#ffe8b5}
-.modal input,.modal textarea{width:100%;padding:11px;border:1px solid #a96b0c;border-radius:8px;background:#140b02;color:#fff1c8}
-.modal-actions{display:flex;gap:10px;margin-top:18px}.modal-actions button{flex:1}
-.close-btn{background:transparent;color:#ffdc70;border:1px solid #ad780e;border-radius:9px;padding:9px}
-.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#f5c34d;color:#251300;padding:12px 18px;border-radius:10px;font-weight:bold;display:none;z-index:20;box-shadow:0 0 15px #ffb000}
-@media(max-width:1100px){.app{grid-template-columns:175px minmax(0,1fr)}.stats{grid-template-columns:repeat(2,minmax(0,1fr))}.content-grid{grid-template-columns:1fr 1fr}.quick-panel{grid-column:1/-1}.quick{grid-template-columns:repeat(3,1fr)}.hero{grid-template-columns:1fr 1fr}.account-card{grid-column:1/-1;display:flex;justify-content:space-between;align-items:center}.account-title{border:0;margin:0;padding:0}.account-row{margin:0 10px}}
-@media(max-width:700px){.app{display:block;padding:8px}.sidebar{min-height:auto;padding:9px;margin-bottom:9px}.brand{padding:5px;border:0}.brand-name{font-size:28px}.brand-sub{font-size:11px}.nav{display:flex;overflow-x:auto;margin-top:8px;gap:6px;padding-bottom:3px}.nav button{flex:0 0 auto;padding:9px 10px;font-size:12px;gap:6px}.nav .ico{font-size:17px;width:auto}.side-bottom{display:none}.topbar{grid-template-columns:1fr auto;padding:11px;min-height:70px}.top-brand{display:none}.slogan{text-align:left;font-size:17px}.user-tools{gap:8px}.avatar{width:36px;height:36px;font-size:19px}.user-small{display:none}.user-name{font-size:12px}.hero{grid-template-columns:1fr 1fr;padding:14px;min-height:220px}.hero-copy h1{font-size:30px}.hero-copy h2{font-size:17px}.hero-copy p{font-size:13px}.drone-svg{width:100%;max-width:310px}.account-card{grid-column:1/-1;display:block;padding:12px}.account-title{margin-bottom:8px}.account-row{display:inline-block;margin:4px 8px 4px 0;font-size:12px}.account-row strong{font-size:13px}.member-seal{font-size:30px;float:right}.stats{grid-template-columns:1fr 1fr;gap:8px}.stat{padding:10px;min-height:104px;gap:8px}.stat-icon{font-size:29px}.stat-label{font-size:11px;white-space:normal}.stat-value{font-size:15px}.stat-sub{font-size:11px}.stat .gold-btn{padding:6px 9px;font-size:11px}.content-grid{grid-template-columns:1fr;gap:9px}.quick-panel{grid-column:auto}.quick{grid-template-columns:1fr}.panel{padding:13px}.panel h3{font-size:17px}.banner{min-height:95px}.banner .trophy{font-size:35px}.banner-drone{font-size:11px;letter-spacing:1px}}
+.chart-note{font-size:11px;color:#bfa56c;text-align:center;margin-top:6px}
+.referral-content{display:grid;grid-template-columns:1fr auto;align-items:center;gap:8px}
+.referral-number{font-size:28px;color:#ffe28a;font-weight:bold}
+.gift{font-size:65px;filter:drop-shadow(0 0 12px #ffca35)}
+.referral-link{display:flex;gap:6px;margin-top:12px}
+.referral-link input{min-width:0;margin:0;padding:8px;font-size:11px}
+.quick-list{display:grid;gap:8px;padding:12px}
+.quick-btn{width:100%;display:flex;align-items:center;gap:9px;text-align:left;border:1px solid #f6d26c;border-radius:9px;padding:9px 11px;background:linear-gradient(100deg,#fff0a0,#d99b16);color:#241500;font-size:12px;font-weight:bold}
+.quick-btn:hover{filter:brightness(1.12);box-shadow:0 0 13px #ffbd35}
+.bottom-banner{margin-top:15px;min-height:88px;padding:15px 20px;border:1px solid #d9a62e;border-radius:12px;background:linear-gradient(100deg,#382100,#9a5b00,#241500);display:flex;align-items:center;justify-content:center;gap:18px;text-align:center;box-shadow:0 0 17px #d99b1630}
+.bottom-banner .trophy{font-size:39px}.bottom-banner strong{display:block;font-size:clamp(17px,2.5vw,28px);font-style:italic;color:#ffe27a}.bottom-banner small{color:#ffedbd}
+.section-title{font-size:20px;margin:22px 0 13px;border-left:4px solid var(--gold);padding-left:12px;color:#ffdf76}
+.content-panel{padding:22px;background:linear-gradient(145deg,#392300,#1b1000);border:1px solid var(--line);border-radius:13px;box-shadow:0 0 18px #c18b2630}
+.content-panel h2{color:var(--gold);margin-bottom:10px}.content-panel p{color:#e6d3a4;font-size:14px;margin-bottom:10px}
+.info{background:linear-gradient(120deg,#241500,#493000);border:1px solid #9b701f;padding:14px;border-radius:9px;margin-top:12px;color:#ffedc0;font-size:13px}
+.btn{display:inline-block;background:linear-gradient(100deg,#fff0a0,#e8a500,#ffdc65);color:#241500;border:1px solid #fff1a4;border-radius:8px;padding:11px 18px;font-weight:bold;cursor:pointer;margin-top:10px;box-shadow:0 0 12px #ffb90070}
+.form-control{display:block;width:100%;padding:12px;margin:9px 0;color:#fff0c0;background:#1b1000;border:1px solid #a8781d;border-radius:8px}
+.empty-state{padding:18px;text-align:center;border:1px dashed #936515;border-radius:9px;color:#d7bd80;font-size:13px;margin-top:12px}
+footer{text-align:center;padding:24px 15px;background:linear-gradient(100deg,#170d00,#4a2c00,#170d00);margin-top:25px;border-top:2px solid var(--gold);color:#e8d2a0;font-size:12px}
+footer h3{color:#ffdc68;margin-bottom:7px}
+@media(max-width:1100px){.dashboard-grid{grid-template-columns:1fr 1fr}.quick-panel{grid-column:1/-1}.quick-list{grid-template-columns:repeat(3,1fr)}.quick-btn{justify-content:center}.account-strip{grid-template-columns:1fr}.hero{min-height:245px}}
+@media(max-width:760px){.app-header{height:66px;padding:8px 12px;gap:10px}.menu-toggle{display:block;width:38px;height:38px}.brand{min-width:0;gap:7px}.logo{font-size:20px}.brand-sub{font-size:8px}.tagline{display:none}.header-right{margin-left:auto}.welcome-user{display:none}.sidebar{top:66px;transform:translateX(-105%);width:265px}.sidebar.open{transform:translateX(0)}.overlay.show{display:block}.main{margin-left:0;padding:12px}.hero{grid-template-columns:1fr;min-height:0;padding:22px 18px}.hero-copy{text-align:center}.hero-art{height:145px;order:-1}.drone{transform:scale(.8);height:145px}.hero-stats{justify-content:center}.account-meta{grid-template-columns:1fr 1fr}.cards{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.stat-card{min-height:100px;padding:11px;gap:8px}.stat-icon{font-size:28px}.dashboard-grid{grid-template-columns:1fr}.quick-panel{grid-column:auto}.quick-list{grid-template-columns:1fr 1fr}.bottom-banner{min-height:80px}.content-panel{padding:16px}}
+@media(max-width:390px){.logo{font-size:17px}.brand-sub{font-size:7px}.icon-btn{width:35px;height:35px}.cards{grid-template-columns:1fr 1fr}.stat-card{display:block}.stat-icon{font-size:25px}.stat-value{font-size:16px}.quick-list{grid-template-columns:1fr}.account-meta{grid-template-columns:1fr}.hero-art{height:120px}}
 </style>
 </head>
 <body>
-<div class="app">
-  <aside class="sidebar">
-    <div class="brand"><div class="brand-name">YUNEEC</div><div class="brand-sub">Global Investment Platform</div></div>
-    <nav class="nav" aria-label="Main navigation">
-      <button class="active" data-page="Dashboard"><span class="ico">🏠</span>Dashboard</button>
-      <button data-page="My Investments"><span class="ico">📈</span>My Investments</button>
-      <button data-page="Investments"><span class="ico">🪙</span>Investments</button>
-      <button data-page="Earnings"><span class="ico">📈</span>Earnings</button>
-      <button data-page="Referrals"><span class="ico">👥</span>Referrals</button>
-      <button data-page="Wallet"><span class="ico">👛</span>Wallet</button>
-      <button data-page="Transactions"><span class="ico">▤</span>Transactions</button>
-      <button data-page="Support"><span class="ico">🎧</span>Support</button>
-      <button data-page="Settings"><span class="ico">⚙️</span>Settings</button>
-      <button data-page="Logout"><span class="ico">↪</span>Logout</button>
-    </nav>
-    <div class="side-bottom"><div class="globe">🌍</div><small>Global Investment Services</small></div>
-  </aside>
-
-  <main class="main">
-    <header class="topbar">
-      <div class="top-brand">GLOBAL INVESTMENT PLATFORM</div>
-      <div class="slogan">Fly Smarter. Live Better.</div>
-      <div class="user-tools">
-        <div class="user-chip"><div class="avatar">👤</div><div><div class="user-small">Welcome,</div><div class="user-name" id="displayName">BakaShaba⌄</div></div></div>
-        <button class="tool-btn" id="notifications" aria-label="Notifications">🔔<span class="notif">3</span></button>
-        <button class="tool-btn" data-page="Settings" aria-label="Settings">⚙️</button>
-      </div>
-    </header>
-
-    <section class="hero" id="hero">
-      <div class="hero-copy"><h1>YUNEEC</h1><h2>Global Drone<br>Technologies</h2><p>Smart Investments.<br>A Brighter Tomorrow.</p></div>
-      <div class="drone-art"><svg class="drone-svg" viewBox="0 0 520 260" role="img" aria-label="Gold investment growth illustration">
-      <defs>
-        <linearGradient id="invGold" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#fff0a0"/><stop offset=".55" stop-color="#e5a51c"/><stop offset="1" stop-color="#754000"/></linearGradient>
-        <filter id="invGlow"><feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-      </defs>
-      <g stroke="#ffcf45" stroke-width="2" opacity=".35"><path d="M35 220H485M35 170H485M35 120H485M35 70H485"/></g>
-      <g fill="url(#invGold)" stroke="#ffe18a" stroke-width="3" filter="url(#invGlow)">
-        <rect x="75" y="157" width="55" height="63" rx="7"/><rect x="175" y="124" width="55" height="96" rx="7"/>
-        <rect x="275" y="91" width="55" height="129" rx="7"/><rect x="375" y="48" width="55" height="172" rx="7"/>
-      </g>
-      <path d="M58 145L202 105L302 72L438 25" fill="none" stroke="#fff0a0" stroke-width="7" stroke-linecap="round" filter="url(#invGlow)"/>
-      <path d="M397 25H438V66" fill="none" stroke="#fff0a0" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
-      <g fill="#fff1a5" stroke="#e5a51c" stroke-width="3"><circle cx="58" cy="145" r="8"/><circle cx="202" cy="105" r="8"/><circle cx="302" cy="72" r="8"/><circle cx="438" cy="25" r="8"/></g>
-      <g fill="#ffe28a" font-size="19" font-weight="bold"><text x="260" y="252" text-anchor="middle">INVESTMENT GROWTH</text></g>
-    </svg></div>
-      <div class="account-card">
-        <div class="account-title"><span>👤</span>Your Account Overview</div>
-        <div class="account-row"><div>Account ID<strong id="accountId">#YUN20261123</strong></div></div>
-        <div class="account-row"><div>Membership Level<strong>⭐ Premium Member</strong></div></div>
-        <div class="member-seal">🏅</div>
-      </div>
-    </section>
-
-    <section class="stats" aria-label="Account statistics">
-      <article class="stat"><div class="stat-icon">📈</div><div><div class="stat-label">Active Investments</div><div class="stat-value" id="droneCount">2</div><div class="stat-sub">🟢 Active Plans</div></div></article>
-      <article class="stat"><div class="stat-icon">🪙</div><div><div class="stat-label">Total Investment</div><div class="stat-value" id="investmentValue">UGX 500,000</div><div class="stat-sub">🟢 Active Plan</div></div></article>
-      <article class="stat"><div class="stat-icon">👛</div><div><div class="stat-label">Available Balance</div><div class="stat-value" id="balanceValue">UGX 125,000</div><button class="gold-btn" data-modal="withdraw">Withdraw</button></div></article>
-      <article class="stat"><div class="stat-icon">📊</div><div><div class="stat-label">Today's Earnings</div><div class="stat-value" id="todayValue">UGX 75,000</div><div class="stat-sub">↑ +30%</div></div></article>
-    </section>
-
-    <section class="content-grid" id="dashboardContent">
-      <article class="panel">
-        <div class="panel-head"><h3>Earnings Overview</h3><select id="chartPeriod"><option>This Month</option><option>This Week</option><option>This Year</option></select></div>
-        <svg class="chart" viewBox="0 0 560 210" role="img" aria-label="Earnings bar and line chart">
-          <defs><linearGradient id="barFill" x1="0" x2="0" y1="0" y2="1"><stop stop-color="#ffdc63"/><stop offset="1" stop-color="#a85b00"/></linearGradient><filter id="shine"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>
-          <g stroke="rgba(255,202,83,.22)" stroke-width="1"><path d="M45 20H545M45 70H545M45 120H545M45 170H545"/></g>
-          <g fill="#ffe3a0" font-size="15"><text x="0" y="25">150K</text><text x="0" y="75">100K</text><text x="7" y="125">50K</text><text x="25" y="175">0</text></g>
-          <g fill="url(#barFill)" stroke="#ffcf4b" stroke-width="1"><rect x="85" y="115" width="38" height="55"/><rect x="160" y="90" width="38" height="80"/><rect x="235" y="102" width="38" height="68"/><rect x="310" y="70" width="38" height="100"/><rect x="385" y="82" width="38" height="88"/><rect x="460" y="52" width="38" height="118"/></g>
-          <path d="M104 112 L179 86 L254 99 L329 62 L404 77 L479 38" fill="none" stroke="#ffd044" stroke-width="3" filter="url(#shine)"/>
-          <g fill="#fff0a0" stroke="#ffb900" stroke-width="3"><circle cx="104" cy="112" r="5"/><circle cx="179" cy="86" r="5"/><circle cx="254" cy="99" r="5"/><circle cx="329" cy="62" r="5"/><circle cx="404" cy="77" r="5"/><circle cx="479" cy="38" r="5"/></g>
-        </svg>
-        <div class="chart-labels"><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sun</span></div>
-      </article>
-      <article class="panel">
-        <div class="panel-head"><h3>👥 Referral Program</h3></div>
-        <div class="referral-body"><div><div>Total Referrals</div><div class="referral-number" id="referralCount">128</div><div style="color:#ffda6c">Referral Bonus</div><div class="referral-bonus" id="referralBonus">UGX 64,000</div><button class="gold-btn" id="shareButton">↗ Share Link</button></div><div class="gift">🎁</div></div>
-      </article>
-      <article class="panel quick-panel">
-        <div class="panel-head"><h3>⚡ Quick Actions</h3></div>
-        <div class="quick">
-          <button data-modal="invest"><span>📈</span>Invest Now</button>
-          <button data-modal="withdraw"><span>👛</span>Withdraw Funds</button>
-          <button data-page="Referrals"><span>👥</span>View Referrals</button>
-          <button data-page="Support"><span>🎧</span>Contact Support</button>
-        </div>
-      </article>
-    </section>
-
-    <section class="banner" id="banner"><div class="trophy">🏆</div><div><strong>Together We Soar Higher</strong><small>With YUNEEC, your financial goals come into focus!</small></div><div class="banner-drone">✦ INVEST • GROW • PROGRESS ✦</div><div style="font-size:42px">🌆</div></section>
-
-    <section class="page-view" id="pageView"><article class="panel"><div class="panel-head"><h3 id="pageTitle">My Investments</h3></div><div id="pageDescription">Your investment account information will appear here.</div></article></section>
-  </main>
-</div>
-
-<div class="modal-backdrop" id="modalBackdrop">
-  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
-    <h2 id="modalTitle">Withdraw Funds</h2>
-    <div id="modalBody"></div>
-    <div class="modal-actions"><button class="close-btn" id="closeModal">Cancel</button><button class="gold-btn" id="confirmAction">Continue</button></div>
+<header class="app-header">
+  <button class="menu-toggle" onclick="toggleMenu()" aria-label="Open navigation">☰</button>
+  <div class="brand"><div><div class="logo">YUN<span style="color:#fff1a5">EEC</span></div><div class="brand-sub">GLOBAL DRONE TECHNOLOGIES</div></div></div>
+  <div class="tagline">Fly Smarter. Live Better.</div>
+  <div class="header-right">
+    <div class="welcome-user">Welcome,<strong id="headerName">Member</strong></div>
+    <button class="icon-btn" aria-label="Notifications" onclick="showNotice()">♟<span class="notice-dot">0</span></button>
+    <button class="icon-btn" aria-label="Settings" onclick="location.hash='profile'">⚙</button>
   </div>
-</div>
-<div class="toast" id="toast"></div>
+</header>
+<div class="overlay" id="overlay" onclick="closeMenu()"></div>
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-label">Main Menu</div>
+  <a href="#dashboard" class="active"><span class="nav-icon">⌂</span>Dashboard</a>
+  <a href="#drones"><span class="nav-icon">🚁</span>My Drones</a>
+  <a href="#investment"><span class="nav-icon">▤</span>Investments</a>
+  <a href="#earnings"><span class="nav-icon">📈</span>Earnings</a>
+  <a href="#referrals"><span class="nav-icon">👥</span>Referrals</a>
+  <a href="#balance"><span class="nav-icon">👛</span>Wallet</a>
+  <a href="#transactions"><span class="nav-icon">▧</span>Transactions</a>
+  <div class="sidebar-label">Account & Help</div>
+  <a href="#deposit"><span class="nav-icon">💰</span>Deposit</a>
+  <a href="#withdraw"><span class="nav-icon">💸</span>Withdraw Funds</a>
+  <a href="#profile"><span class="nav-icon">♙</span>My Profile</a>
+  <a href="#support"><span class="nav-icon">🎧</span>Support</a>
+  <a href="#settings"><span class="nav-icon">⚙</span>Settings</a>
+  <div class="sidebar-label">Administration</div>
+  <a href="#admin"><span class="nav-icon">🛡</span>Admin Panel</a>
+  <a href="#logout"><span class="nav-icon">⇥</span>Logout</a>
+  <div class="sidebar-bottom">YUNEEC Global Drone Technologies<br>Innovating the Future of Aerial Technology</div>
+</aside>
+
+<main class="main">
+<section id="dashboard" class="page-section active">
+  <div class="hero">
+    <div class="hero-copy">
+      <h1>YUNEEC</h1><h2>Global Drone<br>Technologies</h2>
+      <p>Innovative Drones.<br>A Smarter Tomorrow.</p>
+      <div class="hero-stats"><span class="hero-pill">✦ Innovation</span><span class="hero-pill">✦ Technology</span><span class="hero-pill">✦ Precision</span></div>
+    </div>
+    <div class="hero-art" aria-label="Decorative drone illustration">
+      <div class="drone"><div class="arm left"></div><div class="arm right"></div><div class="rotor one"></div><div class="rotor two"></div><div class="drone-body"></div><div class="leg one"></div><div class="leg two"></div></div>
+    </div>
+  </div>
+
+  <div class="account-strip">
+    <div class="panel"><div class="panel-head">👤 Your Account Overview</div><div class="panel-body account-meta">
+      <div><div class="meta-label">Account ID</div><div class="meta-value" id="accountId">Not available</div></div>
+      <div><div class="meta-label">Membership Level</div><div class="meta-value">Member</div></div>
+      <div class="membership"><div class="medal">🏅</div><div><div class="meta-label">Account Status</div><div class="meta-value">Account overview</div></div></div>
+    </div></div>
+    <div class="panel"><div class="panel-head">✨ Welcome to YUNEEC</div><div class="panel-body"><div class="meta-value" style="font-size:16px">Your dashboard at a glance</div><p style="font-size:12px;color:var(--muted);margin-top:6px">Your verified account information and activity will appear in the sections below.</p></div></div>
+  </div>
+
+  <div class="cards">
+    <div class="stat-card"><div class="stat-icon">🚁</div><div><div class="stat-label">My Drones</div><div class="stat-value" id="droneCount">0</div><div class="stat-note">● Registered drones</div></div></div>
+    <div class="stat-card"><div class="stat-icon">🪙</div><div><div class="stat-label">Total Investment</div><div class="stat-value" id="totalInvestment">UGX 0</div><div class="stat-note">● Verified investment</div></div></div>
+    <div class="stat-card"><div class="stat-icon">👛</div><div><div class="stat-label">Available Balance</div><div class="stat-value" id="availableBalance">UGX 0</div><button class="small-btn" onclick="location.hash='withdraw'">Withdraw</button></div></div>
+    <div class="stat-card"><div class="stat-icon">📊</div><div><div class="stat-label">Today's Earnings</div><div class="stat-value" id="todayEarnings">UGX 0</div><div class="stat-note">● Verified earnings</div></div></div>
+  </div>
+
+  <div class="dashboard-grid">
+    <div class="panel"><div class="panel-head"><span class="panel-title">Earnings Overview</span><span class="push"></span><select class="period-select" aria-label="Chart period"><option>This Month</option><option>Last Month</option><option>This Year</option></select></div><div class="chart-wrap">
+      <svg class="chart" viewBox="0 0 560 220" role="img" aria-label="Earnings chart currently has no transaction data">
+        <g stroke="#79551b" stroke-width="1"><line x1="55" y1="25" x2="545" y2="25"/><line x1="55" y1="75" x2="545" y2="75"/><line x1="55" y1="125" x2="545" y2="125"/><line x1="55" y1="175" x2="545" y2="175"/></g>
+        <g fill="#e8cc83" font-size="12"><text x="7" y="29">150K</text><text x="7" y="79">100K</text><text x="15" y="129">50K</text><text x="34" y="179">0</text></g>
+        <line x1="55" y1="175" x2="545" y2="175" stroke="#d5a33c" stroke-width="2"/>
+        <g fill="#d5a33c" font-size="12" text-anchor="middle"><text x="95" y="198">Mon</text><text x="170" y="198">Tue</text><text x="245" y="198">Wed</text><text x="320" y="198">Thu</text><text x="395" y="198">Fri</text><text x="470" y="198">Sat</text><text x="530" y="198">Sun</text></g>
+        <text x="300" y="105" text-anchor="middle" fill="#d7bd80" font-size="14">No earnings data yet</text>
+      </svg>
+      <div class="chart-note">The chart will update when verified earnings are available.</div>
+    </div></div>
+    <div class="panel"><div class="panel-head"><span class="panel-title">👥 Referral Program</span></div><div class="panel-body"><div class="referral-content"><div><div class="meta-label">Total Referrals</div><div class="referral-number" id="referralCount">0</div><div class="meta-label" style="margin-top:7px">Referral Bonus</div><div class="stat-value">UGX 0</div></div><div class="gift">🎁</div></div><div class="referral-link"><input id="referralLink" readonly value="Referral link unavailable"><button class="small-btn" onclick="copyReferral()">Copy</button></div><button class="btn" style="width:100%" onclick="shareReferral()">↗ Share Link</button></div></div>
+    <div class="panel quick-panel"><div class="panel-head"><span class="panel-title">⚡ Quick Actions</span></div><div class="quick-list">
+      <button class="quick-btn" onclick="location.hash='investment'">📈 Invest Now</button>
+      <button class="quick-btn" onclick="location.hash='withdraw'">👛 Withdraw Funds</button>
+      <button class="quick-btn" onclick="location.hash='referrals'">👥 View Referrals</button>
+      <button class="quick-btn" onclick="location.hash='support'">🎧 Contact Support</button>
+    </div></div>
+  </div>
+  <div class="bottom-banner"><span class="trophy">🏆</span><div><strong>Together We Soar Higher</strong><small>With YUNEEC, the sky is not the limit!</small></div></div>
+</section>
+
+<section id="drones" class="page-section"><div class="content-panel"><h2>🚁 My Drones</h2><p>View drones registered to your account.</p><div class="empty-state">No drone records are available yet.</div></div></section>
+<section id="investment" class="page-section"><div class="content-panel"><h2>▤ Investments</h2><p>Manage and review your investment activity.</p><div class="info">Total verified investment: <strong>UGX 0</strong></div><div class="empty-state">No verified investment records are available yet.</div></div></section>
+<section id="earnings" class="page-section"><div class="content-panel"><h2>📈 Earnings</h2><p>Review your verified earnings.</p><div class="info">Total earnings: <strong>UGX 0</strong></div><div class="empty-state">No verified earnings records are available yet.</div></div></section>
+<section id="referrals" class="page-section"><div class="content-panel"><h2>👥 Referral Team</h2><p>View members who registered using your referral link.</p><div class="info">Total referrals: <strong>0</strong></div><div class="empty-state">Your referral members will appear here when referral records are connected.</div><button class="btn" onclick="copyReferral()">Copy Referral Link</button></div></section>
+<section id="balance" class="page-section"><div class="content-panel"><h2>👛 My Wallet</h2><p>View your available account balance.</p><div class="info">Available Balance: <strong>UGX 0</strong></div><div class="info">Total Earnings: <strong>UGX 0</strong></div></div></section>
+<section id="transactions" class="page-section"><div class="content-panel"><h2>▧ Transactions</h2><p>Review your account transaction history.</p><div class="empty-state">No transaction records available.</div></div></section>
+<section id="deposit" class="page-section"><div class="content-panel"><h2>💰 Deposit</h2><p>Deposit instructions and payment verification will appear here.</p><div class="info">No payment instructions have been configured on this page yet. Please contact support before sending money.</div></div></section>
+<section id="withdraw" class="page-section"><div class="content-panel"><h2>💸 Withdraw Funds</h2><p>Withdrawal requests will be shown here.</p><div class="info">Available balance: <strong>UGX 0</strong></div><div class="info">Withdrawal submission is not connected on this page yet.</div></div></section>
+<section id="profile" class="page-section"><div class="content-panel"><h2>♙ My Profile</h2><p>Your verified profile information will appear here when your account data is connected.</p><div class="empty-state">Profile details are not loaded.</div></div></section>
+<section id="settings" class="page-section"><div class="content-panel"><h2>⚙ Settings</h2><p>Account preferences and security settings.</p><div class="info">Settings controls are not connected yet.</div></div></section>
+<section id="support" class="page-section"><div class="content-panel"><h2>🎧 Contact & Support</h2><p>Contact YUNEEC customer support.</p><div class="info">Support contact details have not been configured on this page yet.</div></div></section>
+<section id="admin" class="page-section"><div class="content-panel"><h2>🛡 Admin Panel</h2><p>Administrative management area.</p><div class="info">Admin access must be protected and verified by your authentication and database rules. No admin controls are exposed by this static page.</div></div></section>
+<section id="logout" class="page-section"><div class="content-panel"><h2>⇥ Logout</h2><p>Are you sure you want to leave your account?</p><button class="btn" onclick="logout()">Confirm Logout</button></div></section>
+</main>
+<footer><h3>✨ YUNEEC Global Drone Technologies ✨</h3><p>Innovating the Future of Aerial Technology</p><p>© 2026 YUNEEC. All rights reserved.</p></footer>
 
 <script>
-/* DEMO FRONT END:
-   These values are sample display data. Connect your own secure backend/API
-   before using real accounts, balances, investments or withdrawals. */
-const demoAccount = {
-  name:"BakaShaba", id:"#YUN20261123", drones:2,
-  investment:500000, balance:125000, today:75000,
-  referrals:128, referralBonus:64000,
-  referralLink:location.href.split("#")[0] + "?ref=YUN20261123"
-};
-const money = n => "UGX " + Number(n).toLocaleString("en-US");
-function showToast(message){
-  const toast=document.getElementById("toast");
-  toast.textContent=message;toast.style.display="block";
-  clearTimeout(window.toastTimer);
-  window.toastTimer=setTimeout(()=>toast.style.display="none",2600);
+function toggleMenu(){document.getElementById('sidebar').classList.toggle('open');document.getElementById('overlay').classList.toggle('show')}
+function closeMenu(){document.getElementById('sidebar').classList.remove('open');document.getElementById('overlay').classList.remove('show')}
+function showPage(){
+  const id=(location.hash||'#dashboard').slice(1);
+  const sections=[...document.querySelectorAll('.page-section')];
+  const target=sections.find(s=>s.id===id)||document.getElementById('dashboard');
+  sections.forEach(s=>s.classList.toggle('active',s===target));
+  document.querySelectorAll('.sidebar a').forEach(a=>a.classList.toggle('active',a.getAttribute('href')==='#'+target.id));
+  closeMenu();window.scrollTo({top:0,behavior:'smooth'});
 }
-function updateDashboard(){
-  document.getElementById("displayName").textContent=demoAccount.name+"⌄";
-  document.getElementById("accountId").textContent=demoAccount.id;
-  document.getElementById("droneCount").textContent=demoAccount.drones;
-  document.getElementById("investmentValue").textContent=money(demoAccount.investment);
-  document.getElementById("balanceValue").textContent=money(demoAccount.balance);
-  document.getElementById("todayValue").textContent=money(demoAccount.today);
-  document.getElementById("referralCount").textContent=demoAccount.referrals;
-  document.getElementById("referralBonus").textContent=money(demoAccount.referralBonus);
+window.addEventListener('hashchange',showPage);
+window.addEventListener('DOMContentLoaded',showPage);
+function showNotice(){alert('You have no new notifications.')}
+function getReferralUrl(){return document.querySelector('meta[name="referral-url"]')?.content||''}
+function copyReferral(){
+  const url=getReferralUrl();
+  if(!url){alert('Your personal referral link will appear after the referral system is connected.');return}
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(url).then(()=>alert('Referral link copied.')).catch(()=>prompt('Copy your referral link:',url))}
+  else{prompt('Copy your referral link:',url)}
 }
-const descriptions={
- "My Investments":"<h2>📈 My Investment Portfolio</h2><div class=\"drone-fleet\"><div class=\"drone-item\"><div class=\"mini-drone\">✥</div><div><strong>Investment Plan #01</strong><p>Active investment plan</p><span class=\"active-status\">● Active</span></div></div><div class=\"drone-item\"><div class=\"mini-drone\">✥</div><div><strong>Investment Plan #02</strong><p>Active investment plan</p><span class=\"active-status\">● Active</span></div></div></div><p>Plan details, investment history and returns can be connected to your backend.</p>",
- "Investments":"<h2>🪙 Investment Plans</h2><p>Review your active plans, investment history and plan details.</p><button class='gold-btn' data-modal='invest'>Explore Investments</button>",
- "Earnings":"<h2>📈 Earnings</h2><p>Today's earnings: <strong>UGX 75,000</strong></p><p>Connect your earnings ledger to show verified payouts and history.</p>",
- "Referrals":"<h2>👥 Referral Center</h2><p>Total referrals: <strong>128</strong></p><p>Referral bonus: <strong>UGX 64,000</strong></p><button class='gold-btn' id='pageShare'>Share Referral Link</button>",
- "Wallet":"<h2>👛 My Wallet</h2><p>Available balance: <strong>UGX 125,000</strong></p><button class='gold-btn' data-modal='withdraw'>Request Withdrawal</button>",
- "Transactions":"<h2>▤ Transactions</h2><p>Your deposits, withdrawals, investments and earnings transactions will be listed here after backend integration.</p>",
- "Support":"<h2>🎧 Customer Support</h2><p>Need help with your account? Add your official support email, phone number or live chat link here.</p>",
- "Settings":"<h2>⚙️ Account Settings</h2><p>Profile, password, notification and security settings can be added here.</p>",
- "Logout":"<h2>Logout</h2><p>This sample interface does not have login authentication connected.</p><button class='gold-btn' id='stayLoggedIn'>Stay on Dashboard</button>"
-};
-function openPage(page){
-  const isDash=page==="Dashboard";
-  document.getElementById("dashboardContent").style.display=isDash?"grid":"none";
-  document.getElementById("hero").style.display=isDash?"grid":"none";
-  document.getElementById("banner").style.display=isDash?"flex":"none";
-  const view=document.getElementById("pageView");
-  view.classList.toggle("active",!isDash);
-  if(!isDash){
-    document.getElementById("pageTitle").textContent=page;
-    document.getElementById("pageDescription").innerHTML=descriptions[page]||"";
+function shareReferral(){
+  const url=getReferralUrl();
+  if(!url){alert('Your personal referral link will appear after the referral system is connected.');return}
+  if(navigator.share){navigator.share({title:'Join YUNEEC',text:'Here is my referral link:',url}).catch(()=>{})}
+  else{copyReferral()}
+}
+function logout(){
+  if(confirm('Are you sure you want to logout?')){
+    alert('Connect your authentication system logout function here. No account session was changed.');
   }
-  document.querySelectorAll(".nav button").forEach(b=>b.classList.toggle("active",b.dataset.page===page));
 }
-document.querySelectorAll("[data-page]").forEach(btn=>btn.addEventListener("click",()=>openPage(btn.dataset.page)));
-document.addEventListener("click",e=>{
-  const modalButton=e.target.closest("[data-modal]");
-  if(modalButton) openModal(modalButton.dataset.modal);
-  if(e.target.id==="pageShare") shareLink();
-  if(e.target.id==="stayLoggedIn") openPage("Dashboard");
-});
-document.getElementById("notifications").addEventListener("click",()=>showToast("You have 3 sample notifications."));
-document.getElementById("chartPeriod").addEventListener("change",e=>showToast("Showing sample data: "+e.target.value));
-document.getElementById("shareButton").addEventListener("click",shareLink);
-async function shareLink(){
-  const link=demoAccount.referralLink;
-  try{
-    if(navigator.share) await navigator.share({title:"Join YUNEEC",text:"Check out YUNEEC Global Investment Platform",url:link});
-    else if(navigator.clipboard){await navigator.clipboard.writeText(link);showToast("Referral link copied!");}
-    else showToast("Referral link: "+link);
-  }catch(err){if(err.name!=="AbortError")showToast("Share was cancelled or unavailable.");}
-}
-const backdrop=document.getElementById("modalBackdrop");
-let activeModal="withdraw";
-function openModal(type){
-  activeModal=type;
-  const title=document.getElementById("modalTitle");
-  const body=document.getElementById("modalBody");
-  if(type==="withdraw"){
-    title.textContent="Withdraw Funds";
-    body.innerHTML='<p>Available balance: <strong>'+money(demoAccount.balance)+'</strong></p><label for="amount">Withdrawal amount (UGX)</label><input id="amount" type="number" min="1" placeholder="Enter amount"><label for="method">Payment method</label><select id="method" style="width:100%;padding:11px"><option>Mobile Money</option><option>Bank Transfer</option></select>';
-    document.getElementById("confirmAction").textContent="Submit Request";
-  }else{
-    title.textContent="Invest in YUNEEC";
-    body.innerHTML='<p>Choose an amount to explore an investment plan.</p><label for="amount">Investment amount (UGX)</label><input id="amount" type="number" min="1" placeholder="Enter amount"><p style="font-size:12px;color:#d6b777">Demo only — no payment will be collected.</p>';
-    document.getElementById("confirmAction").textContent="Continue";
-  }
-  backdrop.classList.add("show");
-}
-function closeModal(){backdrop.classList.remove("show")}
-document.getElementById("closeModal").addEventListener("click",closeModal);
-backdrop.addEventListener("click",e=>{if(e.target===backdrop)closeModal()});
-document.getElementById("confirmAction").addEventListener("click",()=>{
-  const amount=Number(document.getElementById("amount")?.value||0);
-  if(!Number.isFinite(amount)||amount<=0){showToast("Please enter a valid amount.");return}
-  if(activeModal==="withdraw"){
-    if(amount>demoAccount.balance){showToast("Amount exceeds the displayed balance.");return}
-    showToast("Demo request prepared. Connect a secure backend to submit it.");
-  }else showToast("Demo investment selected. Connect payment processing to continue.");
-  closeModal();
-});
-updateDashboard();
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeMenu()});
 </script>
 </body>
-  </html>
+</html>
+
 
 
