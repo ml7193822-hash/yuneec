@@ -232,6 +232,65 @@ footer h3{color:#ffdc68;margin-bottom:7px}
   font-size:13px;
   margin-top:12px;
 }
+  
+/* YUNEEC ADMIN DASHBOARD */
+#admin .admin-stats {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin: 20px 0;
+}
+
+#admin .admin-card {
+  background: #f1f5f9;
+  border: 1px solid #dbe3ed;
+  border-radius: 12px;
+  padding: 16px;
+  min-width: 0;
+}
+
+#admin .admin-card h3 {
+  font-size: 14px;
+  margin: 0 0 10px;
+  color: #475569;
+}
+
+#admin .admin-card strong {
+  font-size: 19px;
+  color: #075985;
+  overflow-wrap: anywhere;
+}
+
+#admin .content-panel h3 {
+  margin-top: 25px;
+}
+
+#admin input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 12px;
+  margin: 8px 0 14px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+}
+
+#admin form label {
+  display: block;
+  font-weight: 600;
+  margin-top: 12px;
+}
+
+#admin form .btn {
+  width: 100%;
+  margin-top: 15px;
+}
+
+@media (max-width: 400px) {
+  #admin .admin-stats {
+    grid-template-columns: 1fr;
+  }
+}
+
 .auth-hidden {display:none!important}
 
 </style>
@@ -411,7 +470,124 @@ footer h3{color:#ffdc68;margin-bottom:7px}
 
 <section id="settings" class="page-section"><div class="content-panel"><h2>⚙ Settings</h2><p>Account preferences and security settings.</p><div class="info">Settings controls are not connected yet.</div></div></section>
 <section id="support" class="page-section"><div class="content-panel"><h2>🎧 Contact & Support</h2><p>Contact YUNEEC customer support.</p><div class="info">Support contact details have not been configured on this page yet.</div></div></section>
-<section id="admin" class="page-section"><div class="content-panel"><h2>🛡 Admin Panel</h2><p>Administrative management area.</p><div class="info">Admin access must be protected and verified by your authentication and database rules. No admin controls are exposed by this static page.</div></div></section>
+
+<section id="admin" class="page-section">
+  <div class="content-panel">
+    <h2>🛡 YUNEEC Admin Dashboard</h2>
+    <p>Global Drone Technologies — Management Centre</p>
+
+    <div class="admin-stats">
+      <div class="admin-card">
+        <h3>Total Deposits</h3>
+        <strong id="adminTotalDeposits">UGX 0</strong>
+      </div>
+      <div class="admin-card">
+        <h3>Total Withdrawals</h3>
+        <strong id="adminTotalWithdrawals">UGX 0</strong>
+      </div>
+      <div class="admin-card">
+        <h3>Registered Members</h3>
+        <strong id="adminTotalMembers">0</strong>
+      </div>
+      <div class="admin-card">
+        <h3>Total Wallet Balance</h3>
+        <strong id="adminTotalWallet">UGX 0</strong>
+      </div>
+    </div>
+
+    <h3>💰 Pending Deposits</h3>
+    <p>Review and manage member deposit requests.</p>
+    <div id="adminPendingDeposits">
+      Loading deposit requests...
+    </div>
+
+    <h3>💸 Pending Withdrawals</h3>
+    <p>Review member withdrawal requests.</p>
+    <div id="adminPendingWithdrawals">
+      Loading withdrawal requests...
+    </div>
+
+    <h3>👥 Members Management</h3>
+    <input
+      type="search"
+      id="adminMemberSearch"
+      placeholder="Search members by email..."
+    >
+    <div id="adminMembers">
+      Loading members...
+    </div>
+
+    <h3>🏦 Company Profit Funds</h3>
+    <div class="admin-stats">
+      <div class="admin-card">
+        <h3>Declared Funds</h3>
+        <strong id="adminDeclaredFunds">UGX 0</strong>
+      </div>
+      <div class="admin-card">
+        <h3>Verified Funds</h3>
+        <strong id="adminVerifiedFunds">UGX 0</strong>
+      </div>
+      <div class="admin-card">
+        <h3>Allocated Funds</h3>
+        <strong id="adminAllocatedFunds">UGX 0</strong>
+      </div>
+      <div class="admin-card">
+        <h3>Available Funds</h3>
+        <strong id="adminAvailableFunds">UGX 0</strong>
+      </div>
+    </div>
+
+    <p>
+      Only independently verified company funds can be
+      used for member earnings. Declared funds are not
+      available until verified.
+    </p>
+
+    <h3>📋 Company Fund Verification</h3>
+    <div id="adminFundSubmissions">
+      Loading company fund submissions...
+    </div>
+
+    <h3>➕ Register Company Profit Funds</h3>
+    <p>
+      Submit genuine company profit funds for
+      administrator verification.
+    </p>
+
+    <form id="adminCompanyFundsForm">
+      <label>Amount (UGX)</label>
+      <input
+        type="number"
+        id="companyFundAmount"
+        min="1"
+        placeholder="Enter amount"
+        required
+      >
+
+      <label>Source of Funds</label>
+      <input
+        type="text"
+        id="companyFundSource"
+        placeholder="e.g. Company operating profits"
+        required
+      >
+
+      <label>Proof Reference</label>
+      <input
+        type="text"
+        id="companyFundProof"
+        placeholder="Bank statement or transaction reference"
+        required
+      >
+
+      <button type="submit" class="btn">
+        Submit Funds for Verification
+      </button>
+    </form>
+    <div id="adminFundMessage"></div>
+  </div>
+</section>
+
 <section id="logout" class="page-section"><div class="content-panel"><h2>⇥ Logout</h2><p>Are you sure you want to leave your account?</p><button class="btn" onclick="logout()">Confirm Logout</button></div></section>
 </main>
 <footer><h3>✨ YUNEEC Global Drone Technologies ✨</h3><p>Innovating the Future of Aerial Technology</p><p>© 2026 YUNEEC. All rights reserved.</p></footer>
