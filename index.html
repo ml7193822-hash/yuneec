@@ -825,9 +825,135 @@ if (adminError || isAdmin !== true) {
   const walletMap = new Map(
     (wallets || []).map(w => [w.user_id, Number(w.balance || 0)])
   );
+    const { data: pendingDeposits, error: depositError } =
+  await supabaseClient
+    .from('deposits')
+    .select('id, user_id, amount, payment_reference, created_at, status')
+    .eq('status', 'Pending')
+    .order('created_at', { ascending: false });
+
+const depositContainer =
+  document.getElementById('adminPendingDeposits');
+
+depositContainer.replaceChildren();
+
+if (depositError) {
+  depositContainer.textContent = 'Could not load deposits.';
+} else if (!pendingDeposits || pendingDeposits.length === 0) {
+  depositContainer.textContent = 'No pending deposits.';
+} else {
+  pendingDeposits.forEach(request => {
+    const card = document.createElement('div');
+    card.className = 'admin-card';
+
+    const details = document.createElement('p');
+    details.textContent =
+      'Member: ' + request.user_id +
+      ' | Amount: UGX ' + Number(request.amount).toLocaleString('en-UG') +
+      ' | Reference: ' + (request.payment_reference || 'Not provided');
+
+    card.appendChild(details);
+
+    ['Approved', 'Rejected'].forEach(decision => {
+      const button = document.createElement('button');
+      button.className = 'btn';
+      button.textContent = decision;
+
+      button.onclick = async () => {
+        if (!confirm('Mark this deposit as ' + decision + '?')) return;
+
+        button.disabled = true;
+
+        const { error } = await supabaseClient.rpc(
+          'admin_review_deposit',
+          {
+            target_deposit_id: request.id,
+            decision
+          }
+        );
+
+        if (error) {
+          alert(error.message);
+          button.disabled = false;
+          return;
+        }
+
+        alert('Deposit ' + decision.toLowerCase() + '.');
+        await loadAdminDashboard();
+      };
+
+      card.appendChild(button);
+    });
+
+    depositContainer.appendChild(card);
+  });
+}
 
   document.getElementById('adminTotalMembers').textContent =
     (members || []).length;
+    const { data: pendingWithdrawals, error: withdrawalError } =
+  await supabaseClient
+    .from('withdrawals')
+    .select('id, user_id, amount, payment_details, created_at, status')
+    .eq('status', 'Pending')
+    .order('created_at', { ascending: false });
+
+const withdrawalContainer =
+  document.getElementById('adminPendingWithdrawals');
+
+withdrawalContainer.replaceChildren();
+
+if (withdrawalError) {
+  withdrawalContainer.textContent = 'Could not load withdrawals.';
+} else if (!pendingWithdrawals || pendingWithdrawals.length === 0) {
+  withdrawalContainer.textContent = 'No pending withdrawals.';
+} else {
+  pendingWithdrawals.forEach(request => {
+    const card = document.createElement('div');
+    card.className = 'admin-card';
+
+    const details = document.createElement('p');
+    details.textContent =
+      'Member: ' + request.user_id +
+      ' | Amount: UGX ' + Number(request.amount).toLocaleString('en-UG') +
+      ' | Payment details: ' + (request.payment_details || 'Not provided');
+
+    card.appendChild(details);
+
+    ['Approved', 'Rejected'].forEach(decision => {
+      const button = document.createElement('button');
+      button.className = 'btn';
+      button.textContent = decision;
+
+      button.onclick = async () => {
+        if (!confirm('Mark this withdrawal as ' + decision + '?')) return;
+
+        button.disabled = true;
+
+        const { error } = await supabaseClient.rpc(
+          'admin_review_withdrawal',
+          {
+            target_withdrawal_id: request.id,
+            decision
+          }
+        );
+
+        if (error) {
+          alert(error.message);
+          button.disabled = false;
+          return;
+        }
+
+        alert('Withdrawal ' + decision.toLowerCase() + '.');
+        await loadAdminDashboard();
+      };
+
+      card.appendChild(button);
+    });
+
+    withdrawalContainer.appendChild(card);
+  });
+}
 
   const totalWallet = (wallets || []).reduce(
     (sum, w) => sum + Number(w.balance || 0), 0
