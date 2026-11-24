@@ -104,9 +104,124 @@ footer h3{color:#ffdc68;margin-bottom:7px}
 @media(max-width:1100px){.dashboard-grid{grid-template-columns:1fr 1fr}.quick-panel{grid-column:1/-1}.quick-list{grid-template-columns:repeat(3,1fr)}.quick-btn{justify-content:center}.account-strip{grid-template-columns:1fr}.hero{min-height:245px}}
 @media(max-width:760px){.app-header{height:66px;padding:8px 12px;gap:10px}.menu-toggle{display:block;width:38px;height:38px}.brand{min-width:0;gap:7px}.logo{font-size:20px}.brand-sub{font-size:8px}.tagline{display:none}.header-right{margin-left:auto}.welcome-user{display:none}.sidebar{top:66px;transform:translateX(-105%);width:265px}.sidebar.open{transform:translateX(0)}.overlay.show{display:block}.main{margin-left:0;padding:12px}.hero{grid-template-columns:1fr;min-height:0;padding:22px 18px}.hero-copy{text-align:center}.hero-art{height:145px;order:-1}.drone{transform:scale(.8);height:145px}.hero-stats{justify-content:center}.account-meta{grid-template-columns:1fr 1fr}.cards{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.stat-card{min-height:100px;padding:11px;gap:8px}.stat-icon{font-size:28px}.dashboard-grid{grid-template-columns:1fr}.quick-panel{grid-column:auto}.quick-list{grid-template-columns:1fr 1fr}.bottom-banner{min-height:80px}.content-panel{padding:16px}}
 @media(max-width:390px){.logo{font-size:17px}.brand-sub{font-size:7px}.icon-btn{width:35px;height:35px}.cards{grid-template-columns:1fr 1fr}.stat-card{display:block}.stat-icon{font-size:25px}.stat-value{font-size:16px}.quick-list{grid-template-columns:1fr}.account-meta{grid-template-columns:1fr}.hero-art{height:120px}}
+  
+/* YUNEEC AUTHENTICATION */
+.auth-screen {
+  position:fixed;
+  inset:0;
+  z-index:9999;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:18px;
+  background:radial-gradient(ellipse at top,#684000,#100900 75%);
+}
+.auth-box {
+  width:100%;
+  max-width:420px;
+  padding:28px;
+  background:linear-gradient(145deg,#493000,#170d00);
+  border:1px solid #ffca35;
+  border-radius:16px;
+  box-shadow:0 0 30px #ffbd3560;
+}
+.auth-box h1 {
+  color:#ffdf76;
+  text-align:center;
+  margin-bottom:5px;
+}
+.auth-box p {
+  color:#d3b879;
+  text-align:center;
+  font-size:13px;
+  margin-bottom:20px;
+}
+.auth-box input {
+  display:block;
+  width:100%;
+  padding:14px;
+  margin:12px 0;
+  color:#fff0c0;
+  background:#100900;
+  border:1px solid #a8781d;
+  border-radius:8px;
+  outline:none;
+}
+.auth-submit {
+  width:100%;
+  padding:14px;
+  margin-top:12px;
+  border:0;
+  border-radius:8px;
+  background:linear-gradient(100deg,#fff0a0,#e8a500);
+  color:#241500;
+  font-weight:bold;
+  cursor:pointer;
+}
+.auth-switch {
+  display:block;
+  margin:18px auto 0;
+  background:none;
+  border:0;
+  color:#ffdf76;
+  cursor:pointer;
+}
+.auth-message {
+  color:#ffe99a;
+  text-align:center;
+  font-size:13px;
+  margin-top:12px;
+}
+.auth-hidden {display:none!important}
+
 </style>
 </head>
 <body>
+  
+<div class="auth-screen" id="authScreen">
+  <div class="auth-box">
+    <h1>YUNEEC</h1>
+    <p id="authSubtitle">Create your YUNEEC account</p>
+
+    <form id="authForm">
+      <input
+        id="authUsername"
+        type="text"
+        placeholder="Username"
+        autocomplete="username"
+        required
+      >
+
+      <input
+        id="authEmail"
+        type="email"
+        placeholder="Email address"
+        autocomplete="email"
+        required
+      >
+
+      <input
+        id="authPassword"
+        type="password"
+        placeholder="Password"
+        autocomplete="new-password"
+        minlength="6"
+        required
+      >
+
+      <button class="auth-submit" id="authSubmit" type="submit">
+        Create Account
+      </button>
+    </form>
+
+    <button class="auth-switch" id="authSwitch" type="button">
+      Already have an account? Sign in
+    </button>
+
+    <div class="auth-message" id="authMessage"></div>
+  </div>
+</div>
+
 <header class="app-header">
   <button class="menu-toggle" onclick="toggleMenu()" aria-label="Open navigation">☰</button>
   <div class="brand"><div><div class="logo">YUN<span style="color:#fff1a5">EEC</span></div><div class="brand-sub">GLOBAL DRONE TECHNOLOGIES</div></div></div>
@@ -206,40 +321,256 @@ footer h3{color:#ffdc68;margin-bottom:7px}
 </main>
 <footer><h3>✨ YUNEEC Global Drone Technologies ✨</h3><p>Innovating the Future of Aerial Technology</p><p>© 2026 YUNEEC. All rights reserved.</p></footer>
 
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 <script>
-function toggleMenu(){document.getElementById('sidebar').classList.toggle('open');document.getElementById('overlay').classList.toggle('show')}
-function closeMenu(){document.getElementById('sidebar').classList.remove('open');document.getElementById('overlay').classList.remove('show')}
-function showPage(){
-  const id=(location.hash||'#dashboard').slice(1);
-  const sections=[...document.querySelectorAll('.page-section')];
-  const target=sections.find(s=>s.id===id)||document.getElementById('dashboard');
-  sections.forEach(s=>s.classList.toggle('active',s===target));
-  document.querySelectorAll('.sidebar a').forEach(a=>a.classList.toggle('active',a.getAttribute('href')==='#'+target.id));
-  closeMenu();window.scrollTo({top:0,behavior:'smooth'});
+const SUPABASE_URL =
+  'https://dlowtcbvmporsphegacb.supabase.co';
+
+const SUPABASE_KEY =
+  'sb_publishable_DMRhqYhppQ1Yx0ptkjMLdQ_og3rcWYq';
+
+const supabase = window.supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_KEY
+);
+
+let authMode = 'signup';
+
+const authScreen = document.getElementById('authScreen');
+const authForm = document.getElementById('authForm');
+const authUsername = document.getElementById('authUsername');
+const authEmail = document.getElementById('authEmail');
+const authPassword = document.getElementById('authPassword');
+const authMessage = document.getElementById('authMessage');
+const authSubmit = document.getElementById('authSubmit');
+const authSwitch = document.getElementById('authSwitch');
+
+function setAuthMode(mode) {
+  authMode = mode;
+  authMessage.textContent = '';
+
+  const signingUp = mode === 'signup';
+
+  authUsername.classList.toggle('auth-hidden', !signingUp);
+  authUsername.required = signingUp;
+  authPassword.autocomplete = signingUp
+    ? 'new-password'
+    : 'current-password';
+
+  document.getElementById('authSubtitle').textContent =
+    signingUp
+      ? 'Create your YUNEEC account'
+      : 'Sign in to your YUNEEC account';
+
+  authSubmit.textContent =
+    signingUp ? 'Create Account' : 'Sign In';
+
+  authSwitch.textContent =
+    signingUp
+      ? 'Already have an account? Sign in'
+      : 'New here? Create Account';
 }
-window.addEventListener('hashchange',showPage);
-window.addEventListener('DOMContentLoaded',showPage);
-function showNotice(){alert('You have no new notifications.')}
-function getReferralUrl(){return document.querySelector('meta[name="referral-url"]')?.content||''}
-function copyReferral(){
-  const url=getReferralUrl();
-  if(!url){alert('Your personal referral link will appear after the referral system is connected.');return}
-  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(url).then(()=>alert('Referral link copied.')).catch(()=>prompt('Copy your referral link:',url))}
-  else{prompt('Copy your referral link:',url)}
+
+authSwitch.addEventListener('click', () => {
+  setAuthMode(authMode === 'signup' ? 'login' : 'signup');
+});
+
+authForm.addEventListener('submit', async (event) => {
+  event.preventDefault();
+
+  const username = authUsername.value.trim();
+  const email = authEmail.value.trim();
+  const password = authPassword.value;
+
+  authSubmit.disabled = true;
+  authMessage.textContent = 'Please wait...';
+
+  try {
+    if (authMode === 'signup') {
+      if (!username) {
+        throw new Error('Please enter your username.');
+      }
+
+      const { data, error } = await supabase.auth.signUp({
+        email,
+        password,
+        options: {
+          data: {
+            username: username,
+            full_name: username
+          }
+        }
+      });
+
+      if (error) throw error;
+
+      if (data.session) {
+        await loadAccount(data.session.user);
+      } else {
+        authMessage.textContent =
+          'Account created! Please check your email to confirm your account, then sign in.';
+      }
+
+    } else {
+      const { data, error } =
+        await supabase.auth.signInWithPassword({
+          email,
+          password
+        });
+
+      if (error) throw error;
+
+      await loadAccount(data.user);
+    }
+
+  } catch (error) {
+    authMessage.textContent = error.message;
+  } finally {
+    authSubmit.disabled = false;
+  }
+});
+
+async function loadAccount(user) {
+  if (!user) return;
+
+  authScreen.classList.add('auth-hidden');
+
+  const username =
+    user.user_metadata?.username ||
+    user.user_metadata?.full_name ||
+    user.email?.split('@')[0] ||
+    'Member';
+
+  document.getElementById('headerName').textContent = username;
+  document.getElementById('accountId').textContent = user.id;
+
+  const referralUrl =
+    location.origin + location.pathname + '?ref=' + user.id;
+
+  document.getElementById('referralLink').value = referralUrl;
+
+  showPage();
 }
-function shareReferral(){
-  const url=getReferralUrl();
-  if(!url){alert('Your personal referral link will appear after the referral system is connected.');return}
-  if(navigator.share){navigator.share({title:'Join YUNEEC',text:'Here is my referral link:',url}).catch(()=>{})}
-  else{copyReferral()}
-}
-function logout(){
-  if(confirm('Are you sure you want to logout?')){
-    alert('Connect your authentication system logout function here. No account session was changed.');
+
+async function checkSession() {
+  const { data, error } = await supabase.auth.getSession();
+
+  if (error) {
+    authMessage.textContent = error.message;
+    return;
+  }
+
+  if (data.session) {
+    await loadAccount(data.session.user);
+  } else {
+    authScreen.classList.remove('auth-hidden');
   }
 }
-document.addEventListener('keydown',e=>{if(e.key==='Escape')closeMenu()});
+
+function toggleMenu() {
+  document.getElementById('sidebar').classList.toggle('open');
+  document.getElementById('overlay').classList.toggle('show');
+}
+
+function closeMenu() {
+  document.getElementById('sidebar').classList.remove('open');
+  document.getElementById('overlay').classList.remove('show');
+}
+
+function showPage() {
+  const id = (location.hash || '#dashboard').slice(1);
+
+  const sections = [
+    ...document.querySelectorAll('.page-section')
+  ];
+
+  const target =
+    sections.find(s => s.id === id) ||
+    document.getElementById('dashboard');
+
+  sections.forEach(s =>
+    s.classList.toggle('active', s === target)
+  );
+
+  document.querySelectorAll('.sidebar a').forEach(a =>
+    a.classList.toggle(
+      'active',
+      a.getAttribute('href') === '#' + target.id
+    )
+  );
+
+  closeMenu();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+window.addEventListener('hashchange', showPage);
+
+function showNotice() {
+  alert('You have no new notifications.');
+}
+
+function getReferralUrl() {
+  return document.getElementById('referralLink').value;
+}
+
+async function copyReferral() {
+  const url = getReferralUrl();
+
+  try {
+    await navigator.clipboard.writeText(url);
+    alert('Referral link copied.');
+  } catch {
+    prompt('Copy your referral link:', url);
+  }
+}
+
+async function shareReferral() {
+  const url = getReferralUrl();
+
+  if (navigator.share) {
+    try {
+      await navigator.share({
+        title: 'Join YUNEEC',
+        text: 'Join YUNEEC Global Drone Technologies.',
+        url
+      });
+    } catch {}
+  } else {
+    copyReferral();
+  }
+}
+
+async function logout() {
+  if (!confirm('Are you sure you want to logout?')) return;
+
+  const { error } = await supabase.auth.signOut();
+
+  if (error) {
+    alert(error.message);
+    return;
+  }
+
+  location.hash = 'dashboard';
+  authScreen.classList.remove('auth-hidden');
+  setAuthMode('login');
+  authForm.reset();
+}
+
+supabase.auth.onAuthStateChange((event, session) => {
+  if (event === 'SIGNED_OUT') {
+    authScreen.classList.remove('auth-hidden');
+  }
+});
+
+document.addEventListener('keydown', event => {
+  if (event.key === 'Escape') closeMenu();
+});
+
+window.addEventListener('DOMContentLoaded', checkSession);
 </script>
+
 </body>
 </html>
 
