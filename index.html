@@ -787,7 +787,80 @@ async function loadAccount(user) {
     location.origin + location.pathname + '?ref=' + user.id;
 
   showPage();
+  loadAdminDashboard();
 }
+  async function loadAdminDashboard() {
+  const { data: isAdmin, error: adminError } =
+  await supabaseClient.rpc('is_admin');
+
+if (adminError || isAdmin !== true) {
+  console.error('Admin verification failed:', adminError);
+  return;
+}
+
+  if (adminError || !admin) {
+    console.error('Admin verification failed:', adminError);
+    return;
+  }
+
+  const { data: members, error } = await supabaseClient
+    .from('profiles')
+    .select('id, username, full_name, account_status, created_at');
+
+  if (error) {
+    console.error('Members loading failed:', error);
+    document.getElementById('adminMembers').textContent =
+      'Could not load members.';
+    return;
+  }
+
+  const { data: wallets, error: walletError } = await supabaseClient
+    .from('wallets')
+    .select('user_id, balance');
+
+  if (walletError) {
+    console.error('Wallet loading failed:', walletError);
+  }
+
+  const walletMap = new Map(
+    (wallets || []).map(w => [w.user_id, Number(w.balance || 0)])
+  );
+
+  document.getElementById('adminTotalMembers').textContent =
+    (members || []).length;
+
+  const totalWallet = (wallets || []).reduce(
+    (sum, w) => sum + Number(w.balance || 0), 0
+  );
+
+  document.getElementById('adminTotalWallet').textContent =
+    'UGX ' + totalWallet.toLocaleString('en-UG');
+
+  const container = document.getElementById('adminMembers');
+  container.replaceChildren();
+
+  (members || []).forEach(member => {
+    const card = document.createElement('div');
+    card.className = 'admin-card';
+
+    const name = document.createElement('strong');
+    name.textContent = member.username || member.full_name || 'Member';
+
+    const details = document.createElement('p');
+    details.textContent =
+      'ID: ' + member.id +
+      ' | Status: ' + (member.account_status || 'Unknown') +
+      ' | Joined: ' + new Date(member.created_at).toLocaleDateString();
+
+    const balance = document.createElement('p');
+    balance.textContent =
+      'Wallet: UGX ' +
+      (walletMap.get(member.id) || 0).toLocaleString('en-UG');
+
+    card.append(name, details, balance);
+    container.appendChild(card);
+  });
+  }
 
 async function checkSession() {
   const { data, error } = await supabaseClient.auth.getSession();
