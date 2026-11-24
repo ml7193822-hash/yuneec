@@ -1,6 +1,66 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  
+<style>
+.drone-catalogue {
+  background: #101010;
+  border: 1px solid #b8860b;
+  border-radius: 14px;
+  padding: 20px;
+}
+
+.drone-catalogue h2 {
+  color: #d4af37;
+}
+
+.drone-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 18px;
+  margin-top: 24px;
+}
+
+.drone-card {
+  background: linear-gradient(145deg, #242424, #080808);
+  border: 1px solid #b8860b;
+  border-radius: 14px;
+  padding: 20px;
+  text-align: center;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.drone-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 5px 20px #d4af3755;
+}
+
+.drone-image {
+  font-size: 55px;
+  padding: 15px;
+  color: #d4af37;
+}
+
+.drone-card h3 {
+  color: #e5c158;
+  margin: 12px 0;
+}
+
+.drone-card p {
+  color: #ddd;
+}
+
+.drone-status {
+  display: inline-block;
+  color: #d4af37;
+  border: 1px solid #b8860b;
+  border-radius: 20px;
+  padding: 6px 12px;
+  margin-top: 10px;
+  font-size: 12px;
+}
+</style>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#170d00">
@@ -305,7 +365,81 @@ footer h3{color:#ffdc68;margin-bottom:7px}
   <div class="bottom-banner"><span class="trophy">🏆</span><div><strong>Together We Soar Higher</strong><small>With YUNEEC, the sky is not the limit!</small></div></div>
 </section>
 
-<section id="drones" class="page-section"><div class="content-panel"><h2>🚁 My Drones</h2><p>View drones registered to your account.</p><div class="empty-state">No drone records are available yet.</div></div></section>
+
+<section id="drones" class="page-section">
+  <div class="content-panel drone-catalogue">
+    <h2 style="color:#d4af37;">🚁 YUNEEC Gold Drone Collection</h2>
+    <p>Explore our premium drone technology collection.</p>
+
+    <div class="drone-grid">
+
+      <div class="drone-card">
+        <div class="drone-image">🚁</div>
+        <h3>Sky Home 500W</h3>
+        <p>Compact home energy solution.</p>
+        <span class="drone-status">Available model</span>
+      </div>
+
+      <div class="drone-card">
+        <div class="drone-image">🚁</div>
+        <h3>Sky Home 1KW</h3>
+        <p>Enhanced home energy solution.</p>
+        <span class="drone-status">Available model</span>
+      </div>
+
+      <div class="drone-card">
+        <div class="drone-image">🚁</div>
+        <h3>Sky Farm 2KW</h3>
+        <p>Designed for agricultural applications.</p>
+        <span class="drone-status">Available model</span>
+      </div>
+
+      <div class="drone-card">
+        <div class="drone-image">🚁</div>
+        <h3>Sky Power 3KW</h3>
+        <p>Powerful energy system.</p>
+        <span class="drone-status">Available model</span>
+      </div>
+
+      <div class="drone-card">
+        <div class="drone-image">🚁</div>
+        <h3>Sky Power 5KW</h3>
+        <p>High-capacity energy system.</p>
+        <span class="drone-status">Available model</span>
+      </div>
+
+      <div class="drone-card">
+        <div class="drone-image">🚁</div>
+        <h3>Sky Vertical 5KW</h3>
+        <p>Vertical-axis energy system.</p>
+        <span class="drone-status">Available model</span>
+      </div>
+
+      <div class="drone-card">
+        <div class="drone-image">🚁</div>
+        <h3>Sky Industrial 10KW</h3>
+        <p>Industrial-scale energy solution.</p>
+        <span class="drone-status">Available model</span>
+      </div>
+
+      <div class="drone-card">
+        <div class="drone-image">🚁</div>
+        <h3>Sky Hybrid System</h3>
+        <p>Hybrid energy technology.</p>
+        <span class="drone-status">Available model</span>
+      </div>
+
+      <div class="drone-card">
+        <div class="drone-image">🚁</div>
+        <h3>Sky Commercial 20KW</h3>
+        <p>Commercial-scale energy solution.</p>
+        <span class="drone-status">Available model</span>
+      </div>
+
+    </div>
+  </div>
+</section>
+
 <section id="investment" class="page-section"><div class="content-panel"><h2>▤ Investments</h2><p>Manage and review your investment activity.</p><div class="info">Total verified investment: <strong>UGX 0</strong></div><div class="empty-state">No verified investment records are available yet.</div></div></section>
 <section id="earnings" class="page-section"><div class="content-panel"><h2>📈 Earnings</h2><p>Review your verified earnings.</p><div class="info">Total earnings: <strong>UGX 0</strong></div><div class="empty-state">No verified earnings records are available yet.</div></div></section>
 <section id="referrals" class="page-section"><div class="content-panel"><h2>👥 Referral Team</h2><p>View members who registered using your referral link.</p><div class="info">Total referrals: <strong>0</strong></div><div class="empty-state">Your referral members will appear here when referral records are connected.</div><button class="btn" onclick="copyReferral()">Copy Referral Link</button></div></section>
