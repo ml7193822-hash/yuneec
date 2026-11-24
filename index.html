@@ -509,12 +509,13 @@ footer h3{color:#ffdc68;margin-bottom:7px}
   });
 
   
+
 async function loadAccount(user) {
   if (!user) return;
 
   authScreen.classList.add('auth-hidden');
 
-  const { data: profile, error } = await supabaseClient
+  const { data: profile, error } = await supabase
     .from('profiles')
     .select('full_name, phone')
     .eq('id', user.id)
@@ -536,16 +537,20 @@ async function loadAccount(user) {
   document.getElementById('referralLink').value =
     location.origin + location.pathname + '?ref=' + user.id;
 
-  document.getElementById('profileUsername').textContent = username;
-  document.getElementById('profileEmail').textContent = user.email || 'Not available';
-  document.getElementById('profileId').textContent = user.id;
-  document.getElementById('profileFullName').textContent =
-    profile?.full_name || 'Not provided';
-  document.getElementById('profilePhone').textContent =
-    profile?.phone || 'Not provided';
+  const setText = (id, value) => {
+    const element = document.getElementById(id);
+    if (element) element.textContent = value;
+  };
+
+  setText('profileUsername', username);
+  setText('profileEmail', user.email || 'Not available');
+  setText('profileId', user.id);
+  setText('profileFullName', profile?.full_name || 'Not provided');
+  setText('profilePhone', profile?.phone || 'Not provided');
 
   showPage();
 }
+
 
 
   function toggleMenu() {
