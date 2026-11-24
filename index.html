@@ -48,7 +48,7 @@ button{cursor:pointer}
 .hero-copy h1{font-size:clamp(30px,3.4vw,54px);line-height:.98;margin:0;color:#ffdb68;text-shadow:0 0 12px #ffae00}
 .hero-copy h2{font-size:clamp(18px,2.2vw,30px);margin:8px 0;color:#ffe7a0}
 .hero-copy p{font-size:17px;font-weight:bold;font-style:italic;color:#ffe6a0;line-height:1.35}
-.drone-art{z-index:1;text-align:center;font-size:clamp(95px,13vw,190px);filter:drop-shadow(0 10px 16px #000) drop-shadow(0 0 14px #ffb000);transform:rotate(-7deg)}
+.drone-art{z-index:1;text-align:center;filter:drop-shadow(0 10px 16px #000) drop-shadow(0 0 14px #ffb000)}.drone-svg{width:100%;max-width:520px;height:auto;overflow:visible}
 .account-card{z-index:1;border:1px solid #ffcf51;border-radius:15px;background:linear-gradient(140deg,rgba(80,42,0,.9),rgba(18,9,0,.94));box-shadow:var(--glow);padding:18px;min-width:0}
 .account-title{font-size:17px;color:#ffdf7d;font-weight:bold;border-bottom:1px solid rgba(255,190,36,.4);padding-bottom:12px;margin-bottom:12px}
 .account-title span{font-size:24px;margin-right:8px}
@@ -79,9 +79,9 @@ select{background:#211100;color:#ffe5a0;border:1px solid #b8790b;border-radius:8
 .quick button span{font-size:19px;margin-right:8px}
 .banner{margin-top:14px;min-height:112px;border:1px solid var(--line);border-radius:16px;box-shadow:var(--glow);background:linear-gradient(100deg,#4b2600,#1b0c01 50%,#a65b00);display:flex;align-items:center;justify-content:space-around;gap:12px;padding:14px;text-align:center;overflow:hidden}
 .banner .trophy{font-size:54px}.banner strong{font-size:clamp(19px,2.4vw,31px);font-style:italic;color:#ffe07a}.banner small{display:block;margin-top:7px;color:#ffedbd;font-style:italic}
-.banner-drone{font-size:60px}
+.banner-drone{font-size:18px;font-weight:800;letter-spacing:2px;color:#ffe08a;text-shadow:0 0 12px #ffb000}
 .page-view{display:none;margin-top:14px}.page-view.active{display:block}
-.page-view .panel{min-height:180px}
+.page-view .panel{min-height:180px}.drone-fleet{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin:18px 0}.drone-item{display:flex;align-items:center;gap:14px;padding:16px;border:1px solid var(--line);border-radius:13px;background:linear-gradient(140deg,#4b2906,#1b0d02)}.mini-drone{width:76px;height:76px;flex:0 0 76px;border-radius:50%;display:grid;place-items:center;background:radial-gradient(circle,#76500c,#1c0e02);font-size:58px;color:#ffd35c;text-shadow:0 0 12px #ffb000}.drone-item p{margin:6px 0;color:#d9bd83}.active-status{color:var(--green);font-size:13px}@media(max-width:700px){.drone-fleet{grid-template-columns:1fr}.drone-item{padding:12px}}
 .modal-backdrop{display:none;position:fixed;inset:0;background:rgba(0,0,0,.76);z-index:10;align-items:center;justify-content:center;padding:16px}
 .modal-backdrop.show{display:flex}
 .modal{width:min(420px,100%);border:1px solid #ffce4e;border-radius:17px;background:linear-gradient(145deg,#482500,#140900);box-shadow:0 0 25px #ffb000;padding:22px}
@@ -92,7 +92,7 @@ select{background:#211100;color:#ffe5a0;border:1px solid #b8790b;border-radius:8
 .close-btn{background:transparent;color:#ffdc70;border:1px solid #ad780e;border-radius:9px;padding:9px}
 .toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#f5c34d;color:#251300;padding:12px 18px;border-radius:10px;font-weight:bold;display:none;z-index:20;box-shadow:0 0 15px #ffb000}
 @media(max-width:1100px){.app{grid-template-columns:175px minmax(0,1fr)}.stats{grid-template-columns:repeat(2,minmax(0,1fr))}.content-grid{grid-template-columns:1fr 1fr}.quick-panel{grid-column:1/-1}.quick{grid-template-columns:repeat(3,1fr)}.hero{grid-template-columns:1fr 1fr}.account-card{grid-column:1/-1;display:flex;justify-content:space-between;align-items:center}.account-title{border:0;margin:0;padding:0}.account-row{margin:0 10px}}
-@media(max-width:700px){.app{display:block;padding:8px}.sidebar{min-height:auto;padding:9px;margin-bottom:9px}.brand{padding:5px;border:0}.brand-name{font-size:28px}.brand-sub{font-size:11px}.nav{display:flex;overflow-x:auto;margin-top:8px;gap:6px;padding-bottom:3px}.nav button{flex:0 0 auto;padding:9px 10px;font-size:12px;gap:6px}.nav .ico{font-size:17px;width:auto}.side-bottom{display:none}.topbar{grid-template-columns:1fr auto;padding:11px;min-height:70px}.top-brand{display:none}.slogan{text-align:left;font-size:17px}.user-tools{gap:8px}.avatar{width:36px;height:36px;font-size:19px}.user-small{display:none}.user-name{font-size:12px}.hero{grid-template-columns:1fr 1fr;padding:14px;min-height:220px}.hero-copy h1{font-size:30px}.hero-copy h2{font-size:17px}.hero-copy p{font-size:13px}.drone-art{font-size:90px}.account-card{grid-column:1/-1;display:block;padding:12px}.account-title{margin-bottom:8px}.account-row{display:inline-block;margin:4px 8px 4px 0;font-size:12px}.account-row strong{font-size:13px}.member-seal{font-size:30px;float:right}.stats{grid-template-columns:1fr 1fr;gap:8px}.stat{padding:10px;min-height:104px;gap:8px}.stat-icon{font-size:29px}.stat-label{font-size:11px;white-space:normal}.stat-value{font-size:15px}.stat-sub{font-size:11px}.stat .gold-btn{padding:6px 9px;font-size:11px}.content-grid{grid-template-columns:1fr;gap:9px}.quick-panel{grid-column:auto}.quick{grid-template-columns:1fr}.panel{padding:13px}.panel h3{font-size:17px}.banner{min-height:95px}.banner .trophy{font-size:35px}.banner-drone{font-size:38px}}
+@media(max-width:700px){.app{display:block;padding:8px}.sidebar{min-height:auto;padding:9px;margin-bottom:9px}.brand{padding:5px;border:0}.brand-name{font-size:28px}.brand-sub{font-size:11px}.nav{display:flex;overflow-x:auto;margin-top:8px;gap:6px;padding-bottom:3px}.nav button{flex:0 0 auto;padding:9px 10px;font-size:12px;gap:6px}.nav .ico{font-size:17px;width:auto}.side-bottom{display:none}.topbar{grid-template-columns:1fr auto;padding:11px;min-height:70px}.top-brand{display:none}.slogan{text-align:left;font-size:17px}.user-tools{gap:8px}.avatar{width:36px;height:36px;font-size:19px}.user-small{display:none}.user-name{font-size:12px}.hero{grid-template-columns:1fr 1fr;padding:14px;min-height:220px}.hero-copy h1{font-size:30px}.hero-copy h2{font-size:17px}.hero-copy p{font-size:13px}.drone-svg{width:100%;max-width:310px}.account-card{grid-column:1/-1;display:block;padding:12px}.account-title{margin-bottom:8px}.account-row{display:inline-block;margin:4px 8px 4px 0;font-size:12px}.account-row strong{font-size:13px}.member-seal{font-size:30px;float:right}.stats{grid-template-columns:1fr 1fr;gap:8px}.stat{padding:10px;min-height:104px;gap:8px}.stat-icon{font-size:29px}.stat-label{font-size:11px;white-space:normal}.stat-value{font-size:15px}.stat-sub{font-size:11px}.stat .gold-btn{padding:6px 9px;font-size:11px}.content-grid{grid-template-columns:1fr;gap:9px}.quick-panel{grid-column:auto}.quick{grid-template-columns:1fr}.panel{padding:13px}.panel h3{font-size:17px}.banner{min-height:95px}.banner .trophy{font-size:35px}.banner-drone{font-size:11px;letter-spacing:1px}}
 </style>
 </head>
 <body>
@@ -127,7 +127,13 @@ select{background:#211100;color:#ffe5a0;border:1px solid #b8790b;border-radius:8
 
     <section class="hero" id="hero">
       <div class="hero-copy"><h1>YUNEEC</h1><h2>Global Drone<br>Technologies</h2><p>Innovative Drones.<br>A Smarter Tomorrow.</p></div>
-      <div class="drone-art" aria-label="Drone illustration">🚁</div>
+      <div class="drone-art"><svg class="drone-svg" viewBox="0 0 520 260" role="img" aria-label="YUNEEC gold quadcopter drone">
+<defs><linearGradient id="dg" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#fff0a0"/><stop offset=".5" stop-color="#e5a51c"/><stop offset="1" stop-color="#613000"/></linearGradient><filter id="dglow"><feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>
+<g stroke="url(#dg)" stroke-width="13" stroke-linecap="round"><path d="M245 112L112 58M275 112L408 58M245 133L100 183M275 133L420 183"/></g>
+<g fill="none" stroke="#ffd85a" stroke-width="4" filter="url(#dglow)"><ellipse cx="93" cy="48" rx="82" ry="15"/><ellipse cx="427" cy="48" rx="82" ry="15"/><ellipse cx="82" cy="193" rx="75" ry="13"/><ellipse cx="438" cy="193" rx="75" ry="13"/></g>
+<g fill="url(#dg)" stroke="#ffe18a" stroke-width="3"><circle cx="112" cy="58" r="17"/><circle cx="408" cy="58" r="17"/><circle cx="100" cy="183" r="17"/><circle cx="420" cy="183" r="17"/><path d="M198 100Q260 72 322 100L344 131Q260 165 176 131Z"/><path d="M226 97L239 77H281L294 97Z"/></g>
+<path d="M215 113Q260 96 305 113L292 138Q260 150 228 138Z" fill="#251400" stroke="#ffcf45" stroke-width="3"/><text x="260" y="126" text-anchor="middle" fill="#ffe58a" font-size="18" font-weight="bold">YUNEEC</text>
+<path d="M246 145V169H274V145" stroke="#d89a19" stroke-width="9" fill="none"/><path d="M260 166V183" stroke="#f7cf60" stroke-width="8"/><rect x="226" y="180" width="68" height="48" rx="18" fill="#2a1a08" stroke="#e9b332" stroke-width="4"/><circle cx="260" cy="202" r="18" fill="#10151b" stroke="#ffdc68" stroke-width="5"/><circle cx="260" cy="202" r="9" fill="#34718a" stroke="#bceaff" stroke-width="2"/><circle cx="260" cy="202" r="3" fill="#fff"/></svg></div>
       <div class="account-card">
         <div class="account-title"><span>👤</span>Your Account Overview</div>
         <div class="account-row"><div>Account ID<strong id="accountId">#YUN20261123</strong></div></div>
@@ -171,7 +177,7 @@ select{background:#211100;color:#ffe5a0;border:1px solid #b8790b;border-radius:8
       </article>
     </section>
 
-    <section class="banner" id="banner"><div class="trophy">🏆</div><div><strong>Together We Soar Higher</strong><small>With YUNEEC, the sky is not the limit!</small></div><div class="banner-drone">🚁</div><div style="font-size:42px">🌆</div></section>
+    <section class="banner" id="banner"><div class="trophy">🏆</div><div><strong>Together We Soar Higher</strong><small>With YUNEEC, the sky is not the limit!</small></div><div class="banner-drone">✦ QUADCOPTER DRONE ✦</div><div style="font-size:42px">🌆</div></section>
 
     <section class="page-view" id="pageView"><article class="panel"><div class="panel-head"><h3 id="pageTitle">My Drones</h3></div><div id="pageDescription">Your drone account information will appear here.</div></article></section>
   </main>
@@ -214,7 +220,7 @@ function updateDashboard(){
   document.getElementById("referralBonus").textContent=money(demoAccount.referralBonus);
 }
 const descriptions={
- "My Drones":"<h2>🚁 My Drone Fleet</h2><p>You currently have <strong>2 active drones</strong>.</p><p>Drone details, status and management controls can be connected here.</p>",
+ "My Drones":"<h2>🚁 My Drone Fleet</h2><div class=\"drone-fleet\"><div class=\"drone-item\"><div class=\"mini-drone\">✥</div><div><strong>YUNEEC Drone #01</strong><p>Quadcopter Camera Drone</p><span class=\"active-status\">● Active</span></div></div><div class=\"drone-item\"><div class=\"mini-drone\">✥</div><div><strong>YUNEEC Drone #02</strong><p>Quadcopter Camera Drone</p><span class=\"active-status\">● Active</span></div></div></div><p>Drone specifications, serial numbers and live flight status can be connected to your device or backend.</p>",
  "Investments":"<h2>🪙 Investment Plans</h2><p>Review your active plans, investment history and plan details.</p><button class='gold-btn' data-modal='invest'>Explore Investments</button>",
  "Earnings":"<h2>📈 Earnings</h2><p>Today's earnings: <strong>UGX 75,000</strong></p><p>Connect your earnings ledger to show verified payouts and history.</p>",
  "Referrals":"<h2>👥 Referral Center</h2><p>Total referrals: <strong>128</strong></p><p>Referral bonus: <strong>UGX 64,000</strong></p><button class='gold-btn' id='pageShare'>Share Referral Link</button>",
@@ -287,6 +293,6 @@ document.getElementById("confirmAction").addEventListener("click",()=>{
 updateDashboard();
 </script>
 </body>
-        </html>
+          </html>
 
 
