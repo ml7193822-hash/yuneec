@@ -322,7 +322,301 @@ footer h3{color:#ffdc68;margin-bottom:7px}
 <footer><h3>✨ YUNEEC Global Drone Technologies ✨</h3><p>Innovating the Future of Aerial Technology</p><p>© 2026 YUNEEC. All rights reserved.</p></footer>
 
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+(async function () {
+  const authScreen = document.getElementById('authScreen');
+  const authForm = document.getElementById('authForm');
+  const authUsername = document.getElementById('authUsername');
+  const authEmail = document.getElementById('authEmail');
+  const authPassword = document.getElementById('authPassword');
+  const authMessage = document.getElementById('authMessage');
+  const authSubmit = document.getElementById('authSubmit');
+  const authSwitch = document.getElementById('authSwitch');
+
+  const SUPABASE_URL = 'https://dlowtcbvmporsphegacb.supabase.co';
+  const SUPABASE_KEY = 'sb_publishable_DMRhqYhppQ1Yx0ptkjMLdQ_og3rcWYq';
+
+  let authMode = 'signup';
+  let supabaseClient;
+
+  function message(text) {
+    authMessage.textContent = text;
+  }
+
+  function setAuthMode(mode) {
+    authMode = mode;
+    message('');
+
+    const signingUp = mode === 'signup';
+
+    authUsername.classList.toggle('auth-hidden', !signingUp);
+    authUsername.required = signingUp;
+    authPassword.autocomplete = signingUp
+      ? 'new-password'
+      : 'current-password';
+
+    document.getElementById('authSubtitle').textContent =
+      signingUp
+        ? 'Create your YUNEEC account'
+        : 'Sign in to your YUNEEC account';
+
+    authSubmit.textContent = signingUp
+      ? 'Create Account'
+      : 'Sign In';
+
+    authSwitch.textContent = signingUp
+      ? 'Already have an account? Sign in'
+      : 'New here? Create Account';
+  }
+
+  function loadLibrary() {
+    return new Promise((resolve, reject) => {
+      if (window.supabase?.createClient) {
+        resolve();
+        return;
+      }
+
+      const script = document.createElement('script');
+      script.src = 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2';
+      script.onload = () => {
+        if (window.supabase?.createClient) {
+          resolve();
+        } else {
+          reject(new Error('Supabase library did not initialize.'));
+        }
+      };
+      script.onerror = () =>
+        reject(new Error('Could not load Supabase. Check your internet connection.'));
+
+      document.head.appendChild(script);
+    });
+  }
+
+  try {
+    message('Connecting to YUNEEC...');
+
+    await loadLibrary();
+
+    supabaseClient = window.supabase.createClient(
+      SUPABASE_URL,
+      SUPABASE_KEY
+    );
+
+    message('');
+  } catch (error) {
+    message(error.message);
+    console.error(error);
+    authSubmit.disabled = true;
+    return;
+  }
+
+  authSwitch.addEventListener('click', () => {
+    setAuthMode(authMode === 'signup' ? 'login' : 'signup');
+  });
+
+  authForm.addEventListener('submit', async (event) => {
+    event.preventDefault();
+
+    if (!supabaseClient) {
+      message('Connection is not ready. Please refresh the page.');
+      return;
+    }
+
+    const username = authUsername.value.trim();
+    const email = authEmail.value.trim();
+    const password = authPassword.value;
+
+    authSubmit.disabled = true;
+    message('Please wait...');
+
+    try {
+      if (authMode === 'signup') {
+        if (!username) {
+          throw new Error('Please enter your username.');
+        }
+
+        const { data, error } = await supabaseClient.auth.signUp({
+          email,
+          password,
+          options: {
+            data: {
+              username: username,
+              full_name: username
+            }
+          }
+        });
+
+        if (error) throw error;
+
+        if (data.session) {
+          await loadAccount(data.session.user);
+        } else {
+          message('Account created! Check your email to confirm your account, then sign in.');
+        }
+      } else {
+        const { data, error } =
+          await supabaseClient.auth.signInWithPassword({
+            email,
+            password
+          });
+
+        if (error) throw error;
+
+        await loadAccount(data.user);
+      }
+    } catch (error) {
+      console.error('Authentication error:', error);
+      message(error.message || 'Registration failed. Please try again.');
+    } finally {
+      authSubmit.disabled = false;
+    }
+  });
+
+  async function loadAccount(user) {
+    if (!user) return;
+
+    authScreen.classList.add('auth-hidden');
+
+    const username =
+      user.user_metadata?.username ||
+      user.user_metadata?.full_name ||
+      user.email?.split('@')[0] ||
+      'Member';
+
+    document.getElementById('headerName').textContent = username;
+    document.getElementById('accountId').textContent = user.id;
+
+    document.getElementById('referralLink').value =
+      location.origin + location.pathname + '?ref=' + user.id;
+
+    showPage();
+  }
+
+  async function checkSession() {
+    const { data, error } = await supabaseClient.auth.getSession();
+
+    if (error) {
+      message(error.message);
+      return;
+    }
+
+    if (data.session) {
+      await loadAccount(data.session.user);
+    } else {
+      authScreen.classList.remove('auth-hidden');
+      message('');
+    }
+  }
+
+  function toggleMenu() {
+    document.getElementById('sidebar').classList.toggle('open');
+    document.getElementById('overlay').classList.toggle('show');
+  }
+
+  function closeMenu() {
+    document.getElementById('sidebar').classList.remove('open');
+    document.getElementById('overlay').classList.remove('show');
+  }
+
+  function showPage() {
+    const id = (location.hash || '#dashboard').slice(1);
+    const sections = [...document.querySelectorAll('.page-section')];
+
+    const target =
+      sections.find(section => section.id === id) ||
+      document.getElementById('dashboard');
+
+    sections.forEach(section =>
+      section.classList.toggle('active', section === target)
+    );
+
+    document.querySelectorAll('.sidebar a').forEach(link =>
+      link.classList.toggle(
+        'active',
+        link.getAttribute('href') === '#' + target.id
+      )
+    );
+
+    closeMenu();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function showNotice() {
+    alert('You have no new notifications.');
+  }
+
+  function getReferralUrl() {
+    return document.getElementById('referralLink').value;
+  }
+
+  async function copyReferral() {
+    const url = getReferralUrl();
+
+    try {
+      await navigator.clipboard.writeText(url);
+      alert('Referral link copied.');
+    } catch {
+      prompt('Copy your referral link:', url);
+    }
+  }
+
+  async function shareReferral() {
+    const url = getReferralUrl();
+
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: 'Join YUNEEC',
+          text: 'Join YUNEEC Global Drone Technologies.',
+          url
+        });
+      } catch {}
+    } else {
+      await copyReferral();
+    }
+  }
+
+  async function logout() {
+    if (!confirm('Are you sure you want to logout?')) return;
+
+    const { error } = await supabaseClient.auth.signOut();
+
+    if (error) {
+      alert(error.message);
+      return;
+    }
+
+    location.hash = 'dashboard';
+    authScreen.classList.remove('auth-hidden');
+    setAuthMode('login');
+    authForm.reset();
+  }
+
+  window.toggleMenu = toggleMenu;
+  window.closeMenu = closeMenu;
+  window.showPage = showPage;
+  window.showNotice = showNotice;
+  window.copyReferral = copyReferral;
+  window.shareReferral = shareReferral;
+  window.logout = logout;
+
+  window.addEventListener('hashchange', showPage);
+
+  document.addEventListener('keydown', event => {
+    if (event.key === 'Escape') closeMenu();
+  });
+
+  supabaseClient.auth.onAuthStateChange((event) => {
+    if (event === 'SIGNED_OUT') {
+      authScreen.classList.remove('auth-hidden');
+    }
+  });
+
+  await checkSession();
+})();
+</script>
+
 
 <script>
 const SUPABASE_URL =
