@@ -1019,9 +1019,15 @@ if (approvedDepositError || approvedWithdrawalError) {
   const totalWallet = (wallets || []).reduce(
     (sum, w) => sum + Number(w.balance || 0), 0
   );
-    .select('id, amount, status, source');
+      const { data: funds, error: fundsError } =
+    await supabaseClient
+      .from('company_fund_submissions')
+      .select('id, amount, status, source');
 
-.select('submission_id, amount, allocated_at');
+  const { data: allocations, error: allocationsError } =
+    await supabaseClient
+      .from('company_fund_allocations')
+      .select('submission_id, amount, allocated_at');
 
 if (fundsError || allocationsError) {
   console.error('Company funds loading error:', fundsError || allocationsError);
