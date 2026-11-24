@@ -798,10 +798,6 @@ if (adminError || isAdmin !== true) {
   return;
 }
 
-  if (adminError || !admin) {
-    console.error('Admin verification failed:', adminError);
-    return;
-  }
 
   const { data: members, error } = await supabaseClient
     .from('profiles')
@@ -1264,28 +1260,9 @@ searchInput.oninput = async () => {
 
 renderMembers();
 
-  (members || []).forEach(member => {
-    const card = document.createElement('div');
-    card.className = 'admin-card';
-
-    const name = document.createElement('strong');
-    name.textContent = member.username || member.full_name || 'Member';
-
-    const details = document.createElement('p');
-    details.textContent =
-      'ID: ' + member.id +
-      ' | Status: ' + (member.account_status || 'Unknown') +
-      ' | Joined: ' + new Date(member.created_at).toLocaleDateString();
-
-    const balance = document.createElement('p');
-    balance.textContent =
-      'Wallet: UGX ' +
-      (walletMap.get(member.id) || 0).toLocaleString('en-UG');
-
-    card.append(name, details, balance);
-    container.appendChild(card);
-  });
   }
+
+  
 
 async function checkSession() {
   const { data, error } = await supabaseClient.auth.getSession();
