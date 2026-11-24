@@ -1019,15 +1019,9 @@ if (approvedDepositError || approvedWithdrawalError) {
   const totalWallet = (wallets || []).reduce(
     (sum, w) => sum + Number(w.balance || 0), 0
   );
-    const { data: funds, error: fundsError } =
-  await supabaseClient
-    .from('company_fund_submissions')
-    .select('id, amount, status');
+    .select('id, amount, status, source');
 
-const { data: allocations, error: allocationsError } =
-  await supabaseClient
-    .from('company_fund_allocations')
-    .select('submission_id, amount');
+.select('submission_id, amount, allocated_at');
 
 if (fundsError || allocationsError) {
   console.error('Company funds loading error:', fundsError || allocationsError);
@@ -1198,6 +1192,43 @@ if (!allocations || allocations.length === 0) {
     historyContainer.appendChild(card);
   });
       }
+    const allocationForm = document.getElementById('adminFundAllocationForm');
+
+allocationForm.onsubmit = async (event) => {
+  event.preventDefault();
+
+  const fundId = document.getElementById('allocationFundSelect').value;
+  const amount = Number(document.getElementById('allocationAmount').value);
+  const message = document.getElementById('adminAllocationMessage');
+
+  if (!fundId || !Number.isFinite(amount) || amount <= 0) {
+    message.textContent = 'Select a verified fund and enter a valid amount.';
+    return;
+  }
+
+  const button = allocationForm.querySelector('button[type="submit"]');
+  button.disabled = true;
+  button.textContent = 'Allocating...';
+
+  const { error } = await supabaseClient.rpc(
+    'admin_allocate_company_fund',
+    {
+      target_fund_id: fundId,
+      allocation_amount: amount
+    }
+  );
+
+  if (error) {
+    message.textContent = 'Allocation failed: ' + error.message;
+  } else {
+    message.textContent = 'Allocation recorded successfully.';
+    allocationForm.reset();
+    await loadAdminDashboard();
+  }
+
+  button.disabled = false;
+  button.textContent = 'Allocate Company Funds';
+};
     const fundForm = document.getElementById('adminCompanyFundsForm');
 
 fundForm.onsubmit = async (event) => {
