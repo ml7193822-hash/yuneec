@@ -1,896 +1,292 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#1b1000">
-<title>YUNEEC Global Drone Technologies</title>
-
+<meta name="theme-color" content="#160b02">
+<title>YUNEEC | Global Drone Technologies</title>
 <style>
 :root{
-  --navy:#170d00;
-  --navy-light:#382100;
-  --blue:#d99b16;
-  --blue-light:#ffdc68;
-  --white:#fff5d5;
-  --muted:#d3b879;
-  --border:#9d6c16;
-  --gold:#ffca35;
-  --gold-light:#fff0a0;
+  --bg:#100800;--panel:#211203;--panel2:#321b04;--gold:#ffbf24;
+  --gold2:#ffe58a;--amber:#d98608;--text:#fff1c5;--muted:#c9a96b;
+  --green:#16e879;--line:rgba(255,190,36,.62);
+  --glow:0 0 9px #ffbd26,0 0 22px rgba(255,166,0,.55),inset 0 0 12px rgba(255,183,26,.12);
 }
-
-*{
-  box-sizing:border-box;
-  margin:0;
-  padding:0;
-}
-
-body{
-  font-family:Arial,sans-serif;
-  background:
-    radial-gradient(ellipse at top,#684000 0%,#291700 40%,#100900 100%);
-  color:var(--white);
-  line-height:1.5;
-  min-height:100vh;
-}
-
-/* GOLD SHINE ANIMATION */
-
-@keyframes goldGlow{
-  0%,100%{
-    box-shadow:0 0 8px #ffbd3040;
-  }
-  50%{
-    box-shadow:0 0 22px #ffc52b90;
-  }
-}
-
-@keyframes shine{
-  0%{background-position:-200% center}
-  100%{background-position:200% center}
-}
-
-/* HEADER */
-
-header{
-  background:linear-gradient(
-    110deg,#170d00,#654000,#2b1900,#170d00
-  );
-  padding:14px 17px;
-  display:flex;
-  align-items:center;
-  gap:15px;
-  border-bottom:2px solid var(--gold);
-  position:sticky;
-  top:0;
-  z-index:200;
-  box-shadow:0 3px 20px #ffb90035;
-}
-
-.logo{
-  font-size:23px;
-  font-weight:bold;
-  letter-spacing:3px;
-  color:var(--gold-light);
-  text-shadow:0 0 12px #ffbd30;
-}
-
-.logo span{
-  color:#fff1a5;
-}
-
-.company-label{
-  color:#ffe6a0;
-  font-size:13px;
-  margin-left:auto;
-}
-
-.menu-toggle{
-  background:linear-gradient(135deg,#765000,#d99b16,#805000);
-  color:#211300;
-  border:1px solid #ffe28a;
-  border-radius:8px;
-  width:43px;
-  height:43px;
-  font-size:25px;
-  cursor:pointer;
-  flex-shrink:0;
-  box-shadow:0 0 12px #ffbb35;
-}
-
-/* SIDEBAR */
-
-.sidebar{
-  position:fixed;
-  top:0;
-  left:-290px;
-  width:270px;
-  height:100vh;
-  background:linear-gradient(180deg,#382100,#170d00);
-  border-right:2px solid var(--gold);
-  z-index:400;
-  transition:left .3s ease;
-  overflow-y:auto;
-  padding-bottom:25px;
-  box-shadow:5px 0 25px #0008;
-}
-
-.sidebar.open{
-  left:0;
-}
-
-.sidebar-header{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  padding:19px 15px;
-  border-bottom:1px solid var(--border);
-  background:linear-gradient(100deg,#604000,#241500);
-}
-
-.sidebar-title{
-  font-size:20px;
-  font-weight:bold;
-  letter-spacing:2px;
-  color:var(--gold);
-  text-shadow:0 0 10px #ffb900;
-}
-
-.sidebar-title span{
-  color:#fff0a0;
-}
-
-.close-menu{
-  background:#694400;
-  color:#ffe9a0;
-  border:1px solid var(--gold);
-  font-size:23px;
-  padding:5px 12px;
-  border-radius:7px;
-  cursor:pointer;
-}
-
-.sidebar-label{
-  color:#d6ad54;
-  font-size:11px;
-  font-weight:bold;
-  padding:20px 18px 9px;
-  text-transform:uppercase;
-  letter-spacing:1px;
-}
-
-.sidebar a{
-  display:flex;
-  align-items:center;
-  gap:13px;
-  color:#ffe9b9;
-  text-decoration:none;
-  padding:13px 18px;
-  margin:3px 10px;
-  border-radius:8px;
-  font-size:14px;
-  font-weight:bold;
-  transition:.2s;
-}
-
-.sidebar a span{
-  font-size:20px;
-  width:25px;
-  text-align:center;
-}
-
-.sidebar a:hover,
-.sidebar a.active{
-  background:linear-gradient(
-    100deg,#fff0a0,#e7a817,#a96800
-  );
-  color:#241500;
-  box-shadow:0 0 15px #ffbd35;
-}
-
-.overlay{
-  display:none;
-  position:fixed;
-  inset:0;
-  background:#000b;
-  z-index:300;
-}
-
-.overlay.show{
-  display:block;
-}
-
-/* MAIN */
-
-.container{
-  max-width:1100px;
-  margin:auto;
-  padding:20px;
-}
-
-/* WELCOME */
-
-.welcome{
-  position:relative;
-  overflow:hidden;
-  background:
-    linear-gradient(120deg,#211300,#694100,#b87900,#392000);
-  border:1px solid #ffe08a;
-  padding:27px;
-  border-radius:16px;
-  margin-bottom:25px;
-  box-shadow:0 0 25px #d99b1650;
-}
-
-.welcome:after{
-  content:"";
-  position:absolute;
-  top:0;
-  left:-100%;
-  width:60%;
-  height:100%;
-  background:linear-gradient(
-    90deg,transparent,#ffffff20,transparent
-  );
-  transform:skewX(-20deg);
-  animation:shine 5s infinite;
-}
-
-.welcome h1{
-  font-size:27px;
-  margin-bottom:8px;
-  color:#fff0a0;
-  text-shadow:0 0 15px #ffb900;
-}
-
-.welcome p{
-  color:#ffebbb;
-  font-size:14px;
-}
-
-.section-title{
-  font-size:21px;
-  margin:27px 0 16px;
-  border-left:4px solid var(--gold);
-  padding-left:12px;
-  color:#ffdf76;
-  text-shadow:0 0 8px #ffb90060;
-}
-
-/* CARDS */
-
-.cards{
-  display:grid;
-  grid-template-columns:repeat(2,minmax(0,1fr));
-  gap:13px;
-}
-
-.card{
-  background:linear-gradient(
-    145deg,#624000,#382100,#1b1000
-  );
-  padding:19px;
-  border-radius:12px;
-  border:1px solid #b88625;
-  transition:.2s;
-  animation:goldGlow 4s infinite;
-}
-
-.card:hover{
-  border-color:#ffe28a;
-  transform:translateY(-3px);
-  box-shadow:0 0 22px #ffbf35;
-}
-
-.card .icon{
-  font-size:25px;
-  margin-bottom:8px;
-  filter:drop-shadow(0 0 7px #ffc000);
-}
-
-.card p{
-  color:#e4ca8a;
-  font-size:12px;
-}
-
-.card h3{
-  font-size:18px;
-  color:#ffdc68;
-  margin-top:7px;
-  text-shadow:0 0 8px #ffb90070;
-}
-
-/* DASHBOARD MENU */
-
-.menu-list{
-  display:grid;
-  grid-template-columns:repeat(2,minmax(0,1fr));
-  gap:12px;
-}
-
-.menu-item{
-  background:linear-gradient(120deg,#523300,#291800);
-  border:1px solid #936515;
-  border-radius:11px;
-  padding:16px 12px;
-  color:#ffedbc;
-  text-decoration:none;
-  display:flex;
-  align-items:center;
-  gap:12px;
-  transition:.2s;
-  font-weight:bold;
-  font-size:13px;
-}
-
-.menu-item:hover{
-  background:linear-gradient(100deg,#fff0a0,#d99b16);
-  color:#241500;
-  border-color:#fff0a0;
-  box-shadow:0 0 16px #ffb900;
-}
-
-.menu-item span{
-  font-size:23px;
-}
-
-/* PAGES */
-
-.page-section{
-  display:none;
-  background:linear-gradient(145deg,#392300,#1b1000);
-  border:1px solid var(--border);
-  padding:22px;
-  border-radius:13px;
-  margin-top:20px;
-  box-shadow:0 0 18px #c18b2630;
-}
-
-.page-section.active{
-  display:block;
-  animation:fadeIn .3s ease;
-}
-
-@keyframes fadeIn{
-  from{opacity:0;transform:translateY(8px)}
-  to{opacity:1;transform:translateY(0)}
-}
-
-.page-section h2{
-  color:var(--gold);
-  margin-bottom:12px;
-  text-shadow:0 0 10px #ffb90060;
-}
-
-.page-section p{
-  color:#e6d3a4;
-  font-size:14px;
-  margin-bottom:10px;
-}
-
-.info{
-  background:linear-gradient(120deg,#241500,#493000);
-  border:1px solid #9b701f;
-  padding:15px;
-  border-radius:9px;
-  margin-top:12px;
-  color:#ffedc0;
-  font-size:13px;
-}
-
-/* BUTTON */
-
-.btn{
-  display:inline-block;
-  background:linear-gradient(
-    100deg,#fff0a0,#e8a500,#ffdc65
-  );
-  color:#241500;
-  border:1px solid #fff1a4;
-  border-radius:8px;
-  padding:12px 20px;
-  font-weight:bold;
-  cursor:pointer;
-  margin-top:12px;
-  box-shadow:0 0 12px #ffb90070;
-  transition:.2s;
-}
-
-.btn:hover{
-  filter:brightness(1.15);
-  box-shadow:0 0 22px #ffcb42;
-}
-
-/* INPUTS */
-
-input,select{
-  width:100%;
-  padding:13px;
-  margin:10px 0;
-  color:#fff0c0;
-  background:#1b1000;
-  border:1px solid #a8781d;
-  border-radius:8px;
-}
-
-input::placeholder{
-  color:#b99b5a;
-}
-
-input:focus,select:focus{
-  outline:1px solid var(--gold);
-  box-shadow:0 0 10px #ffbd3580;
-}
-
-/* FOOTER */
-
-footer{
-  text-align:center;
-  padding:28px 15px;
-  background:linear-gradient(100deg,#170d00,#4a2c00,#170d00);
-  margin-top:35px;
-  border-top:2px solid var(--gold);
-  color:#e8d2a0;
-  font-size:12px;
-  box-shadow:0 0 20px #ffbd3025;
-}
-
-footer h3{
-  color:#ffdc68;
-  margin-bottom:7px;
-  text-shadow:0 0 10px #ffb900;
-}
-
-/* RESPONSIVE */
-
-@media(min-width:700px){
-  .cards{
-    grid-template-columns:repeat(4,1fr);
-  }
-
-  .menu-list{
-    grid-template-columns:repeat(3,1fr);
-  }
-
-  .welcome h1{
-    font-size:34px;
-  }
-}
-
-@media(max-width:420px){
-  .logo{
-    font-size:19px;
-  }
-
-  .company-label{
-    font-size:11px;
-  }
-
-  .container{
-    padding:13px;
-  }
-
-  .menu-item{
-    font-size:12px;
-    padding:13px 9px;
-  }
-}
+*{box-sizing:border-box}
+body{margin:0;background:
+ radial-gradient(ellipse at 52% 0%,rgba(194,103,0,.23),transparent 42%),
+ radial-gradient(ellipse at 80% 90%,rgba(116,57,0,.2),transparent 35%),var(--bg);
+ color:var(--text);font-family:Arial,Helvetica,sans-serif;min-height:100vh}
+button,a{font:inherit}
+button{cursor:pointer}
+.app{max-width:1800px;margin:auto;padding:12px;display:grid;grid-template-columns:214px minmax(0,1fr);gap:14px}
+.sidebar{border:1px solid var(--line);border-radius:18px;background:linear-gradient(150deg,#422300,#170b02 55%,#281300);box-shadow:var(--glow);min-height:calc(100vh - 24px);padding:15px 12px;display:flex;flex-direction:column;position:relative;overflow:hidden}
+.brand{padding:10px 4px 22px;text-align:center;border-bottom:1px solid rgba(255,195,50,.45)}
+.brand-name{font-size:clamp(25px,2.3vw,39px);font-weight:900;letter-spacing:2px;color:#ffe28a;text-shadow:0 0 8px #ffae00,0 0 20px #ff9d00}
+.brand-sub{font-size:13px;color:#ffda66;margin-top:3px}
+.nav{display:grid;gap:8px;margin-top:17px}
+.nav button{border:1px solid transparent;color:#fff0c7;background:transparent;text-align:left;padding:13px 11px;border-radius:12px;display:flex;align-items:center;gap:13px;font-size:15px;transition:.2s}
+.nav button:hover,.nav button.active{background:linear-gradient(100deg,#ffcf4a,#9e5200);border-color:#ffe38c;box-shadow:var(--glow);color:#291400}
+.nav .ico{width:25px;text-align:center;font-size:21px}
+.side-bottom{margin-top:auto;text-align:center;padding-top:25px;color:#e6b94e}
+.globe{font-size:85px;filter:drop-shadow(0 0 14px #ffb000);line-height:1}
+.main{min-width:0}
+.topbar{min-height:96px;border:1px solid var(--line);border-radius:18px;background:linear-gradient(100deg,#291400,#120900 45%,#3b1d00);box-shadow:var(--glow);display:grid;grid-template-columns:1fr 1fr auto;align-items:center;padding:12px 22px;gap:14px}
+.top-brand{font-size:13px;color:#e9c66f}
+.slogan{text-align:center;font-size:clamp(17px,2vw,29px);font-weight:bold;font-style:italic;color:#ffe07b;text-shadow:0 0 10px #ffb000}
+.user-tools{display:flex;align-items:center;gap:18px}
+.user-chip{display:flex;align-items:center;gap:10px}
+.avatar{width:48px;height:48px;border:2px solid var(--gold2);border-radius:50%;display:grid;place-items:center;font-size:25px;background:#3a2305}
+.user-small{font-size:12px;color:#e6c77c}.user-name{font-size:16px;color:#fff1bd;margin-top:3px}
+.tool-btn{border:0;background:none;color:#ffd35c;font-size:23px;position:relative;padding:5px}
+.notif{position:absolute;right:-3px;top:-3px;background:#d92314;color:white;border-radius:50%;font-size:11px;padding:3px 6px}
+.hero{margin-top:13px;min-height:290px;border:1px solid var(--line);border-radius:18px;box-shadow:var(--glow);background:
+ radial-gradient(ellipse at 50% 90%,rgba(255,170,0,.45),transparent 38%),
+ linear-gradient(115deg,#1d0e02,#3a1b00 52%,#170a01);display:grid;grid-template-columns:1fr 1.4fr 1fr;align-items:center;gap:10px;padding:20px;overflow:hidden;position:relative}
+.hero:before{content:"";position:absolute;left:0;right:0;bottom:0;height:28%;background:linear-gradient(0deg,rgba(255,160,0,.22),transparent);border-top:1px solid rgba(255,194,42,.35)}
+.hero-copy{z-index:1}
+.hero-copy h1{font-size:clamp(30px,3.4vw,54px);line-height:.98;margin:0;color:#ffdb68;text-shadow:0 0 12px #ffae00}
+.hero-copy h2{font-size:clamp(18px,2.2vw,30px);margin:8px 0;color:#ffe7a0}
+.hero-copy p{font-size:17px;font-weight:bold;font-style:italic;color:#ffe6a0;line-height:1.35}
+.drone-art{z-index:1;text-align:center;font-size:clamp(95px,13vw,190px);filter:drop-shadow(0 10px 16px #000) drop-shadow(0 0 14px #ffb000);transform:rotate(-7deg)}
+.account-card{z-index:1;border:1px solid #ffcf51;border-radius:15px;background:linear-gradient(140deg,rgba(80,42,0,.9),rgba(18,9,0,.94));box-shadow:var(--glow);padding:18px;min-width:0}
+.account-title{font-size:17px;color:#ffdf7d;font-weight:bold;border-bottom:1px solid rgba(255,190,36,.4);padding-bottom:12px;margin-bottom:12px}
+.account-title span{font-size:24px;margin-right:8px}
+.account-row{display:flex;justify-content:space-between;align-items:center;gap:8px;margin:10px 0;font-size:14px}
+.account-row strong{display:block;font-size:16px;margin-top:5px;color:#fff3d0}
+.member-seal{font-size:52px;color:#ffca40;text-shadow:0 0 12px #ffb000}
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:14px}
+.stat{min-height:128px;border:1px solid var(--line);border-radius:15px;background:linear-gradient(140deg,#4b2906,#1b0d02 70%);box-shadow:var(--glow);padding:16px;display:flex;align-items:center;gap:13px;min-width:0}
+.stat-icon{font-size:clamp(30px,3vw,49px);filter:drop-shadow(0 0 8px #ffb000)}
+.stat-label{font-size:14px;color:#ffe8b0;white-space:nowrap}
+.stat-value{font-size:clamp(17px,1.8vw,25px);font-weight:800;color:#fff4d8;margin:7px 0;white-space:nowrap}
+.stat-sub{font-size:13px;color:var(--green)}
+.gold-btn{border:1px solid #ffe17a;border-radius:10px;background:linear-gradient(#ffe17b,#d88b00);color:#2a1600;font-weight:bold;padding:8px 18px;box-shadow:0 0 12px rgba(255,179,0,.45)}
+.gold-btn:hover{filter:brightness(1.12);transform:translateY(-1px)}
+.content-grid{display:grid;grid-template-columns:1.55fr 1.05fr .72fr;gap:13px;margin-top:14px}
+.panel{border:1px solid var(--line);border-radius:16px;background:linear-gradient(145deg,rgba(58,30,3,.96),rgba(17,8,1,.98));box-shadow:var(--glow);padding:17px;min-width:0}
+.panel-head{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:13px}
+.panel h3{font-size:20px;color:#ffdf76;margin:0}
+select{background:#211100;color:#ffe5a0;border:1px solid #b8790b;border-radius:8px;padding:6px}
+.chart{width:100%;height:205px;display:block}
+.chart-labels{display:flex;justify-content:space-around;color:#ffe3a0;font-size:13px;margin-top:4px}
+.referral-body{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.referral-number{font-size:27px;font-weight:bold;color:#fff4d5;margin:4px 0 12px}
+.referral-bonus{font-size:23px;font-weight:bold;color:#ffcc45;margin:5px 0 15px}
+.gift{font-size:90px;filter:drop-shadow(0 0 13px #ffb000)}
+.quick{display:grid;gap:8px}
+.quick button{width:100%;text-align:left;border:1px solid #ffda69;border-radius:10px;padding:10px 12px;background:linear-gradient(100deg,#ffdf79,#c97800);color:#2a1600;font-weight:bold}
+.quick button span{font-size:19px;margin-right:8px}
+.banner{margin-top:14px;min-height:112px;border:1px solid var(--line);border-radius:16px;box-shadow:var(--glow);background:linear-gradient(100deg,#4b2600,#1b0c01 50%,#a65b00);display:flex;align-items:center;justify-content:space-around;gap:12px;padding:14px;text-align:center;overflow:hidden}
+.banner .trophy{font-size:54px}.banner strong{font-size:clamp(19px,2.4vw,31px);font-style:italic;color:#ffe07a}.banner small{display:block;margin-top:7px;color:#ffedbd;font-style:italic}
+.banner-drone{font-size:60px}
+.page-view{display:none;margin-top:14px}.page-view.active{display:block}
+.page-view .panel{min-height:180px}
+.modal-backdrop{display:none;position:fixed;inset:0;background:rgba(0,0,0,.76);z-index:10;align-items:center;justify-content:center;padding:16px}
+.modal-backdrop.show{display:flex}
+.modal{width:min(420px,100%);border:1px solid #ffce4e;border-radius:17px;background:linear-gradient(145deg,#482500,#140900);box-shadow:0 0 25px #ffb000;padding:22px}
+.modal h2{color:#ffdc70;margin:0 0 15px}
+.modal label{display:block;margin:12px 0 6px;color:#ffe8b5}
+.modal input,.modal textarea{width:100%;padding:11px;border:1px solid #a96b0c;border-radius:8px;background:#140b02;color:#fff1c8}
+.modal-actions{display:flex;gap:10px;margin-top:18px}.modal-actions button{flex:1}
+.close-btn{background:transparent;color:#ffdc70;border:1px solid #ad780e;border-radius:9px;padding:9px}
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#f5c34d;color:#251300;padding:12px 18px;border-radius:10px;font-weight:bold;display:none;z-index:20;box-shadow:0 0 15px #ffb000}
+@media(max-width:1100px){.app{grid-template-columns:175px minmax(0,1fr)}.stats{grid-template-columns:repeat(2,minmax(0,1fr))}.content-grid{grid-template-columns:1fr 1fr}.quick-panel{grid-column:1/-1}.quick{grid-template-columns:repeat(3,1fr)}.hero{grid-template-columns:1fr 1fr}.account-card{grid-column:1/-1;display:flex;justify-content:space-between;align-items:center}.account-title{border:0;margin:0;padding:0}.account-row{margin:0 10px}}
+@media(max-width:700px){.app{display:block;padding:8px}.sidebar{min-height:auto;padding:9px;margin-bottom:9px}.brand{padding:5px;border:0}.brand-name{font-size:28px}.brand-sub{font-size:11px}.nav{display:flex;overflow-x:auto;margin-top:8px;gap:6px;padding-bottom:3px}.nav button{flex:0 0 auto;padding:9px 10px;font-size:12px;gap:6px}.nav .ico{font-size:17px;width:auto}.side-bottom{display:none}.topbar{grid-template-columns:1fr auto;padding:11px;min-height:70px}.top-brand{display:none}.slogan{text-align:left;font-size:17px}.user-tools{gap:8px}.avatar{width:36px;height:36px;font-size:19px}.user-small{display:none}.user-name{font-size:12px}.hero{grid-template-columns:1fr 1fr;padding:14px;min-height:220px}.hero-copy h1{font-size:30px}.hero-copy h2{font-size:17px}.hero-copy p{font-size:13px}.drone-art{font-size:90px}.account-card{grid-column:1/-1;display:block;padding:12px}.account-title{margin-bottom:8px}.account-row{display:inline-block;margin:4px 8px 4px 0;font-size:12px}.account-row strong{font-size:13px}.member-seal{font-size:30px;float:right}.stats{grid-template-columns:1fr 1fr;gap:8px}.stat{padding:10px;min-height:104px;gap:8px}.stat-icon{font-size:29px}.stat-label{font-size:11px;white-space:normal}.stat-value{font-size:15px}.stat-sub{font-size:11px}.stat .gold-btn{padding:6px 9px;font-size:11px}.content-grid{grid-template-columns:1fr;gap:9px}.quick-panel{grid-column:auto}.quick{grid-template-columns:1fr}.panel{padding:13px}.panel h3{font-size:17px}.banner{min-height:95px}.banner .trophy{font-size:35px}.banner-drone{font-size:38px}}
 </style>
 </head>
-
 <body>
+<div class="app">
+  <aside class="sidebar">
+    <div class="brand"><div class="brand-name">YUNEEC</div><div class="brand-sub">Global Drone Technologies</div></div>
+    <nav class="nav" aria-label="Main navigation">
+      <button class="active" data-page="Dashboard"><span class="ico">🏠</span>Dashboard</button>
+      <button data-page="My Drones"><span class="ico">🚁</span>My Drones</button>
+      <button data-page="Investments"><span class="ico">🪙</span>Investments</button>
+      <button data-page="Earnings"><span class="ico">📈</span>Earnings</button>
+      <button data-page="Referrals"><span class="ico">👥</span>Referrals</button>
+      <button data-page="Wallet"><span class="ico">👛</span>Wallet</button>
+      <button data-page="Transactions"><span class="ico">▤</span>Transactions</button>
+      <button data-page="Support"><span class="ico">🎧</span>Support</button>
+      <button data-page="Settings"><span class="ico">⚙️</span>Settings</button>
+      <button data-page="Logout"><span class="ico">↪</span>Logout</button>
+    </nav>
+    <div class="side-bottom"><div class="globe">🌍</div><small>Global Drone Technology</small></div>
+  </aside>
 
-<!-- HEADER -->
+  <main class="main">
+    <header class="topbar">
+      <div class="top-brand">GLOBAL DRONE TECHNOLOGIES</div>
+      <div class="slogan">Fly Smarter. Live Better.</div>
+      <div class="user-tools">
+        <div class="user-chip"><div class="avatar">👤</div><div><div class="user-small">Welcome,</div><div class="user-name" id="displayName">BakaShaba⌄</div></div></div>
+        <button class="tool-btn" id="notifications" aria-label="Notifications">🔔<span class="notif">3</span></button>
+        <button class="tool-btn" data-page="Settings" aria-label="Settings">⚙️</button>
+      </div>
+    </header>
 
-<header>
-  <button class="menu-toggle"
-    onclick="toggleMenu()"
-    aria-label="Open menu">☰</button>
+    <section class="hero" id="hero">
+      <div class="hero-copy"><h1>YUNEEC</h1><h2>Global Drone<br>Technologies</h2><p>Innovative Drones.<br>A Smarter Tomorrow.</p></div>
+      <div class="drone-art" aria-label="Drone illustration">🚁</div>
+      <div class="account-card">
+        <div class="account-title"><span>👤</span>Your Account Overview</div>
+        <div class="account-row"><div>Account ID<strong id="accountId">#YUN20261123</strong></div></div>
+        <div class="account-row"><div>Membership Level<strong>⭐ Premium Member</strong></div></div>
+        <div class="member-seal">🏅</div>
+      </div>
+    </section>
 
-  <div class="logo">YUN<span>EEC</span></div>
+    <section class="stats" aria-label="Account statistics">
+      <article class="stat"><div class="stat-icon">🚁</div><div><div class="stat-label">My Drones</div><div class="stat-value" id="droneCount">2</div><div class="stat-sub">🟢 Active</div></div></article>
+      <article class="stat"><div class="stat-icon">🪙</div><div><div class="stat-label">Total Investment</div><div class="stat-value" id="investmentValue">UGX 500,000</div><div class="stat-sub">🟢 Active Plan</div></div></article>
+      <article class="stat"><div class="stat-icon">👛</div><div><div class="stat-label">Available Balance</div><div class="stat-value" id="balanceValue">UGX 125,000</div><button class="gold-btn" data-modal="withdraw">Withdraw</button></div></article>
+      <article class="stat"><div class="stat-icon">📊</div><div><div class="stat-label">Today's Earnings</div><div class="stat-value" id="todayValue">UGX 75,000</div><div class="stat-sub">↑ +30%</div></div></article>
+    </section>
 
-  <div class="company-label">
-    🚁 Global Technologies
+    <section class="content-grid" id="dashboardContent">
+      <article class="panel">
+        <div class="panel-head"><h3>Earnings Overview</h3><select id="chartPeriod"><option>This Month</option><option>This Week</option><option>This Year</option></select></div>
+        <svg class="chart" viewBox="0 0 560 210" role="img" aria-label="Earnings bar and line chart">
+          <defs><linearGradient id="barFill" x1="0" x2="0" y1="0" y2="1"><stop stop-color="#ffdc63"/><stop offset="1" stop-color="#a85b00"/></linearGradient><filter id="shine"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>
+          <g stroke="rgba(255,202,83,.22)" stroke-width="1"><path d="M45 20H545M45 70H545M45 120H545M45 170H545"/></g>
+          <g fill="#ffe3a0" font-size="15"><text x="0" y="25">150K</text><text x="0" y="75">100K</text><text x="7" y="125">50K</text><text x="25" y="175">0</text></g>
+          <g fill="url(#barFill)" stroke="#ffcf4b" stroke-width="1"><rect x="85" y="115" width="38" height="55"/><rect x="160" y="90" width="38" height="80"/><rect x="235" y="102" width="38" height="68"/><rect x="310" y="70" width="38" height="100"/><rect x="385" y="82" width="38" height="88"/><rect x="460" y="52" width="38" height="118"/></g>
+          <path d="M104 112 L179 86 L254 99 L329 62 L404 77 L479 38" fill="none" stroke="#ffd044" stroke-width="3" filter="url(#shine)"/>
+          <g fill="#fff0a0" stroke="#ffb900" stroke-width="3"><circle cx="104" cy="112" r="5"/><circle cx="179" cy="86" r="5"/><circle cx="254" cy="99" r="5"/><circle cx="329" cy="62" r="5"/><circle cx="404" cy="77" r="5"/><circle cx="479" cy="38" r="5"/></g>
+        </svg>
+        <div class="chart-labels"><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sun</span></div>
+      </article>
+      <article class="panel">
+        <div class="panel-head"><h3>👥 Referral Program</h3></div>
+        <div class="referral-body"><div><div>Total Referrals</div><div class="referral-number" id="referralCount">128</div><div style="color:#ffda6c">Referral Bonus</div><div class="referral-bonus" id="referralBonus">UGX 64,000</div><button class="gold-btn" id="shareButton">↗ Share Link</button></div><div class="gift">🎁</div></div>
+      </article>
+      <article class="panel quick-panel">
+        <div class="panel-head"><h3>⚡ Quick Actions</h3></div>
+        <div class="quick">
+          <button data-modal="invest"><span>📈</span>Invest Now</button>
+          <button data-modal="withdraw"><span>👛</span>Withdraw Funds</button>
+          <button data-page="Referrals"><span>👥</span>View Referrals</button>
+          <button data-page="Support"><span>🎧</span>Contact Support</button>
+        </div>
+      </article>
+    </section>
+
+    <section class="banner" id="banner"><div class="trophy">🏆</div><div><strong>Together We Soar Higher</strong><small>With YUNEEC, the sky is not the limit!</small></div><div class="banner-drone">🚁</div><div style="font-size:42px">🌆</div></section>
+
+    <section class="page-view" id="pageView"><article class="panel"><div class="panel-head"><h3 id="pageTitle">My Drones</h3></div><div id="pageDescription">Your drone account information will appear here.</div></article></section>
+  </main>
+</div>
+
+<div class="modal-backdrop" id="modalBackdrop">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <h2 id="modalTitle">Withdraw Funds</h2>
+    <div id="modalBody"></div>
+    <div class="modal-actions"><button class="close-btn" id="closeModal">Cancel</button><button class="gold-btn" id="confirmAction">Continue</button></div>
   </div>
-</header>
-
-<!-- OVERLAY -->
-
-<div class="overlay"
-  id="overlay"
-  onclick="closeMenu()"></div>
-
-<!-- SIDEBAR -->
-
-<aside class="sidebar" id="sidebar">
-
-  <div class="sidebar-header">
-    <div class="sidebar-title">
-      YUN<span>EEC</span>
-    </div>
-
-    <button class="close-menu"
-      onclick="closeMenu()"
-      aria-label="Close menu">×</button>
-  </div>
-
-  <div class="sidebar-label">Main Menu</div>
-
-  <a href="#dashboard" class="active">
-    <span>▣</span> Dashboard
-  </a>
-
-  <a href="#balance">
-    <span>▣</span> My Balance
-  </a>
-
-  <a href="#investment">
-    <span>↗</span> Investment
-  </a>
-
-  <a href="#deposit">
-    <span>💰</span> Deposit
-  </a>
-
-  <a href="#withdraw">
-    <span>💸</span> Withdraw Money
-  </a>
-
-  <div class="sidebar-label">Transaction History</div>
-
-  <a href="#deposit-history">
-    <span>◷</span> Deposit History
-  </a>
-
-  <a href="#withdrawal-history">
-    <span>⇩</span> Withdrawal History
-  </a>
-
-  <div class="sidebar-label">Account</div>
-
-  <a href="#referrals">
-    <span>♧</span> Referral Team
-  </a>
-
-  <a href="#profile">
-    <span>♙</span> My Profile
-  </a>
-
-  <a href="#support">
-    <span>☎</span> Contact & Support
-  </a>
-
-  <div class="sidebar-label">Administration</div>
-
-  <a href="#admin">
-    <span>🛡️</span> Admin Panel
-  </a>
-
-  <a href="#logout">
-    <span>🚪</span> Logout
-  </a>
-
-</aside>
-
-<main class="container">
-
-<!-- DASHBOARD -->
-
-<section id="dashboard" class="page-section active">
-
-  <div class="welcome">
-    <h1>✨ Welcome to YUNEEC</h1>
-
-    <p>
-      Welcome to YUNEEC Global Drone Technologies.
-      Manage your account and access your dashboard.
-    </p>
-  </div>
-
-  <h2 class="section-title">Account Overview</h2>
-
-  <div class="cards">
-
-    <div class="card">
-      <div class="icon">💰</div>
-      <p>Available Balance</p>
-      <h3>UGX 0</h3>
-    </div>
-
-    <div class="card">
-      <div class="icon">📈</div>
-      <p>Total Investment</p>
-      <h3>UGX 0</h3>
-    </div>
-
-    <div class="card">
-      <div class="icon">💵</div>
-      <p>Total Earnings</p>
-      <h3>UGX 0</h3>
-    </div>
-
-    <div class="card">
-      <div class="icon">👥</div>
-      <p>Referral Members</p>
-      <h3>0</h3>
-    </div>
-
-  </div>
-
-  <h2 class="section-title">Account Menu</h2>
-
-  <div class="menu-list">
-
-    <a href="#balance" class="menu-item">
-      <span>▣</span> My Balance
-    </a>
-
-    <a href="#investment" class="menu-item">
-      <span>↗</span> Investment
-    </a>
-
-    <a href="#deposit" class="menu-item">
-      <span>💰</span> Deposit
-    </a>
-
-    <a href="#withdraw" class="menu-item">
-      <span>💸</span> Withdraw Money
-    </a>
-
-    <a href="#deposit-history" class="menu-item">
-      <span>◷</span> Deposit History
-    </a>
-
-    <a href="#withdrawal-history" class="menu-item">
-      <span>⇩</span> Withdrawal History
-    </a>
-
-    <a href="#referrals" class="menu-item">
-      <span>♧</span> Referral Team
-    </a>
-
-    <a href="#profile" class="menu-item">
-      <span>♙</span> My Profile
-    </a>
-
-    <a href="#support" class="menu-item">
-      <span>☎</span> Contact & Support
-    </a>
-
-    <a href="#admin" class="menu-item">
-      <span>🛡️</span> Admin Panel
-    </a>
-
-    <a href="#logout" class="menu-item">
-      <span>🚪</span> Logout
-    </a>
-
-  </div>
-
-</section>
-
-<!-- BALANCE -->
-
-<section id="balance" class="page-section">
-  <h2>▣ My Balance</h2>
-  <p>View your account balance.</p>
-
-  <div class="info">
-    Available Balance: <strong>UGX 0</strong>
-  </div>
-
-  <div class="info">
-    Total Earnings: UGX 0
-  </div>
-</section>
-
-<!-- INVESTMENT -->
-
-<section id="investment" class="page-section">
-  <h2>↗ Investment</h2>
-  <p>Manage your investment activities.</p>
-
-  <div class="info">
-    Your investment information will appear here.
-  </div>
-</section>
-
-<!-- DEPOSIT -->
-
-<section id="deposit" class="page-section">
-  <h2>💰 Deposit</h2>
-  <p>Access your account deposit services.</p>
-
-  <div class="info">
-    Deposit instructions and payment verification will appear here.
-  </div>
-</section>
-
-<!-- WITHDRAW -->
-
-<section id="withdraw" class="page-section">
-  <h2>💸 Withdraw Money</h2>
-  <p>Manage your withdrawal requests.</p>
-
-  <div class="info">
-    Withdrawal instructions and account verification will appear here.
-  </div>
-</section>
-
-<!-- DEPOSIT HISTORY -->
-
-<section id="deposit-history" class="page-section">
-  <h2>◷ Deposit History</h2>
-  <p>View your previous deposit transactions.</p>
-
-  <div class="info">
-    No deposit records available.
-  </div>
-</section>
-
-<!-- WITHDRAWAL HISTORY -->
-
-<section id="withdrawal-history" class="page-section">
-  <h2>⇩ Withdrawal History</h2>
-  <p>View your previous withdrawal transactions.</p>
-
-  <div class="info">
-    No withdrawal records available.
-  </div>
-</section>
-
-<!-- REFERRALS -->
-
-<section id="referrals" class="page-section">
-  <h2>♧ Referral Team</h2>
-  <p>Manage and view your referral team.</p>
-
-  <div class="info">
-    Your referral members will appear here.
-  </div>
-</section>
-
-<!-- PROFILE -->
-
-<section id="profile" class="page-section">
-  <h2>♙ My Profile</h2>
-  <p>View and manage your account information.</p>
-
-  <div class="info">
-    Your profile information will appear here.
-  </div>
-</section>
-
-<!-- SUPPORT -->
-
-<section id="support" class="page-section">
-  <h2>☎ Contact & Support</h2>
-  <p>Contact YUNEEC customer support.</p>
-
-  <div class="info">
-    Support contact details will appear here.
-  </div>
-</section>
-
-<!-- ADMIN -->
-
-<section id="admin" class="page-section">
-  <h2>🛡️ Admin Panel</h2>
-  <p>Administrative management area.</p>
-
-  <div class="info">
-    Administrator access and management tools will appear here.
-  </div>
-</section>
-
-<!-- LOGOUT -->
-
-<section id="logout" class="page-section">
-  <h2>🚪 Logout</h2>
-  <p>Are you sure you want to leave your account?</p>
-
-  <button class="btn" onclick="logout()">
-    Confirm Logout
-  </button>
-</section>
-
-</main>
-
-<footer>
-  <h3>✨ YUNEEC Global Drone Technologies ✨</h3>
-
-  <p>Innovating the Future of Aerial Technology</p>
-
-  <p>© 2026 YUNEEC. All rights reserved.</p>
-</footer>
+</div>
+<div class="toast" id="toast"></div>
 
 <script>
-
-/* SIDEBAR */
-
-function toggleMenu(){
-  document.getElementById("sidebar")
-    .classList.toggle("open");
-
-  document.getElementById("overlay")
-    .classList.toggle("show");
+/* DEMO FRONT END:
+   These values are sample display data. Connect your own secure backend/API
+   before using real accounts, balances, investments or withdrawals. */
+const demoAccount = {
+  name:"BakaShaba", id:"#YUN20261123", drones:2,
+  investment:500000, balance:125000, today:75000,
+  referrals:128, referralBonus:64000,
+  referralLink:location.href.split("#")[0] + "?ref=YUN20261123"
+};
+const money = n => "UGX " + Number(n).toLocaleString("en-US");
+function showToast(message){
+  const toast=document.getElementById("toast");
+  toast.textContent=message;toast.style.display="block";
+  clearTimeout(window.toastTimer);
+  window.toastTimer=setTimeout(()=>toast.style.display="none",2600);
 }
-
-function closeMenu(){
-  document.getElementById("sidebar")
-    .classList.remove("open");
-
-  document.getElementById("overlay")
-    .classList.remove("show");
+function updateDashboard(){
+  document.getElementById("displayName").textContent=demoAccount.name+"⌄";
+  document.getElementById("accountId").textContent=demoAccount.id;
+  document.getElementById("droneCount").textContent=demoAccount.drones;
+  document.getElementById("investmentValue").textContent=money(demoAccount.investment);
+  document.getElementById("balanceValue").textContent=money(demoAccount.balance);
+  document.getElementById("todayValue").textContent=money(demoAccount.today);
+  document.getElementById("referralCount").textContent=demoAccount.referrals;
+  document.getElementById("referralBonus").textContent=money(demoAccount.referralBonus);
 }
-
-/* PAGE NAVIGATION */
-
-function showPage(){
-
-  const id = location.hash.replace("#","") || "dashboard";
-
-  const sections = document.querySelectorAll(".page-section");
-
-  let found = false;
-
-  sections.forEach(section=>{
-    section.classList.remove("active");
-
-    if(section.id === id){
-      section.classList.add("active");
-      found = true;
-    }
-  });
-
-  if(!found){
-    document.getElementById("dashboard")
-      .classList.add("active");
+const descriptions={
+ "My Drones":"<h2>🚁 My Drone Fleet</h2><p>You currently have <strong>2 active drones</strong>.</p><p>Drone details, status and management controls can be connected here.</p>",
+ "Investments":"<h2>🪙 Investment Plans</h2><p>Review your active plans, investment history and plan details.</p><button class='gold-btn' data-modal='invest'>Explore Investments</button>",
+ "Earnings":"<h2>📈 Earnings</h2><p>Today's earnings: <strong>UGX 75,000</strong></p><p>Connect your earnings ledger to show verified payouts and history.</p>",
+ "Referrals":"<h2>👥 Referral Center</h2><p>Total referrals: <strong>128</strong></p><p>Referral bonus: <strong>UGX 64,000</strong></p><button class='gold-btn' id='pageShare'>Share Referral Link</button>",
+ "Wallet":"<h2>👛 My Wallet</h2><p>Available balance: <strong>UGX 125,000</strong></p><button class='gold-btn' data-modal='withdraw'>Request Withdrawal</button>",
+ "Transactions":"<h2>▤ Transactions</h2><p>Your deposits, withdrawals, investments and earnings transactions will be listed here after backend integration.</p>",
+ "Support":"<h2>🎧 Customer Support</h2><p>Need help with your account? Add your official support email, phone number or live chat link here.</p>",
+ "Settings":"<h2>⚙️ Account Settings</h2><p>Profile, password, notification and security settings can be added here.</p>",
+ "Logout":"<h2>Logout</h2><p>This sample interface does not have login authentication connected.</p><button class='gold-btn' id='stayLoggedIn'>Stay on Dashboard</button>"
+};
+function openPage(page){
+  const isDash=page==="Dashboard";
+  document.getElementById("dashboardContent").style.display=isDash?"grid":"none";
+  document.getElementById("hero").style.display=isDash?"grid":"none";
+  document.getElementById("banner").style.display=isDash?"flex":"none";
+  const view=document.getElementById("pageView");
+  view.classList.toggle("active",!isDash);
+  if(!isDash){
+    document.getElementById("pageTitle").textContent=page;
+    document.getElementById("pageDescription").innerHTML=descriptions[page]||"";
   }
-
-  document.querySelectorAll(".sidebar a").forEach(link=>{
-    link.classList.toggle(
-      "active",
-      link.getAttribute("href") === "#" + id
-    );
-  });
-
-  closeMenu();
-
-  window.scrollTo(0,0);
+  document.querySelectorAll(".nav button").forEach(b=>b.classList.toggle("active",b.dataset.page===page));
 }
-
-window.addEventListener("hashchange",showPage);
-
-window.addEventListener("DOMContentLoaded",showPage);
-
-/* LOGOUT */
-
-function logout(){
-
-  const confirmLogout = confirm(
-    "Are you sure you want to logout?"
-  );
-
-  if(confirmLogout){
-    alert(
-      "Connect your authentication system to complete logout."
-    );
-  }
-}
-
-/* CLOSE SIDEBAR WITH ESCAPE */
-
-document.addEventListener("keydown",event=>{
-  if(event.key === "Escape"){
-    closeMenu();
-  }
+document.querySelectorAll("[data-page]").forEach(btn=>btn.addEventListener("click",()=>openPage(btn.dataset.page)));
+document.addEventListener("click",e=>{
+  const modalButton=e.target.closest("[data-modal]");
+  if(modalButton) openModal(modalButton.dataset.modal);
+  if(e.target.id==="pageShare") shareLink();
+  if(e.target.id==="stayLoggedIn") openPage("Dashboard");
 });
-
+document.getElementById("notifications").addEventListener("click",()=>showToast("You have 3 sample notifications."));
+document.getElementById("chartPeriod").addEventListener("change",e=>showToast("Showing sample data: "+e.target.value));
+document.getElementById("shareButton").addEventListener("click",shareLink);
+async function shareLink(){
+  const link=demoAccount.referralLink;
+  try{
+    if(navigator.share) await navigator.share({title:"Join YUNEEC",text:"Check out YUNEEC Global Drone Technologies",url:link});
+    else if(navigator.clipboard){await navigator.clipboard.writeText(link);showToast("Referral link copied!");}
+    else showToast("Referral link: "+link);
+  }catch(err){if(err.name!=="AbortError")showToast("Share was cancelled or unavailable.");}
+}
+const backdrop=document.getElementById("modalBackdrop");
+let activeModal="withdraw";
+function openModal(type){
+  activeModal=type;
+  const title=document.getElementById("modalTitle");
+  const body=document.getElementById("modalBody");
+  if(type==="withdraw"){
+    title.textContent="Withdraw Funds";
+    body.innerHTML='<p>Available balance: <strong>'+money(demoAccount.balance)+'</strong></p><label for="amount">Withdrawal amount (UGX)</label><input id="amount" type="number" min="1" placeholder="Enter amount"><label for="method">Payment method</label><select id="method" style="width:100%;padding:11px"><option>Mobile Money</option><option>Bank Transfer</option></select>';
+    document.getElementById("confirmAction").textContent="Submit Request";
+  }else{
+    title.textContent="Invest in YUNEEC";
+    body.innerHTML='<p>Choose an amount to explore an investment plan.</p><label for="amount">Investment amount (UGX)</label><input id="amount" type="number" min="1" placeholder="Enter amount"><p style="font-size:12px;color:#d6b777">Demo only — no payment will be collected.</p>';
+    document.getElementById("confirmAction").textContent="Continue";
+  }
+  backdrop.classList.add("show");
+}
+function closeModal(){backdrop.classList.remove("show")}
+document.getElementById("closeModal").addEventListener("click",closeModal);
+backdrop.addEventListener("click",e=>{if(e.target===backdrop)closeModal()});
+document.getElementById("confirmAction").addEventListener("click",()=>{
+  const amount=Number(document.getElementById("amount")?.value||0);
+  if(!Number.isFinite(amount)||amount<=0){showToast("Please enter a valid amount.");return}
+  if(activeModal==="withdraw"){
+    if(amount>demoAccount.balance){showToast("Amount exceeds the displayed balance.");return}
+    showToast("Demo request prepared. Connect a secure backend to submit it.");
+  }else showToast("Demo investment selected. Connect payment processing to continue.");
+  closeModal();
+});
+updateDashboard();
 </script>
-
 </body>
-</html>
+        </html>
 
 
