@@ -838,6 +838,40 @@ if (adminError || isAdmin !== true) {
 
   const container = document.getElementById('adminMembers');
   container.replaceChildren();
+    const searchInput = document.getElementById('adminMemberSearch');
+
+function renderMembers(search = '') {
+  container.replaceChildren();
+
+  (members || [])
+    .filter(member =>
+      (member.username || '').toLowerCase().includes(search.toLowerCase()) ||
+      (member.full_name || '').toLowerCase().includes(search.toLowerCase())
+    )
+    .forEach(member => {
+      const card = document.createElement('div');
+      card.className = 'admin-card';
+
+      const name = document.createElement('strong');
+      name.textContent = member.username || member.full_name || 'Member';
+
+      const details = document.createElement('p');
+      details.textContent =
+        'Status: ' + (member.account_status || 'Unknown') +
+        ' | Joined: ' + new Date(member.created_at).toLocaleDateString();
+
+      const balance = document.createElement('p');
+      balance.textContent =
+        'Wallet: UGX ' +
+        (walletMap.get(member.id) || 0).toLocaleString('en-UG');
+
+      card.append(name, details, balance);
+      container.appendChild(card);
+    });
+}
+
+searchInput.oninput = () => renderMembers(searchInput.value);
+renderMembers();
 
   (members || []).forEach(member => {
     const card = document.createElement('div');
