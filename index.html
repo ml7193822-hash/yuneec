@@ -1137,7 +1137,9 @@ async function loadAccount(user) {
 
   document.getElementById('referralLink').value =
     location.origin + location.pathname + '?ref=' + user.id;
-
+  
+    await loadMyWalletBalance();
+  
   showPage();
 
 }
@@ -1749,6 +1751,45 @@ searchInput.oninput = async () => {
 renderMembers();
 
   }
+  
+async function loadMyWalletBalance() {
+  const { data: { user }, error: authError } =
+    await supabaseClient.auth.getUser();
+
+  if (authError || !user) {
+    console.error('Could not identify logged-in user.');
+    return;
+  }
+
+  const { data, error } = await supabaseClient
+    .from('wallets')
+    .select('balance')
+    .eq('user_id', user.id)
+    .maybeSingle();
+
+  if (error) {
+    console.error('Wallet balance loading failed:', error);
+    return;
+  }
+
+  const balance = Number(data?.balance || 0);
+  const formatted = 'UGX ' + balance.toLocaleString('en-UG');
+
+  const dashboardBalance =
+    document.getElementById('availableBalance');
+
+  const withdrawBalance =
+    document.getElementById('withdrawAvailableBalance');
+
+  if (dashboardBalance) {
+    dashboardBalance.textContent = formatted;
+  }
+
+  if (withdrawBalance) {
+    withdrawBalance.textContent = formatted;
+  }
+}
+
 
   
 
