@@ -778,6 +778,117 @@ footer h3{color:#ffdc68;margin-bottom:7px}
   });
 
   
+const depositForm = document.getElementById('depositForm');
+
+depositForm.addEventListener('submit', async function (event) {
+  event.preventDefault();
+
+  const message = document.getElementById('depositMessage');
+  const amount = Number(document.getElementById('depositAmount').value);
+  const method = document.getElementById('depositMethod').value;
+  const senderPhone = document.getElementById('senderPhone').value.trim();
+  const transactionId = document.getElementById('transactionId').value.trim();
+
+  message.textContent = '';
+
+  if (!Number.isFinite(amount) || amount < 10000) {
+    message.textContent = 'Minimum deposit is UGX 10,000.';
+    return;
+  }
+
+  if (!['MTN', 'Airtel'].includes(method)) {
+    message.textContent = 'Please select MTN or Airtel.';
+    return;
+  }
+
+  if (!senderPhone || !transactionId) {
+    message.textContent = 'Please enter your phone number and transaction ID.';
+    return;
+  }
+
+  const { data: { user }, error: authError } =
+    await supabaseClient.auth.getUser();
+
+  if (authError || !user) {
+    message.textContent = 'Please log in before submitting a deposit.';
+    return;
+  }
+
+  const { error } = await supabaseClient
+    .from('deposits')
+    .insert({
+      user_id: user.id,
+      amount: amount,
+      payment_method: method,
+      sender_phone: senderPhone,
+      transaction_id: transactionId,
+      payment_reference: transactionId,
+      status: 'Pending'
+    });
+
+  if (error) {
+    console.error('Deposit submission error:', error);
+    message.textContent = 'Deposit submission failed. Please try again.';
+    return;
+  }
+
+  message.textContent = 'Deposit submitted successfully! Awaiting admin verification.';
+  depositForm.reset();
+});
+
+  
+async function loadMyDepositHistory() {
+  const container = document.getElementById('myDepositHistory');
+  container.textContent = 'Loading deposits...';
+
+  const { data: { user }, error: authError } =
+    await supabaseClient.auth.getUser();
+
+  if (authError || !user) {
+    container.textContent = 'Please log in to view your deposits.';
+    return;
+  }
+
+  const { data, error } = await supabaseClient
+    .from('deposits')
+    .select('amount, payment_method, sender_phone, transaction_id, status, created_at')
+    .eq('user_id', user.id)
+    .order('created_at', { ascending: false });
+
+  if (error) {
+    console.error('Deposit history error:', error);
+    container.textContent = 'Could not load deposit history.';
+    return;
+  }
+
+  if (!data || data.length === 0) {
+    container.textContent = 'No deposits submitted yet.';
+    return;
+  }
+
+  container.replaceChildren();
+
+  data.forEach(deposit => {
+    const item = document.createElement('div');
+    item.className = 'info';
+
+    const details = [
+      `Amount: UGX ${Number(deposit.amount).toLocaleString()}`,
+      `Method: ${deposit.payment_method || 'N/A'}`,
+      `Sender: ${deposit.sender_phone || 'N/A'}`,
+      `Transaction ID: ${deposit.transaction_id || 'N/A'}`,
+      `Status: ${deposit.status}`,
+      `Date: ${new Date(deposit.created_at).toLocaleString()}`
+    ];
+
+    item.textContent = details.join(' | ');
+    container.appendChild(item);
+  });
+}
+
+
+
+  
 
 
 async function loadAccount(user) {
@@ -857,7 +968,7 @@ if (adminError || isAdmin !== true) {
     const { data: pendingDeposits, error: depositError } =
   await supabaseClient
     .from('deposits')
-    .select('id, user_id, amount, payment_reference, created_at, status')
+    .select('id, user_id, amount, payment_reference, payment_method, sender_phone, transaction_id, created_at, status')
     .eq('status', 'Pending')
     .order('created_at', { ascending: false });
 
@@ -875,11 +986,16 @@ if (depositError) {
     const card = document.createElement('div');
     card.className = 'admin-card';
 
-    const details = document.createElement('p');
-    details.textContent =
-      'Member: ' + request.user_id +
-      ' | Amount: UGX ' + Number(request.amount).toLocaleString('en-UG') +
-      ' | Reference: ' + (request.payment_reference || 'Not provided');
+    
+const details = document.createElement('p');
+details.textContent =
+  'Member: ' + request.user_id +
+  ' | Amount: UGX ' + Number(request.amount).toLocaleString('en-UG') +
+  ' | Payment Method: ' + (request.payment_method || 'Not provided') +
+  ' | Sender Phone: ' + (request.sender_phone || 'Not provided') +
+  ' | Transaction ID: ' + (request.transaction_id || 'Not provided') +
+  ' | Reference: ' + (request.payment_reference || 'Not provided');
+
 
     card.appendChild(details);
 
@@ -1436,28 +1552,34 @@ async function checkSession() {
     document.getElementById('overlay').classList.remove('show');
   }
 
-  function showPage() {
-    const id = (location.hash || '#dashboard').slice(1);
-    const sections = [...document.querySelectorAll('.page-section')];
+  
+function showPage() {
+  const id = (location.hash || '#dashboard').slice(1);
+  const sections = [...document.querySelectorAll('.page-section')];
 
-    const target =
-      sections.find(section => section.id === id) ||
-      document.getElementById('dashboard');
+  const target =
+    sections.find(section => section.id === id) ||
+    document.getElementById('dashboard');
 
-    sections.forEach(section =>
-      section.classList.toggle('active', section === target)
-    );
+  sections.forEach(section =>
+    section.classList.toggle('active', section === target)
+  );
 
-    document.querySelectorAll('.sidebar a').forEach(link =>
-      link.classList.toggle(
-        'active',
-        link.getAttribute('href') === '#' + target.id
-      )
-    );
+  document.querySelectorAll('.sidebar a').forEach(link =>
+    link.classList.toggle(
+      'active',
+      link.getAttribute('href') === '#' + target.id
+    )
+  );
 
-    closeMenu();
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+  if (target.id === 'deposit') {
+    loadMyDepositHistory();
   }
+
+  closeMenu();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
 
   function showNotice() {
     alert('You have no new notifications.');
