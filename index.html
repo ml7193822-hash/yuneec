@@ -367,12 +367,22 @@ footer h3{color:#ffdc68;margin-bottom:7px}
   <a href="#profile"><span class="nav-icon">♙</span>My Profile</a>
   <a href="#support"><span class="nav-icon">🎧</span>Support</a>
   <a href="#settings"><span class="nav-icon">⚙</span>Settings</a>
+  <div id="adminSection" style="display:none;">
   <div class="sidebar-label">Administration</div>
-  <a href="#admin" id="adminMenuLink" style="display:none;">
-  <span class="nav-icon">🛡</span>Admin Panel
+
+  <a href="#admin" id="adminMenuLink">
+    <span class="nav-icon">🛡</span>Admin Panel
   </a>
-  <a href="#logout"><span class="nav-icon">⇥</span>Logout</a>
-  <div class="sidebar-bottom">YUNEEC Global Drone Technologies<br>Innovating the Future of Aerial Technology</div>
+</div>
+
+<a href="#logout">
+  <span class="nav-icon">⇥</span>Logout
+</a>
+
+<div class="sidebar-bottom">
+  YUNEEC Global Drone Technologies<br>
+  Innovating the Future of Aerial Technology
+</div>
 </aside>
 
 <main class="main">
@@ -1822,22 +1832,22 @@ if (target.id === 'withdraw') {
     }
   });
   async function checkAdminAccess() {
-  const adminLink = document.getElementById('adminMenuLink');
+  const adminSection = document.getElementById('adminSection');
+
+  adminSection.style.display = 'none';
 
   const { data: { user }, error } =
     await supabaseClient.auth.getUser();
 
-  if (error || !user) {
-    adminLink.style.display = 'none';
-    return;
-  }
+  if (error || !user) return;
 
   const { data: isAdmin, error: adminError } =
     await supabaseClient.rpc('is_admin');
 
-  adminLink.style.display =
-    !adminError && isAdmin === true ? '' : 'none';
-}
+  if (!adminError && isAdmin === true) {
+    adminSection.style.display = '';
+  }
+         }
 
 await checkAdminAccess();
 
