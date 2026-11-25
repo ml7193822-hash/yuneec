@@ -454,7 +454,23 @@ footer h3{color:#ffdc68;margin-bottom:7px}
   </div>
 </section>
 
-<section id="earnings" class="page-section"><div class="content-panel"><h2>📈 Earnings</h2><p>Review your verified earnings.</p><div class="info">Total earnings: <strong>UGX 0</strong></div><div class="empty-state">No verified earnings records are available yet.</div></div></section>
+
+<section id="earnings" class="page-section">
+  <div class="content-panel">
+    <h2>📈 Earnings</h2>
+    <p>Review your verified earnings.</p>
+
+    <div class="info">
+      Total earnings:
+      <strong id="totalVerifiedEarnings">UGX 0</strong>
+    </div>
+
+    <div id="myEarningsList" class="empty-state">
+      Loading earnings...
+    </div>
+  </div>
+</section>
+
 <section id="referrals" class="page-section"><div class="content-panel"><h2>👥 Referral Team</h2><p>View members who registered using your referral link.</p><div class="info">Total referrals: <strong>0</strong></div><div class="empty-state">Your referral members will appear here when referral records are connected.</div><button class="btn" onclick="copyReferral()">Copy Referral Link</button></div></section>
 <section id="balance" class="page-section"><div class="content-panel"><h2>👛 My Wallet</h2><p>View your available account balance.</p><div class="info">Available Balance: <strong>UGX 0</strong></div><div class="info">Total Earnings: <strong>UGX 0</strong></div></div></section>
 <section id="transactions" class="page-section"><div class="content-panel"><h2>▧ Transactions</h2><p>Review your account transaction history.</p><div class="empty-state">No transaction records available.</div></div></section>
@@ -1790,6 +1806,9 @@ if (target.id === 'admin') {
   if (target.id === 'investment') {
   loadMyInvestments();
   }
+  if (target.id === 'earnings') {
+  loadMyEarnings();
+  }
 
   if (target.id === 'deposit') {
   loadMyDepositHistory();
@@ -1950,6 +1969,65 @@ async function loadMyInvestments() {
     list.appendChild(item);
   });
 }
+
+  
+async function loadMyEarnings() {
+  const list = document.getElementById('myEarningsList');
+  const totalElement = document.getElementById('totalVerifiedEarnings');
+
+  list.textContent = 'Loading earnings...';
+
+  const { data: { user }, error: authError } =
+    await supabaseClient.auth.getUser();
+
+  if (authError || !user) {
+    list.textContent = 'Please log in to view your earnings.';
+    return;
+  }
+
+  const { data, error } = await supabaseClient
+    .from('investment_earnings')
+    .select('amount, earning_date, status, paid_at')
+    .eq('user_id', user.id)
+    .eq('status', 'Verified')
+    .order('earning_date', { ascending: false });
+
+  if (error) {
+    console.error('Earnings loading error:', error);
+    list.textContent = 'Could not load earnings.';
+    return;
+  }
+
+  const earnings = data || [];
+
+  const total = earnings.reduce(
+    (sum, earning) => sum + Number(earning.amount || 0), 0
+  );
+
+  totalElement.textContent =
+    'UGX ' + total.toLocaleString('en-UG');
+
+  list.replaceChildren();
+
+  if (earnings.length === 0) {
+    list.textContent = 'No verified earnings records available yet.';
+    return;
+  }
+
+  earnings.forEach(earning => {
+    const item = document.createElement('div');
+    item.className = 'info';
+
+    item.textContent =
+      'Amount: UGX ' +
+      Number(earning.amount || 0).toLocaleString('en-UG') +
+      ' | Date: ' + (earning.earning_date || 'N/A') +
+      ' | Status: ' + earning.status;
+
+    list.appendChild(item);
+  });
+}
+
 
 
 await checkAdminAccess();
