@@ -1989,7 +1989,7 @@ async function loadMyEarnings() {
     .from('investment_earnings')
     .select('amount, earning_date, status, paid_at')
     .eq('user_id', user.id)
-    .eq('status', 'Verified')
+    .eq('status', 'Paid')
     .order('earning_date', { ascending: false });
 
   if (error) {
