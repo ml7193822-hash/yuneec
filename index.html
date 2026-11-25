@@ -489,7 +489,60 @@ footer h3{color:#ffdc68;margin-bottom:7px}
   </div>
 </section>
 
-<section id="withdraw" class="page-section"><div class="content-panel"><h2>💸 Withdraw Funds</h2><p>Withdrawal requests will be shown here.</p><div class="info">Available balance: <strong>UGX 0</strong></div><div class="info">Withdrawal submission is not connected on this page yet.</div></div></section>
+
+<section id="withdraw" class="page-section">
+  <div class="content-panel">
+    <h2>💸 Withdraw Funds</h2>
+    <p>Submit a withdrawal request for administrator approval.</p>
+
+    <div class="info">
+      Available balance:
+      <strong id="withdrawAvailableBalance">UGX 0</strong>
+    </div>
+
+    <div class="info">
+      Minimum withdrawal: <strong>UGX 1,000</strong>
+    </div>
+
+    <form id="withdrawForm">
+      <label for="withdrawAmount">Amount (UGX)</label>
+      <input
+        class="form-control"
+        id="withdrawAmount"
+        type="number"
+        min="1000"
+        step="1"
+        required
+      >
+
+      <label for="withdrawMethod">Payment method</label>
+      <select class="form-control" id="withdrawMethod" required>
+        <option value="">Select payment method</option>
+        <option value="MTN">MTN Mobile Money</option>
+        <option value="Airtel">Airtel Money</option>
+      </select>
+
+      <label for="withdrawPhone">Receiving phone number</label>
+      <input
+        class="form-control"
+        id="withdrawPhone"
+        type="tel"
+        placeholder="Enter your mobile money number"
+        required
+      >
+
+      <button class="btn" type="submit">Submit Withdrawal</button>
+    </form>
+
+    <div id="withdrawMessage" class="info"></div>
+
+    <h3>My Withdrawal History</h3>
+    <div id="myWithdrawalHistory" class="empty-state">
+      Your withdrawal history will appear here.
+    </div>
+  </div>
+</section>
+
 
 <section id="profile" class="page-section">
   <div class="content-panel">
