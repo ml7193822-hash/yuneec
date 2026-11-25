@@ -472,7 +472,16 @@ footer h3{color:#ffdc68;margin-bottom:7px}
 </section>
 
 <section id="referrals" class="page-section"><div class="content-panel"><h2>👥 Referral Team</h2><p>View members who registered using your referral link.</p><div class="info">Total referrals: <strong>0</strong></div><div class="empty-state">Your referral members will appear here when referral records are connected.</div><button class="btn" onclick="copyReferral()">Copy Referral Link</button></div></section>
-<section id="balance" class="page-section"><div class="content-panel"><h2>👛 My Wallet</h2><p>View your available account balance.</p><div class="info">Available Balance: <strong>UGX 0</strong></div><div class="info">Total Earnings: <strong>UGX 0</strong></div></div></section>
+<section id="balance" class="page-section">
+  <div class="content-panel">
+    <h2>👛 My Wallet</h2>
+    <p>View your available account balance.</p>
+    <div class="info">
+      Available Balance: <strong id="walletPageBalance">UGX 0</strong>
+    </div>
+    <div class="info">Total Earnings: <strong>UGX 0</strong></div>
+  </div>
+</section>
 <section id="transactions" class="page-section"><div class="content-panel"><h2>▧ Transactions</h2><p>Review your account transaction history.</p><div class="empty-state">No transaction records available.</div></div></section>
 
 <section id="deposit" class="page-section">
@@ -1752,6 +1761,7 @@ renderMembers();
 
   }
   
+
 async function loadMyWalletBalance() {
   const { data: { user }, error: authError } =
     await supabaseClient.auth.getUser();
@@ -1778,6 +1788,9 @@ async function loadMyWalletBalance() {
   const dashboardBalance =
     document.getElementById('availableBalance');
 
+  const walletPageBalance =
+    document.getElementById('walletPageBalance');
+
   const withdrawBalance =
     document.getElementById('withdrawAvailableBalance');
 
@@ -1785,10 +1798,15 @@ async function loadMyWalletBalance() {
     dashboardBalance.textContent = formatted;
   }
 
+  if (walletPageBalance) {
+    walletPageBalance.textContent = formatted;
+  }
+
   if (withdrawBalance) {
     withdrawBalance.textContent = formatted;
   }
 }
+
 
 
   
