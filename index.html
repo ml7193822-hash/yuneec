@@ -1767,6 +1767,10 @@ function showPage() {
       link.getAttribute('href') === '#' + target.id
     )
   );
+  // Load administrator data when Admin Panel is opened
+if (target.id === 'admin') {
+  loadAdminDashboard();
+}
 
   if (target.id === 'deposit') {
   loadMyDepositHistory();
