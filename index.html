@@ -997,6 +997,59 @@ async function loadMyDepositHistory() {
   });
 }
 
+  
+async function loadMyWithdrawalHistory() {
+  const container = document.getElementById('myWithdrawalHistory');
+
+  if (!container) return;
+
+  container.textContent = 'Loading withdrawals...';
+
+  const { data: { user }, error: authError } =
+    await supabaseClient.auth.getUser();
+
+  if (authError || !user) {
+    container.textContent = 'Please log in to view withdrawals.';
+    return;
+  }
+
+  const { data, error } = await supabaseClient
+    .from('withdrawals')
+    .select('amount, payment_details, status, created_at')
+    .eq('user_id', user.id)
+    .order('created_at', { ascending: false });
+
+  if (error) {
+    console.error('Withdrawal history error:', error);
+    container.textContent = 'Could not load withdrawal history.';
+    return;
+  }
+
+  if (!data || data.length === 0) {
+    container.textContent = 'No withdrawals submitted yet.';
+    return;
+  }
+
+  container.replaceChildren();
+
+  data.forEach(withdrawal => {
+    const item = document.createElement('div');
+    item.className = 'info';
+
+    item.textContent =
+      'Amount: UGX ' +
+      Number(withdrawal.amount).toLocaleString('en-UG') +
+      ' | Payment details: ' +
+      (withdrawal.payment_details || 'N/A') +
+      ' | Status: ' + withdrawal.status +
+      ' | Date: ' +
+      new Date(withdrawal.created_at).toLocaleString();
+
+    container.appendChild(item);
+  });
+}
+
+
 
 
   
@@ -1684,8 +1737,12 @@ function showPage() {
   );
 
   if (target.id === 'deposit') {
-    loadMyDepositHistory();
-  }
+  loadMyDepositHistory();
+}
+
+if (target.id === 'withdraw') {
+  loadMyWithdrawalHistory();
+}
 
   closeMenu();
   window.scrollTo({ top: 0, behavior: 'smooth' });
