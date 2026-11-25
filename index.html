@@ -437,7 +437,23 @@ footer h3{color:#ffdc68;margin-bottom:7px}
 </section>
 
 
-<section id="investment" class="page-section"><div class="content-panel"><h2>▤ Investments</h2><p>Manage and review your investment activity.</p><div class="info">Total verified investment: <strong>UGX 0</strong></div><div class="empty-state">No verified investment records are available yet.</div></div></section>
+
+<section id="investment" class="page-section">
+  <div class="content-panel">
+    <h2>▤ Investments</h2>
+    <p>Manage and review your investment activity.</p>
+
+    <div class="info">
+      Total verified investment:
+      <strong id="totalVerifiedInvestment">UGX 0</strong>
+    </div>
+
+    <div id="myInvestmentList" class="empty-state">
+      Loading investments...
+    </div>
+  </div>
+</section>
+
 <section id="earnings" class="page-section"><div class="content-panel"><h2>📈 Earnings</h2><p>Review your verified earnings.</p><div class="info">Total earnings: <strong>UGX 0</strong></div><div class="empty-state">No verified earnings records are available yet.</div></div></section>
 <section id="referrals" class="page-section"><div class="content-panel"><h2>👥 Referral Team</h2><p>View members who registered using your referral link.</p><div class="info">Total referrals: <strong>0</strong></div><div class="empty-state">Your referral members will appear here when referral records are connected.</div><button class="btn" onclick="copyReferral()">Copy Referral Link</button></div></section>
 <section id="balance" class="page-section"><div class="content-panel"><h2>👛 My Wallet</h2><p>View your available account balance.</p><div class="info">Available Balance: <strong>UGX 0</strong></div><div class="info">Total Earnings: <strong>UGX 0</strong></div></div></section>
@@ -1771,6 +1787,9 @@ function showPage() {
 if (target.id === 'admin') {
   loadAdminDashboard();
 }
+  if (target.id === 'investment') {
+  loadMyInvestments();
+  }
 
   if (target.id === 'deposit') {
   loadMyDepositHistory();
@@ -1872,6 +1891,66 @@ if (target.id === 'withdraw') {
     adminSection.style.display = '';
   }
          }
+
+  
+async function loadMyInvestments() {
+  const list = document.getElementById('myInvestmentList');
+  const totalElement = document.getElementById('totalVerifiedInvestment');
+
+  list.textContent = 'Loading investments...';
+
+  const { data: { user }, error: authError } =
+    await supabaseClient.auth.getUser();
+
+  if (authError || !user) {
+    list.textContent = 'Please log in to view your investments.';
+    return;
+  }
+
+  const { data, error } = await supabaseClient
+    .from('investments')
+    .select('amount, daily_earning, status, start_date, end_date')
+    .eq('user_id', user.id)
+    .order('created_at', { ascending: false });
+
+  if (error) {
+    console.error('Investment loading error:', error);
+    list.textContent = 'Could not load investments.';
+    return;
+  }
+
+  const investments = data || [];
+
+  const total = investments.reduce(
+    (sum, investment) => sum + Number(investment.amount || 0), 0
+  );
+
+  totalElement.textContent =
+    'UGX ' + total.toLocaleString('en-UG');
+
+  list.replaceChildren();
+
+  if (investments.length === 0) {
+    list.textContent = 'No investment records available yet.';
+    return;
+  }
+
+  investments.forEach(investment => {
+    const item = document.createElement('div');
+    item.className = 'info';
+
+    const amount = Number(investment.amount || 0);
+    const daily = Number(investment.daily_earning || 0);
+
+    item.textContent =
+      'Investment: UGX ' + amount.toLocaleString('en-UG') +
+      ' | Daily earning: UGX ' + daily.toLocaleString('en-UG') +
+      ' | Status: ' + investment.status;
+
+    list.appendChild(item);
+  });
+}
+
 
 await checkAdminAccess();
 
