@@ -430,7 +430,65 @@ footer h3{color:#ffdc68;margin-bottom:7px}
 <section id="referrals" class="page-section"><div class="content-panel"><h2>👥 Referral Team</h2><p>View members who registered using your referral link.</p><div class="info">Total referrals: <strong>0</strong></div><div class="empty-state">Your referral members will appear here when referral records are connected.</div><button class="btn" onclick="copyReferral()">Copy Referral Link</button></div></section>
 <section id="balance" class="page-section"><div class="content-panel"><h2>👛 My Wallet</h2><p>View your available account balance.</p><div class="info">Available Balance: <strong>UGX 0</strong></div><div class="info">Total Earnings: <strong>UGX 0</strong></div></div></section>
 <section id="transactions" class="page-section"><div class="content-panel"><h2>▧ Transactions</h2><p>Review your account transaction history.</p><div class="empty-state">No transaction records available.</div></div></section>
-<section id="deposit" class="page-section"><div class="content-panel"><h2>💰 Deposit</h2><p>Deposit instructions and payment verification will appear here.</p><div class="info">No payment instructions have been configured on this page yet. Please contact support before sending money.</div></div></section>
+
+<section id="deposit" class="page-section">
+  <div class="content-panel">
+    <h2>💰 Make a Deposit</h2>
+    <p>Submit your payment details for administrator verification.</p>
+
+    <div class="info">
+      Minimum deposit: <strong>UGX 10,000</strong>
+    </div>
+
+    <div class="info">
+      <h3>MTN Mobile Money</h3>
+      <p>Number: 0783 865487</p>
+      <p>Account Name: Dina Nasiguza</p>
+    </div>
+
+    <div class="info">
+      <h3>Airtel Money</h3>
+      <p>Number: 0707728435</p>
+      <p>Account Name: BakashabaRuhanga Asa</p>
+    </div>
+
+    <div class="info">
+      <h3>Bank Transfer</h3>
+      <p>Coming Soon</p>
+    </div>
+
+    <form id="depositForm">
+      <label for="depositAmount">Amount (UGX)</label>
+      <input class="form-control" id="depositAmount"
+        type="number" min="10000" step="1" required>
+
+      <label for="depositMethod">Payment Method</label>
+      <select class="form-control" id="depositMethod" required>
+        <option value="">Select payment method</option>
+        <option value="MTN">MTN Mobile Money</option>
+        <option value="Airtel">Airtel Money</option>
+      </select>
+
+      <label for="senderPhone">Your sending phone number</label>
+      <input class="form-control" id="senderPhone"
+        type="tel" required>
+
+      <label for="transactionId">Transaction ID</label>
+      <input class="form-control" id="transactionId"
+        type="text" required>
+
+      <button class="btn" type="submit">Submit Deposit</button>
+    </form>
+
+    <div id="depositMessage" class="info"></div>
+
+    <h3>My Deposit History</h3>
+    <div id="myDepositHistory" class="empty-state">
+      Your deposit history will appear here.
+    </div>
+  </div>
+</section>
+
 <section id="withdraw" class="page-section"><div class="content-panel"><h2>💸 Withdraw Funds</h2><p>Withdrawal requests will be shown here.</p><div class="info">Available balance: <strong>UGX 0</strong></div><div class="info">Withdrawal submission is not connected on this page yet.</div></div></section>
 
 <section id="profile" class="page-section">
