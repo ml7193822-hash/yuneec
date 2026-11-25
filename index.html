@@ -1107,16 +1107,36 @@ async function loadAccount(user) {
     location.origin + location.pathname + '?ref=' + user.id;
 
   showPage();
-  loadAdminDashboard();
+loadAdminDashboard();
 }
   async function loadAdminDashboard() {
-  const { data: isAdmin, error: adminError } =
-  await supabaseClient.rpc('is_admin');
+  const adminPage = document.getElementById('admin');
 
-if (adminError || isAdmin !== true) {
-  console.error('Admin verification failed:', adminError);
-  return;
-}
+  if (adminPage) {
+    adminPage.style.display = 'none';
+  }
+
+  const { data: { user }, error: authError } =
+    await supabaseClient.auth.getUser();
+
+  if (authError || !user) {
+    location.hash = '#dashboard';
+    alert('Please sign in again.');
+    return;
+  }
+
+  const { data: isAdmin, error: adminError } =
+    await supabaseClient.rpc('is_admin');
+
+  if (adminError || isAdmin !== true) {
+    location.hash = '#dashboard';
+    alert('Access denied. Administrator privileges required.');
+    return;
+  }
+
+  if (adminPage) {
+    adminPage.style.display = '';
+  }
 
 
   const { data: members, error } = await supabaseClient
