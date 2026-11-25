@@ -368,7 +368,9 @@ footer h3{color:#ffdc68;margin-bottom:7px}
   <a href="#support"><span class="nav-icon">🎧</span>Support</a>
   <a href="#settings"><span class="nav-icon">⚙</span>Settings</a>
   <div class="sidebar-label">Administration</div>
-  <a href="#admin"><span class="nav-icon">🛡</span>Admin Panel</a>
+  <a href="#admin" id="adminMenuLink" style="display:none;">
+  <span class="nav-icon">🛡</span>Admin Panel
+  </a>
   <a href="#logout"><span class="nav-icon">⇥</span>Logout</a>
   <div class="sidebar-bottom">YUNEEC Global Drone Technologies<br>Innovating the Future of Aerial Technology</div>
 </aside>
@@ -1819,8 +1821,27 @@ if (target.id === 'withdraw') {
       authScreen.classList.remove('auth-hidden');
     }
   });
+  async function checkAdminAccess() {
+  const adminLink = document.getElementById('adminMenuLink');
 
-  await checkSession();
+  const { data: { user }, error } =
+    await supabaseClient.auth.getUser();
+
+  if (error || !user) {
+    adminLink.style.display = 'none';
+    return;
+  }
+
+  const { data: isAdmin, error: adminError } =
+    await supabaseClient.rpc('is_admin');
+
+  adminLink.style.display =
+    !adminError && isAdmin === true ? '' : 'none';
+}
+
+await checkAdminAccess();
+
+await checkSession();
 })();
 </script>
 
