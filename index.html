@@ -2174,6 +2174,11 @@ async function loadMemberDashboardStats() {
   // 2. Total active investment
   const { data: investments, error: investmentError } =
     await supabaseClient
+    alert(JSON.stringify({
+  userId: user.id,
+  investments: investments,
+  error: investmentError
+}));
       .from('investments')
       .select('amount')
       .eq('user_id', user.id)
