@@ -1297,6 +1297,8 @@ async function loadMyWithdrawalHistory() {
       new Date(withdrawal.created_at).toLocaleString();
 
     container.appendChild(item);
+        });
+}
 
 
 
@@ -2640,6 +2642,7 @@ await checkSession();
     message.textContent = 'Password updated successfully!';
     document.getElementById('changePasswordForm').reset();
   });
+  })();
 </script>
 
 </body>
