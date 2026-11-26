@@ -370,6 +370,16 @@ footer h3{color:#ffdc68;margin-bottom:7px}
 }
 
 .auth-hidden {display:none!important}
+  
+/* Hide member interface when logged out */
+body:not(.logged-in) .app-header,
+body:not(.logged-in) .sidebar,
+body:not(.logged-in) .overlay,
+body:not(.logged-in) .main,
+body:not(.logged-in) footer {
+  display: none !important;
+}
+
 
 </style>
 </head>
@@ -1377,6 +1387,7 @@ async function loadAccount(user) {
   if (!user) return;
 
   authScreen.classList.add('auth-hidden');
+  document.body.classList.add('logged-in');
 
   const { data: profile, error } = await supabaseClient
     .from('profiles')
@@ -2239,10 +2250,11 @@ if (target.id === 'withdraw') {
   });
 
   supabaseClient.auth.onAuthStateChange((event) => {
-    if (event === 'SIGNED_OUT') {
-      authScreen.classList.remove('auth-hidden');
-    }
-  });
+  if (event === 'SIGNED_OUT') {
+    document.body.classList.remove('logged-in');
+    authScreen.classList.remove('auth-hidden');
+  }
+});
   async function checkAdminAccess() {
   const adminSection = document.getElementById('adminSection');
 
