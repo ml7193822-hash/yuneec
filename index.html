@@ -2171,22 +2171,22 @@ async function loadMemberDashboardStats() {
       'UGX ' + Number(wallet?.balance || 0).toLocaleString('en-UG');
   }
 
+  
   // 2. Total active investment
   const { data: investments, error: investmentError } =
     await supabaseClient
-    alert(JSON.stringify({
-  userId: user.id,
-  investments: investments,
-  error: investmentError
-}));
       .from('investments')
       .select('amount')
       .eq('user_id', user.id)
       .eq('status', 'Active');
 
+  alert(JSON.stringify({
+    userId: user.id,
+    investments: investments,
+    error: investmentError
+  }));
+
   if (investmentError) {
-    console.log('INVESTMENT ERROR:', investmentError);
-console.log('INVESTMENT DATA:', investments);
     console.error('Investment error:', investmentError);
   } else {
     const totalInvestment = (investments || []).reduce(
@@ -2196,6 +2196,7 @@ console.log('INVESTMENT DATA:', investments);
     document.getElementById('totalInvestment').textContent =
       'UGX ' + totalInvestment.toLocaleString('en-UG');
   }
+
 
   // 3. Today's paid earnings
   const today = new Date().toLocaleDateString('en-CA', {
