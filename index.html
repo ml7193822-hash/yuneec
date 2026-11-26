@@ -525,7 +525,27 @@ footer h3{color:#ffdc68;margin-bottom:7px}
   </div>
 </section>
 
-<section id="referrals" class="page-section"><div class="content-panel"><h2>👥 Referral Team</h2><p>View members who registered using your referral link.</p><div class="info">Total referrals: <strong>0</strong></div><div class="empty-state">Your referral members will appear here when referral records are connected.</div><button class="btn" onclick="copyReferral()">Copy Referral Link</button></div></section>
+
+<section id="referrals" class="page-section">
+  <div class="content-panel">
+    <h2>👥 Referral Team</h2>
+    <p>View members who registered using your referral link.</p>
+
+    <div class="info">
+      Total referrals:
+      <strong id="totalReferrals">0</strong>
+    </div>
+
+    <div id="referralMembers">
+      <div class="empty-state">Loading referral members...</div>
+    </div>
+
+    <button class="btn" onclick="copyReferral()">
+      Copy Referral Link
+    </button>
+  </div>
+</section>
+
 <section id="balance" class="page-section">
   <div class="content-panel">
     <h2>👛 My Wallet</h2>
@@ -957,8 +977,11 @@ footer h3{color:#ffdc68;margin-bottom:7px}
     }
 
     const username = authUsername.value.trim();
-    const email = authEmail.value.trim();
-    const password = authPassword.value;
+const email = authEmail.value.trim();
+const password = authPassword.value;
+
+const referralCode =
+  new URLSearchParams(window.location.search).get('ref') || '';
 
     authSubmit.disabled = true;
     message('Please wait...');
@@ -969,16 +992,19 @@ footer h3{color:#ffdc68;margin-bottom:7px}
           throw new Error('Please enter your username.');
         }
 
-        const { data, error } = await supabaseClient.auth.signUp({
-          email,
-          password,
-          options: {
-            data: {
-              username: username,
-              full_name: username
-            }
-          }
-        });
+        
+const { data, error } = await supabaseClient.auth.signUp({
+  email,
+  password,
+  options: {
+    data: {
+      username: username,
+      full_name: username,
+      referral_code: referralCode
+    }
+  }
+});
+
 
         if (error) throw error;
 
@@ -2368,11 +2394,71 @@ container.innerHTML = transactions.map(t => {
   `;
 }).join('');
 }
+  
+async function loadReferralTeam() {
+  const container = document.getElementById('referralMembers');
+  const totalElement = document.getElementById('totalReferrals');
+
+  container.textContent = 'Loading referral members...';
+
+  const { data, error } = await supabaseClient.rpc(
+    'get_my_referral_team'
+  );
+
+  if (error) {
+    console.error('Referral team error:', error);
+    container.textContent = 'Could not load referral members.';
+    return;
+  }
+
+  const members = data || [];
+
+  totalElement.textContent = members.length;
+
+  if (members.length === 0) {
+    container.innerHTML =
+      '<div class="empty-state">No referral members yet.</div>';
+    return;
+  }
+
+  container.innerHTML = members.map(member => {
+    const username = document.createElement('span');
+    username.textContent = member.member_username;
+
+    const date = member.registration_date
+      ? new Date(member.registration_date).toLocaleDateString()
+      : 'N/A';
+
+    return `
+      <div class="transaction-item">
+        <div>
+          <div class="transaction-type">
+            ${username.innerHTML}
+          </div>
+          <div class="transaction-date">
+            Joined: ${date}
+          </div>
+          <div class="transaction-date">
+            Level ${member.referral_level}
+          </div>
+        </div>
+
+        <div class="transaction-amount">
+          UGX ${Number(member.total_approved_deposits || 0)
+            .toLocaleString('en-UG')}
+          <div class="transaction-date">Approved deposits</div>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
 
 
 
 await loadMemberDashboardStats()
 await loadTransactionHistory();
+await loadReferralTeam();
 await checkAdminAccess();
 
 await checkSession();
