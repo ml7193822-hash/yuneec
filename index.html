@@ -482,7 +482,18 @@ footer h3{color:#ffdc68;margin-bottom:7px}
     <div class="info">Total Earnings: <strong>UGX 0</strong></div>
   </div>
 </section>
-<section id="transactions" class="page-section"><div class="content-panel"><h2>▧ Transactions</h2><p>Review your account transaction history.</p><div class="empty-state">No transaction records available.</div></div></section>
+
+<section id="transactions" class="page-section">
+  <div class="content-panel">
+    <h2>▧ Transactions</h2>
+    <p>Review your account transaction history.</p>
+
+    <div id="transactionHistory">
+      <div class="empty-state">Loading transactions...</div>
+    </div>
+  </div>
+</section>
+
 
 <section id="deposit" class="page-section">
   <div class="content-panel">
@@ -2220,9 +2231,73 @@ async function loadMemberDashboardStats() {
 }
 
 
+async function loadTransactionHistory() {
+  const container = document.getElementById('transactionHistory');
+
+  container.innerHTML = '<div class="empty-state">Loading transactions...</div>';
+
+  const { data: { user }, error: authError } =
+    await supabaseClient.auth.getUser();
+
+  if (authError || !user) {
+    container.textContent = 'Please log in to view transactions.';
+    return;
+  }
+
+  const tables = [
+    { name: 'Deposits', table: 'deposits', date: 'created_at' },
+    { name: 'Withdrawals', table: 'withdrawals', date: 'created_at' },
+    { name: 'Investments', table: 'investments', date: 'created_at' },
+    { name: 'Earnings', table: 'investment_earnings', date: 'earning_date' }
+  ];
+
+  let transactions = [];
+
+  for (const item of tables) {
+    const { data, error } = await supabaseClient
+      .from(item.table)
+      .select('*')
+      .eq('user_id', user.id);
+
+    if (error) {
+      console.error(item.name + ' history error:', error);
+      continue;
+    }
+
+    (data || []).forEach(record => {
+      transactions.push({
+        type: item.name,
+        amount: Number(record.amount || 0),
+        status: record.status || 'Recorded',
+        date: record[item.date] || record.created_at
+      });
+    });
+  }
+
+  transactions.sort((a, b) =>
+    new Date(b.date) - new Date(a.date)
+  );
+
+  if (transactions.length === 0) {
+    container.innerHTML =
+      '<div class="empty-state">No transaction records available.</div>';
+    return;
+  }
+
+  container.innerHTML = transactions.map(t => `
+    <div class="content-panel" style="margin-top:12px;">
+      <strong>${t.type}</strong>
+      <p>Amount: UGX ${t.amount.toLocaleString('en-UG')}</p>
+      <p>Status: ${t.status}</p>
+      <small>${t.date ? new Date(t.date).toLocaleString() : ''}</small>
+    </div>
+  `).join('');
+}
+
 
 
 await loadMemberDashboardStats()
+await loadTransactionHistory();
 await checkAdminAccess();
 
 await checkSession();
