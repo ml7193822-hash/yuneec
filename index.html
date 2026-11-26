@@ -2175,7 +2175,7 @@ async function loadMemberDashboardStats() {
       .from('investments')
       .select('amount')
       .eq('user_id', user.id)
-      .eq('status', 'active');
+      .eq('status', 'Active');
 
   if (investmentError) {
     console.error('Investment error:', investmentError);
