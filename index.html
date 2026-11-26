@@ -2088,20 +2088,28 @@ async function loadMyWalletBalance() {
 
   
 
+
 async function checkSession() {
   const { data, error } = await supabaseClient.auth.getSession();
 
   if (error) {
     message(error.message);
-    return;
+    return false;
   }
 
   if (data.session) {
     await loadAccount(data.session.user);
-  } else {
-    authScreen.classList.remove('auth-hidden');
+    return true;
   }
+
+  document.querySelectorAll('.page-section').forEach(section => {
+    section.classList.remove('active');
+  });
+
+  authScreen.classList.remove('auth-hidden');
+  return false;
 }
+
 
 
 
@@ -2118,6 +2126,12 @@ async function checkSession() {
 
   
 function showPage() {
+    if (!authScreen.classList.contains('auth-hidden')) {
+    document.querySelectorAll('.page-section').forEach(section => {
+      section.classList.remove('active');
+    });
+    return;
+    }
   const id = (location.hash || '#dashboard').slice(1);
   const sections = [...document.querySelectorAll('.page-section')];
 
@@ -2597,13 +2611,17 @@ async function loadReferralTeam() {
 
 
 
-await loadMemberDashboardStats()
-await loadTransactionHistory();
-await loadReferralTeam();
-await loadReferralCommission();
-await checkAdminAccess();
 
-await checkSession();
+const isAuthenticated = await checkSession();
+
+if (isAuthenticated) {
+  await loadMemberDashboardStats();
+  await loadTransactionHistory();
+  await loadReferralTeam();
+  await loadReferralCommission();
+  await checkAdminAccess();
+}
+
 
   document.getElementById('changePasswordForm')
   .addEventListener('submit', async function(event) {
