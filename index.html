@@ -1657,9 +1657,9 @@ if (approvedDepositError || approvedWithdrawalError) {
   document.getElementById('adminTotalWithdrawals').textContent =
     'UGX ' + withdrawalTotal.toLocaleString('en-UG');
   }
-}
+  
 
-  const totalWallet = (wallets || []).reduce(
+    const totalWallet = (wallets || []).reduce(
     (sum, w) => sum + Number(w.balance || 0), 0
   );
       const { data: funds, error: fundsError } =
