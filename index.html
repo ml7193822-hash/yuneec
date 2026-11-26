@@ -724,7 +724,72 @@ footer h3{color:#ffdc68;margin-bottom:7px}
   </div>
 </section>
 
-<section id="settings" class="page-section"><div class="content-panel"><h2>⚙ Settings</h2><p>Account preferences and security settings.</p><div class="info">Settings controls are not connected yet.</div></div></section>
+<section id="settings" class="page-section">
+  <div class="content-panel">
+    <h2>⚙ Account Settings</h2>
+    <p>Manage your YUNEEC account and security.</p>
+
+    <div class="info">
+      <h3>🔐 Account Security</h3>
+      <p>Change your account password.</p>
+      <button class="btn" onclick="showPage('changePassword')">
+        Change Password
+      </button>
+    </div>
+
+    <div class="info">
+      <h3>👤 Profile Settings</h3>
+      <p>Manage your personal account information.</p>
+      <button class="btn" onclick="location.hash='profile'">
+        View My Profile
+      </button>
+    </div>
+
+    <div class="info">
+      <h3>🛡 Account Protection</h3>
+      <p>Keep your login details private and secure.</p>
+    </div>
+  </div>
+  </section>
+  <section id="changePassword" class="page-section">
+  <div class="content-panel">
+    <h2>🔐 Change Password</h2>
+    <p>Update your YUNEEC account password securely.</p>
+
+    <form id="changePasswordForm">
+      <label for="newPassword">New Password</label>
+      <input
+        class="form-control"
+        id="newPassword"
+        type="password"
+        minlength="6"
+        placeholder="Enter new password"
+        required
+      >
+
+      <label for="confirmNewPassword">Confirm New Password</label>
+      <input
+        class="form-control"
+        id="confirmNewPassword"
+        type="password"
+        minlength="6"
+        placeholder="Confirm new password"
+        required
+      >
+
+      <button class="btn" type="submit">
+        Update Password
+      </button>
+    </form>
+
+    <div id="passwordMessage" class="info"></div>
+
+    <button class="btn" onclick="location.hash='settings'">
+      Back to Settings
+    </button>
+  </div>
+  </section>
+  
 <section id="support" class="page-section"><div class="content-panel"><h2>🎧 Contact & Support</h2><p>Contact YUNEEC customer support.</p><div class="info">Support contact details have not been configured on this page yet.</div></div></section>
 
 <section id="admin" class="page-section">
