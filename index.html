@@ -2177,12 +2177,25 @@ async function loadMemberDashboardStats() {
       .eq('user_id', user.id)
       .eq('status', 'Active');
 
-  if (investmentError) {
-    console.error('Investment error:', investmentError);
-  } else {
-    const totalInvestment = (investments || []).reduce(
-      (sum, item) => sum + Number(item.amount || 0), 0
-    );
+  console.log('Logged-in user:', user.id);
+console.log('Investment query error:', investmentError);
+console.log('Investment records:', investments);
+
+if (investmentError) {
+  alert('Investment error: ' + investmentError.message);
+} else {
+  const totalInvestment = (investments || []).reduce(
+    (sum, item) => sum + Number(item.amount || 0), 0
+  );
+
+  document.getElementById('totalInvestment').textContent =
+    'UGX ' + totalInvestment.toLocaleString('en-UG');
+
+  alert(
+    'Investment records found: ' + investments.length +
+    '\nTotal: UGX ' + totalInvestment.toLocaleString('en-UG')
+  );
+}
 
     document.getElementById('totalInvestment').textContent =
       'UGX ' + totalInvestment.toLocaleString('en-UG');
