@@ -1623,9 +1623,11 @@ if (withdrawalError) {
       card.appendChild(button);
     });
 
-    withdrawalContainer.appendChild(card);
+        withdrawalContainer.appendChild(card);
   });
-  const { data: approvedDeposits, error: approvedDepositError } =
+}
+
+const { data: approvedDeposits, error: approvedDepositError } =
   await supabaseClient
     .from('deposits')
     .select('amount')
