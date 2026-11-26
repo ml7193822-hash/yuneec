@@ -59,6 +59,60 @@
   margin-top: 10px;
   font-size: 12px;
 }
+  
+.transaction-item {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 15px;
+  margin-top: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+.transaction-type {
+  font-weight: 700;
+  color: #1f2937;
+}
+
+.transaction-date {
+  font-size: 12px;
+  color: #6b7280;
+  margin-top: 5px;
+}
+
+.transaction-amount {
+  font-weight: 700;
+  text-align: right;
+  color: #111827;
+}
+
+.transaction-status {
+  display: inline-block;
+  padding: 4px 9px;
+  border-radius: 20px;
+  font-size: 11px;
+  margin-top: 6px;
+}
+
+.status-paid,
+.status-approved {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.status-pending {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.status-rejected {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
 </style>
 
 <meta charset="UTF-8">
@@ -2284,15 +2338,36 @@ async function loadTransactionHistory() {
     return;
   }
 
-  container.innerHTML = transactions.map(t => `
-    <div class="content-panel" style="margin-top:12px;">
-      <strong>${t.type}</strong>
-      <p>Amount: UGX ${t.amount.toLocaleString('en-UG')}</p>
-      <p>Status: ${t.status}</p>
-      <small>${t.date ? new Date(t.date).toLocaleString() : ''}</small>
+  
+container.innerHTML = transactions.map(t => {
+  const status = String(t.status).toLowerCase();
+  let statusClass = 'status-pending';
+
+  if (['approved', 'paid', 'completed'].includes(status)) {
+    statusClass = 'status-approved';
+  } else if (status === 'rejected') {
+    statusClass = 'status-rejected';
+  }
+
+  return `
+    <div class="transaction-item">
+      <div>
+        <div class="transaction-type">${t.type}</div>
+        <div class="transaction-date">
+          ${t.date ? new Date(t.date).toLocaleString() : ''}
+        </div>
+        <span class="transaction-status ${statusClass}">
+          ${t.status}
+        </span>
+      </div>
+
+      <div class="transaction-amount">
+        UGX ${t.amount.toLocaleString('en-UG')}
+      </div>
     </div>
-  `).join('');
-}
+  `;
+}).join('');
+
 
 
 
