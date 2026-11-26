@@ -462,7 +462,14 @@ footer h3{color:#ffdc68;margin-bottom:7px}
   </div>
 
   <div class="cards">
-    <div class="stat-card"><div class="stat-icon">🚁</div><div><div class="stat-label">My Drones</div><div class="stat-value" id="droneCount">0</div><div class="stat-note">● Registered drones</div></div></div>
+    <div class="stat-card">
+  <div class="stat-icon">🎁</div>
+  <div>
+    <div class="stat-label">Referral Commission</div>
+    <div class="stat-value" id="referralCommission">UGX 0</div>
+    <div class="stat-note">● Total referral commissions</div>
+  </div>
+    </div>
     <div class="stat-card"><div class="stat-icon">🪙</div><div><div class="stat-label">Total Investment</div><div class="stat-value" id="totalInvestment">UGX 0</div><div class="stat-note">● Verified investment</div></div></div>
     <div class="stat-card"><div class="stat-icon">👛</div><div><div class="stat-label">Available Balance</div><div class="stat-value" id="availableBalance">UGX 0</div><button class="small-btn" onclick="location.hash='withdraw'">Withdraw</button></div></div>
     <div class="stat-card"><div class="stat-icon">📊</div><div><div class="stat-label">Today's Earnings</div><div class="stat-value" id="todayEarnings">UGX 0</div><div class="stat-note">● Verified earnings</div></div></div>
@@ -2464,6 +2471,22 @@ async function loadReferralTeam() {
     `;
   }).join('');
 }
+  async function loadReferralCommission() {
+  const element = document.getElementById('referralCommission');
+
+  const { data, error } = await supabaseClient.rpc(
+    'get_my_referral_commission_total'
+  );
+
+  if (error) {
+    console.error('Referral commission error:', error);
+    element.textContent = 'Unavailable';
+    return;
+  }
+
+  element.textContent =
+    'UGX ' + Number(data || 0).toLocaleString('en-UG');
+  }
 
 
 
@@ -2471,6 +2494,7 @@ async function loadReferralTeam() {
 await loadMemberDashboardStats()
 await loadTransactionHistory();
 await loadReferralTeam();
+await loadReferralCommission();
 await checkAdminAccess();
 
 await checkSession();
