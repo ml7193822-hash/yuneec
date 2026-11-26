@@ -2147,6 +2147,72 @@ async function loadMyEarnings() {
     list.appendChild(item);
   });
 }
+  
+async function loadMemberDashboardStats() {
+  const { data: { user }, error: authError } =
+    await supabaseClient.auth.getUser();
+
+  if (authError || !user) return;
+
+  // 1. Available wallet balance
+  const { data: wallet, error: walletError } =
+    await supabaseClient
+      .from('wallets')
+      .select('balance')
+      .eq('user_id', user.id)
+      .maybeSingle();
+
+  if (walletError) {
+    console.error('Wallet error:', walletError);
+  } else {
+    document.getElementById('availableBalance').textContent =
+      'UGX ' + Number(wallet?.balance || 0).toLocaleString('en-UG');
+  }
+
+  // 2. Total verified investment
+  const { data: investments, error: investmentError } =
+    await supabaseClient
+      .from('investments')
+      .select('amount')
+      .eq('user_id', user.id)
+      .eq('status', 'active');
+
+  if (investmentError) {
+    console.error('Investment error:', investmentError);
+  } else {
+    const totalInvestment = (investments || []).reduce(
+      (sum, item) => sum + Number(item.amount || 0), 0
+    );
+
+    document.getElementById('totalInvestment').textContent =
+      'UGX ' + totalInvestment.toLocaleString('en-UG');
+  }
+
+  // 3. Today's verified earnings
+  const today = new Date().toLocaleDateString('en-CA', {
+    timeZone: 'Africa/Kampala'
+  });
+
+  const { data: earnings, error: earningsError } =
+    await supabaseClient
+      .from('investment_earnings')
+      .select('amount')
+      .eq('user_id', user.id)
+      .eq('status', 'Paid')
+      .eq('earning_date', today);
+
+  if (earningsError) {
+    console.error('Earnings error:', earningsError);
+  } else {
+    const todayTotal = (earnings || []).reduce(
+      (sum, item) => sum + Number(item.amount || 0), 0
+    );
+
+    document.getElementById('todayEarnings').textContent =
+      'UGX ' + todayTotal.toLocaleString('en-UG');
+  }
+}
+
 
 
 
