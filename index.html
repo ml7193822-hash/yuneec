@@ -2154,6 +2154,7 @@ async function loadMemberDashboardStats() {
     await supabaseClient.auth.getUser();
 
   if (authError || !user) return;
+  console.log('DASHBOARD USER ID:', user.id);
 
   // 1. Available wallet balance
   const { data: wallet, error: walletError } =
@@ -2179,6 +2180,8 @@ async function loadMemberDashboardStats() {
       .eq('status', 'Active');
 
   if (investmentError) {
+    console.log('INVESTMENT ERROR:', investmentError);
+console.log('INVESTMENT DATA:', investments);
     console.error('Investment error:', investmentError);
   } else {
     const totalInvestment = (investments || []).reduce(
