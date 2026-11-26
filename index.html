@@ -2148,6 +2148,7 @@ async function loadMyEarnings() {
   });
 }
   
+
 async function loadMemberDashboardStats() {
   const { data: { user }, error: authError } =
     await supabaseClient.auth.getUser();
@@ -2169,7 +2170,7 @@ async function loadMemberDashboardStats() {
       'UGX ' + Number(wallet?.balance || 0).toLocaleString('en-UG');
   }
 
-  // 2. Total verified investment
+  // 2. Total active investment
   const { data: investments, error: investmentError } =
     await supabaseClient
       .from('investments')
@@ -2177,31 +2178,18 @@ async function loadMemberDashboardStats() {
       .eq('user_id', user.id)
       .eq('status', 'Active');
 
-  console.log('Logged-in user:', user.id);
-console.log('Investment query error:', investmentError);
-console.log('Investment records:', investments);
-
-if (investmentError) {
-  alert('Investment error: ' + investmentError.message);
-} else {
-  const totalInvestment = (investments || []).reduce(
-    (sum, item) => sum + Number(item.amount || 0), 0
-  );
-
-  document.getElementById('totalInvestment').textContent =
-    'UGX ' + totalInvestment.toLocaleString('en-UG');
-
-  alert(
-    'Investment records found: ' + investments.length +
-    '\nTotal: UGX ' + totalInvestment.toLocaleString('en-UG')
-  );
-}
+  if (investmentError) {
+    console.error('Investment error:', investmentError);
+  } else {
+    const totalInvestment = (investments || []).reduce(
+      (sum, item) => sum + Number(item.amount || 0), 0
+    );
 
     document.getElementById('totalInvestment').textContent =
       'UGX ' + totalInvestment.toLocaleString('en-UG');
   }
 
-  // 3. Today's verified earnings
+  // 3. Today's paid earnings
   const today = new Date().toLocaleDateString('en-CA', {
     timeZone: 'Africa/Kampala'
   });
@@ -2225,6 +2213,7 @@ if (investmentError) {
       'UGX ' + todayTotal.toLocaleString('en-UG');
   }
 }
+
 
 
 
