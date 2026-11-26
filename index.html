@@ -1296,8 +1296,20 @@ async function loadAccount(user) {
   setText('profileMembership', 'Member');
   setText('profileStatus', 'Not configured');
 
+  const { data: referralProfile, error: referralError } =
+  await supabaseClient
+    .from('profiles')
+    .select('referral_code')
+    .eq('id', user.id)
+    .single();
+
+if (referralError) {
+  console.error('Referral code error:', referralError);
+} else {
   document.getElementById('referralLink').value =
-    location.origin + location.pathname + '?ref=' + user.id;
+    location.origin + location.pathname +
+    '?ref=' + encodeURIComponent(referralProfile.referral_code);
+}
   
     await loadMyWalletBalance();
   
