@@ -1273,11 +1273,11 @@ async function loadMyWithdrawalHistory() {
       new Date(withdrawal.created_at).toLocaleString();
 
     container.appendChild(item);
-  });
-}
 
 
 
+
+    
 document.getElementById('withdrawForm').addEventListener('submit', async function (e) {
   e.preventDefault();
 
@@ -1285,6 +1285,7 @@ document.getElementById('withdrawForm').addEventListener('submit', async functio
   const amount = Number(document.getElementById('withdrawAmount').value);
   const method = document.getElementById('withdrawMethod').value;
   const phone = document.getElementById('withdrawPhone').value.trim();
+  const accountName = document.getElementById('withdrawAccountName').value.trim();
   const button = this.querySelector('button[type="submit"]');
 
   message.textContent = '';
@@ -1294,8 +1295,9 @@ document.getElementById('withdrawForm').addEventListener('submit', async functio
     return;
   }
 
-  if (!method || !phone) {
-    message.textContent = 'Enter your payment method and phone number.';
+  if (!method || !phone || !accountName) {
+    message.textContent =
+      'Enter your payment method, phone number and account name.';
     return;
   }
 
@@ -1303,7 +1305,8 @@ document.getElementById('withdrawForm').addEventListener('submit', async functio
   button.textContent = 'Submitting...';
 
   try {
-    const paymentDetails = method + ' - ' + phone;
+    const paymentDetails =
+      method + ' - ' + phone + ' - Account Name: ' + accountName;
 
     const { data, error } = await supabaseClient.rpc(
       'submit_withdrawal',
@@ -1336,6 +1339,7 @@ document.getElementById('withdrawForm').addEventListener('submit', async functio
     button.textContent = 'Submit Withdrawal';
   }
 });
+
 
 
 
