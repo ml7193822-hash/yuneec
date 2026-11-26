@@ -1103,6 +1103,78 @@ async function loadMyWithdrawalHistory() {
 }
 
 
+document.getElementById('withdrawForm').addEventListener('submit', async function (e) {
+  e.preventDefault();
+
+  const message = document.getElementById('withdrawMessage');
+  const amount = Number(document.getElementById('withdrawAmount').value);
+  const method = document.getElementById('withdrawMethod').value;
+  const phone = document.getElementById('withdrawPhone').value.trim();
+  const button = this.querySelector('button[type="submit"]');
+
+  message.textContent = '';
+
+  if (!Number.isFinite(amount) || amount < 1000) {
+    message.textContent = 'Minimum withdrawal is UGX 1,000.';
+    return;
+  }
+
+  if (!method || !phone) {
+    message.textContent = 'Please enter your payment method and phone number.';
+    return;
+  }
+
+  button.disabled = true;
+  button.textContent = 'Submitting...';
+
+  try {
+    const { data: { user }, error: authError } =
+      await supabaseClient.auth.getUser();
+
+    if (authError || !user) {
+      throw new Error('Please log in before withdrawing.');
+    }
+
+    const { data: wallet, error: walletError } = await supabaseClient
+      .from('wallets')
+      .select('balance')
+      .eq('user_id', user.id)
+      .single();
+
+    if (walletError) throw walletError;
+
+    if (amount > Number(wallet.balance)) {
+      throw new Error('Insufficient wallet balance.');
+    }
+
+    const paymentDetails = method + ' - ' + phone;
+
+    const { error } = await supabaseClient
+      .from('withdrawals')
+      .insert({
+        user_id: user.id,
+        amount: amount,
+        payment_details: paymentDetails,
+        status: 'Pending'
+      });
+
+    if (error) throw error;
+
+    message.textContent = 'Withdrawal request submitted successfully!';
+
+    this.reset();
+
+    await loadMyWithdrawalHistory();
+
+  } catch (error) {
+    console.error('Withdrawal submission error:', error);
+    message.textContent = error.message || 'Could not submit withdrawal.';
+  } finally {
+    button.disabled = false;
+    button.textContent = 'Submit Withdrawal';
+  }
+});
+
 
 
   
