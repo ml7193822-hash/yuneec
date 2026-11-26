@@ -2180,11 +2180,7 @@ async function loadMemberDashboardStats() {
       .eq('user_id', user.id)
       .eq('status', 'Active');
 
-  alert(JSON.stringify({
-    userId: user.id,
-    investments: investments,
-    error: investmentError
-  }));
+  
 
   if (investmentError) {
     console.error('Investment error:', investmentError);
